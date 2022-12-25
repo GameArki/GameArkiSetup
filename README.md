@@ -9,7 +9,7 @@
 
 # 使用方式
 1. 点击菜单: GameArki/SetupWindow
-2. 按需安装想用的库
+2. 按需安装想用的库  
 ![image](./Doc/GameArkiSetup.png)
 
 # 常见报错
