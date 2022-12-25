@@ -1,3 +1,4 @@
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,11 +40,28 @@ namespace GameArki.Setup {
 
         }
 
+        Vector2 scrollPos;
         void OnGUI() {
+
             var gamearkiPackages = SetupPackageCollection.packages;
+
+            using (new GUILayout.HorizontalScope()) {
+                GUILayout.FlexibleSpace();
+                var content = new GUIContent("GameArki Setup", "GameArki Setup");
+                GUILayout.Label(content, GUILayout.ExpandWidth(true), GUILayout.Height(24));
+                GUILayout.FlexibleSpace();
+            }
+
+            scrollPos = GUILayout.BeginScrollView(scrollPos);
             for (int i = 0; i < gamearkiPackages.Length; i += 1) {
                 var pkg = gamearkiPackages[i];
-                drawer.GUI_DrawOne(manifest, pkg);
+                drawer.GUI_DrawOne(manifest, gamearkiPackages, pkg);
+            }
+            GUILayout.EndScrollView();
+
+            if (drawer.IsDirty) {
+                UnityEditor.PackageManager.Client.Resolve();
+                drawer.SetDirty(false);
             }
         }
 
@@ -51,12 +69,20 @@ namespace GameArki.Setup {
 
     public class PackageDrawer {
 
+        bool isDirty;
+        public bool IsDirty => isDirty;
+        public void SetDirty(bool value) => isDirty = value;
+
         Dictionary<string, bool> titleToggles = new Dictionary<string, bool>();
         Dictionary<string, bool> versionToggles = new Dictionary<string, bool>();
         Dictionary<string, bool> assemblyToggles = new Dictionary<string, bool>();
         Dictionary<string, bool> dependencyToggles = new Dictionary<string, bool>();
 
-        public void GUI_DrawOne(ManifestEntity manifest, SetupPackageModel pkg) {
+        public PackageDrawer() {
+            this.isDirty = false;
+        }
+
+        public void GUI_DrawOne(ManifestEntity manifest, SetupPackageModel[] allPkgs, SetupPackageModel pkg) {
 
             string title = pkg.title;
             string pkgName = pkg.name;
@@ -80,15 +106,10 @@ namespace GameArki.Setup {
             var w_100 = GUILayout.Width(100);
 
             GUILayout.BeginVertical(GUI.skin.box);
-            titleToggles[title] = EditorGUILayout.Foldout(titleToggles[title], title);
+            titleToggles[title] = EditorGUILayout.Foldout(titleToggles[title], title + " - " + pkg.desc);
             if (titleToggles[title]) {
 
                 var w_40 = GUILayout.Width(40);
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(20);
-                GUILayout.Label(pkg.desc);
-                GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(20);
@@ -139,7 +160,7 @@ namespace GameArki.Setup {
                             hasClickInstall = GUILayout.Button("安装", w_40);
                         }
                         if (hasClickInstall) {
-                            GUI_ClickInstall(manifest, pkg, version);
+                            GUI_ClickInstall(manifest, allPkgs, pkg, version);
                         }
                         GUILayout.Label(version);
                         GUILayout.EndHorizontal();
@@ -157,7 +178,7 @@ namespace GameArki.Setup {
             if (!hasInstalled) {
                 GUILayout.Space(10);
                 if (GUILayout.Button("安装最新版", w_100)) {
-                    GUI_ClickInstall(manifest, pkg, "main");
+                    GUI_ClickInstall(manifest, allPkgs, pkg, "main");
                 }
             } else {
                 GUILayout.Space(10);
@@ -170,7 +191,7 @@ namespace GameArki.Setup {
             GUILayout.EndVertical();
         }
 
-        void GUI_ClickInstall(ManifestEntity manifest, SetupPackageModel pkg, string version) {
+        void GUI_ClickInstall(ManifestEntity manifest, SetupPackageModel[] allPkgs, SetupPackageModel pkg, string version) {
             var pkgName = pkg.name;
             bool has = manifest.HasDependency(pkgName);
             string value = pkg.BakeValue(version);
@@ -180,14 +201,14 @@ namespace GameArki.Setup {
                 manifest.AddDependency(pkgName, value);
             }
             manifest.SaveManifest();
-            UnityEditor.PackageManager.Client.Resolve();
+            this.isDirty = true;
         }
 
         void GUI_ClickUninstall(ManifestEntity manifest, SetupPackageModel pkg) {
             var pkgName = pkg.name;
             manifest.RemoveDependency(pkgName);
             manifest.SaveManifest();
-            UnityEditor.PackageManager.Client.Resolve();
+            this.isDirty = true;
         }
 
     }

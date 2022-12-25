@@ -1,15 +1,10 @@
 {
   "dependencies": {
-    "com.unity.collab-proxy": "1.15.15",
+    "com.gamearki.menutool": "ssh://git@github.com/gamearki/arkimenutool.git?path=Assets/com.gamearki.menutool#main",
     "com.unity.feature.2d": "1.0.0",
-    "com.unity.ide.rider": "3.0.13",
-    "com.unity.ide.visualstudio": "2.0.14",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.test-framework": "1.1.31",
-    "com.unity.textmeshpro": "3.0.6",
-    "com.unity.timeline": "1.6.4",
     "com.unity.ugui": "1.0.0",
-    "com.unity.visualscripting": "1.7.6",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -40,6 +35,10 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.gamearki.fpmath": "ssh://git@github.com/gamearki/fpmath.git?path=Assets/com.gamearki.fpmath#main",
+    "com.gamearki.fpphysics2d": "ssh://git@github.com/gamearki/FPPhysics2D.git?path=Assets/com.gamearki.fpphysics2d#main",
+    "com.gamearki.datastructure": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure#main",
+    "com.gamearki.datastructure.fp": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure.fp#main"
   }
 }
