@@ -51,6 +51,12 @@ namespace GameArki.Setup {
                 GUILayout.Label(content, GUILayout.ExpandWidth(true), GUILayout.Height(24));
                 GUILayout.FlexibleSpace();
             }
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("如遇到问题, 请选阅读文档: ", GUILayout.ExpandWidth(false));
+            if (GUILayout.Button("文档", GUILayout.ExpandWidth(false), GUILayout.Width(40))) {
+                Application.OpenURL("https://www.github.com/gamearki/GameArkiSetup");
+            }
+            GUILayout.EndHorizontal();
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
             for (int i = 0; i < gamearkiPackages.Length; i += 1) {

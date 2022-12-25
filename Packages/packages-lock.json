@@ -1,5 +1,26 @@
 {
   "dependencies": {
+    "com.gamearki.bufferio": {
+      "version": "ssh://git@github.com/gamearki/bufferio.git?path=Assets/com.gamearki.bufferio#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e2fe0cf4ab36d5704e6e090dbd1eb9d79106e178"
+    },
+    "com.gamearki.bufferioextra": {
+      "version": "ssh://git@github.com/gamearki/bufferioextra.git?path=Assets/com.gamearki.bufferioextra#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6c1f85ad50be28b1cd401c23c2d985c2b617bf15"
+    },
+    "com.gamearki.csharpgen": {
+      "version": "ssh://git@github.com/gamearki/ArkiCSharpGen.git?path=Assets/com.gamearki.csharpgen#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3c2a704a655199aaff9a680b9922361bdaacfe96"
+    },
     "com.gamearki.datastructure": {
       "version": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure#main",
       "depth": 0,
@@ -48,6 +69,20 @@
       "source": "git",
       "dependencies": {},
       "hash": "44abf32ea5d0124607bc056846c038fb3dd24c81"
+    },
+    "com.gamearki.purebttree": {
+      "version": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "de14f67fc750c665b759cd2f4916a457effdb462"
+    },
+    "com.gamearki.tripodcamera": {
+      "version": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "14d46bc1b1040e1337b3e426a927af99e2994194"
     },
     "com.unity.2d.animation": {
       "version": "7.0.4",

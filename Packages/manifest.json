@@ -41,6 +41,11 @@
     "com.gamearki.datastructure": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure#main",
     "com.gamearki.datastructure.fp": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure.fp#main",
     "com.gamearki.fpeasing.fp": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing.fp#main",
-    "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing#main"
+    "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing#main",
+    "com.gamearki.purebttree": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
+    "com.gamearki.bufferio": "ssh://git@github.com/gamearki/bufferio.git?path=Assets/com.gamearki.bufferio#main",
+    "com.gamearki.csharpgen": "ssh://git@github.com/gamearki/ArkiCSharpGen.git?path=Assets/com.gamearki.csharpgen#main",
+    "com.gamearki.bufferioextra": "ssh://git@github.com/gamearki/bufferioextra.git?path=Assets/com.gamearki.bufferioextra#main",
+    "com.gamearki.tripodcamera": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#main"
   }
 }

@@ -4,6 +4,7 @@ namespace GameArki.Setup {
 
         public readonly static SetupPackageModel[] packages = new SetupPackageModel[] {
 
+            // MenuTool
             new SetupPackageModel {
                 title = "MenuTool",
                 name = "com.gamearki.menutool",
@@ -16,6 +17,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.MenuTool"}
             },
 
+            // FPMath
             new SetupPackageModel {
                 title = "FPMath",
                 name = "com.gamearki.fpmath",
@@ -28,6 +30,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.FPMath"}
             },
 
+            // DataStructure
             new SetupPackageModel {
                 title = "ArkiDataStructure",
                 name = "com.gamearki.datastructure",
@@ -40,6 +43,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.DataStructure"}
             },
 
+            // DataStructure.FP
             new SetupPackageModel {
                 title = "ArkiDataStructure",
                 name = "com.gamearki.datastructure.fp",
@@ -52,6 +56,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.DataStructure.FP"}
             },
 
+            // FPPhysics2D
             new SetupPackageModel {
                 title = "FPPhysics2D",
                 name = "com.gamearki.fpphysics2d",
@@ -64,6 +69,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.FPPhysics2D"}
             },
 
+            // FPEasing
             new SetupPackageModel {
                 title = "FPEasing",
                 name = "com.gamearki.fpeasing",
@@ -76,6 +82,7 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.FPEasing"}
             },
 
+            // FPEasing.FP
             new SetupPackageModel {
                 title = "FPEasing",
                 name = "com.gamearki.fpeasing.fp",
@@ -88,6 +95,20 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.FPEasing.FP"}
             },
 
+            // PureBTTree
+            new SetupPackageModel {
+                title = "PureBTTree",
+                name = "com.gamearki.purebttree",
+                desc = "行为树库(指令式)",
+                versions = new string[] {"0.2.0", "main"},
+                gitUrl = "ssh://git@github.com/gamearki/PureBTTree.git",
+                docuUrl = "https://www.github.com/gamearki/PureBTTree",
+                path = "?path=Assets/com.gamearki.purebttree",
+                dependencies = new string[0],
+                assemblies = new string[] {"GameArki.PureBTTree"}
+            },
+
+            // BufferIO
             new SetupPackageModel {
                 title = "BufferIO",
                 name = "com.gamearki.bufferio",
@@ -100,6 +121,33 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.BufferIO"}
             },
 
+            // CSharpGen
+            new SetupPackageModel {
+                title = "ArkiCSharpGen",
+                name = "com.gamearki.csharpgen",
+                desc = "基于 Roslyn 的元编程工具库",
+                versions = new string[] { "1.1.0", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/ArkiCSharpGen.git",
+                docuUrl = "https://www.github.com/gamearki/ArkiCSharpGen",
+                path = "?path=Assets/com.gamearki.csharpgen",
+                dependencies = new string[] {},
+                assemblies = new string[] {"GameArki.ArkiCSharpGen"}
+            },
+
+            // TripodCamera
+            new SetupPackageModel {
+                title = "TripodCamera",
+                name = "com.gamearki.tripodcamera",
+                desc = "三角架——指令式透视相机库",
+                versions = new string[] { "0.5.0", "0.6.0", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/TripodCamera.git",
+                docuUrl = "https://www.github.com/gamearki/TripodCamera",
+                path = "?path=Assets/com.gamearki.tripodcamera",
+                dependencies = new string[] { "FPEasing" },
+                assemblies = new string[] {"GameArki.TripodCamera"}
+            },
+
+            // BufferIOExtra
             new SetupPackageModel {
                 title = "BufferIOExtra",
                 name = "com.gamearki.bufferioextra",
