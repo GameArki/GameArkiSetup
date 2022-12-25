@@ -126,7 +126,7 @@ namespace GameArki.Setup {
                 title = "CrossIO",
                 name = "com.gamearki.crossio",
                 desc = "Unity 文件存取库(同样适用于手机端)",
-                versions = new string[] {"1.0.0", "1.1.0", "main"},
+                versions = new string[] {"1.2.0", "1.3.0", "main"},
                 gitUrl = "ssh://git@github.com/gamearki/crossio.git",
                 docuUrl = "https://www.github.com/gamearki/crossio",
                 path = "?path=Assets/com.gamearki.crossio",

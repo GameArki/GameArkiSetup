@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.gamearki.menutool": "ssh://git@github.com/gamearki/arkimenutool.git?path=Assets/com.gamearki.menutool#main",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.test-framework": "1.1.31",
@@ -35,21 +34,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.gamearki.fpmath": "ssh://git@github.com/gamearki/fpmath.git?path=Assets/com.gamearki.fpmath#main",
-    "com.gamearki.fpphysics2d": "ssh://git@github.com/gamearki/FPPhysics2D.git?path=Assets/com.gamearki.fpphysics2d#main",
-    "com.gamearki.datastructure": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure#main",
-    "com.gamearki.datastructure.fp": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure.fp#main",
-    "com.gamearki.fpeasing.fp": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing.fp#main",
-    "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing#main",
-    "com.gamearki.purebttree": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
-    "com.gamearki.bufferio": "ssh://git@github.com/gamearki/bufferio.git?path=Assets/com.gamearki.bufferio#main",
-    "com.gamearki.csharpgen": "ssh://git@github.com/gamearki/ArkiCSharpGen.git?path=Assets/com.gamearki.csharpgen#main",
-    "com.gamearki.bufferioextra": "ssh://git@github.com/gamearki/bufferioextra.git?path=Assets/com.gamearki.bufferioextra#main",
-    "com.gamearki.tripodcamera": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#0.6.0",
-    "com.gamearki.networkweaver.tcp": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.tcp#main",
-    "com.gamearki.networkweaver.udp": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.udp#main",
-    "com.gamearki.crossio": "ssh://git@github.com/gamearki/crossio.git?path=Assets/com.gamearki.crossio#main",
-    "com.gamearki.platformercamera": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#0.2.1"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
