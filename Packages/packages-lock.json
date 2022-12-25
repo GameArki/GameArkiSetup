@@ -70,6 +70,20 @@
       "dependencies": {},
       "hash": "44abf32ea5d0124607bc056846c038fb3dd24c81"
     },
+    "com.gamearki.networkweaver.tcp": {
+      "version": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.tcp#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "82c99635f472732b155119e83da68fbb4ff4e84c"
+    },
+    "com.gamearki.networkweaver.udp": {
+      "version": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.udp#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "82c99635f472732b155119e83da68fbb4ff4e84c"
+    },
     "com.gamearki.purebttree": {
       "version": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
       "depth": 0,

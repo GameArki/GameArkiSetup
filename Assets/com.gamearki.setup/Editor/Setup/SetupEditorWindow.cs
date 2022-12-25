@@ -119,7 +119,7 @@ namespace GameArki.Setup {
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(20);
-                dependencyToggles[title] = EditorGUILayout.Foldout(dependencyToggles[title], "依赖外部库");
+                dependencyToggles[title] = EditorGUILayout.Foldout(dependencyToggles[title], "依赖列表");
                 GUILayout.EndHorizontal();
                 if (dependencyToggles[title]) {
                     for (int i = 0; i < pkg.dependencies.Length; i += 1) {

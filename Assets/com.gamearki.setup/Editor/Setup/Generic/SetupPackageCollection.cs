@@ -160,6 +160,32 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.BufferIOExtra"}
             },
 
+            // NetworkWeaver.TCP
+            new SetupPackageModel {
+                title = "NetworkWeaver",
+                name = "com.gamearki.networkweaver.tcp",
+                desc = "(TCP)网络通信库",
+                versions = new string[] { "1.1.0", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/networkweaver.git",
+                docuUrl = "https://www.github.com/gamearki/networkweaver",
+                path = "?path=Assets/com.gamearki.networkweaver.tcp",
+                dependencies = new string[] { "BufferIO", "BufferIOExtra", "ArkiCSharpGen" },
+                assemblies = new string[] {"GameArki.NetworkWeaver.Tcp" }
+            },
+
+            // NetworkWeaver.UDP
+            new SetupPackageModel {
+                title = "NetworkWeaver",
+                name = "com.gamearki.networkweaver.udp",
+                desc = "(UDP)网络通信库",
+                versions = new string[] { "1.1.0", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/networkweaver.git",
+                docuUrl = "https://www.github.com/gamearki/networkweaver",
+                path = "?path=Assets/com.gamearki.networkweaver.udp",
+                dependencies = new string[] { "BufferIO", "BufferIOExtra", "ArkiCSharpGen" },
+                assemblies = new string[] {"GameArki.NetworkWeaver.UDP" }
+            },
+
         };
 
     }
