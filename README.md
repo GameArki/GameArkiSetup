@@ -10,6 +10,7 @@
 # 使用方式
 1. 点击菜单: GameArki/SetupWindow
 2. 按需安装想用的库
+![image](./Doc/GameArkiSetup.png)
 
 # 常见报错
 1. 确认电脑上是否安装 Git, 安装后记得重启电脑  
