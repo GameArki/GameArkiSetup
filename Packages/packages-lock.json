@@ -14,6 +14,20 @@
       "dependencies": {},
       "hash": "5d23b51234a52eaa01e5dbe966c65e874a57855f"
     },
+    "com.gamearki.fpeasing": {
+      "version": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "627d8158ee02fd2c0260208b42b9ad986654373e"
+    },
+    "com.gamearki.fpeasing.fp": {
+      "version": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing.fp#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "627d8158ee02fd2c0260208b42b9ad986654373e"
+    },
     "com.gamearki.fpmath": {
       "version": "ssh://git@github.com/gamearki/fpmath.git?path=Assets/com.gamearki.fpmath#main",
       "depth": 0,

@@ -39,6 +39,8 @@
     "com.gamearki.fpmath": "ssh://git@github.com/gamearki/fpmath.git?path=Assets/com.gamearki.fpmath#main",
     "com.gamearki.fpphysics2d": "ssh://git@github.com/gamearki/FPPhysics2D.git?path=Assets/com.gamearki.fpphysics2d#main",
     "com.gamearki.datastructure": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure#main",
-    "com.gamearki.datastructure.fp": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure.fp#main"
+    "com.gamearki.datastructure.fp": "ssh://git@github.com/gamearki/ArkiDataStructure.git?path=Assets/com.gamearki.datastructure.fp#main",
+    "com.gamearki.fpeasing.fp": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing.fp#main",
+    "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=Assets/com.gamearki.fpeasing#main"
   }
 }

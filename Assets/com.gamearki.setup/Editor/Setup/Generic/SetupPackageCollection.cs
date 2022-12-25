@@ -31,7 +31,7 @@ namespace GameArki.Setup {
             new SetupPackageModel {
                 title = "ArkiDataStructure",
                 name = "com.gamearki.datastructure",
-                desc = "(浮点数版)游戏数据结构",
+                desc = "(浮点数版)游戏数据结构库",
                 versions = new string[] {"0.2.0", "main"},
                 gitUrl = "ssh://git@github.com/gamearki/ArkiDataStructure.git",
                 docuUrl = "https://www.github.com/gamearki/ArkiDataStructure",
@@ -43,7 +43,7 @@ namespace GameArki.Setup {
             new SetupPackageModel {
                 title = "ArkiDataStructure",
                 name = "com.gamearki.datastructure.fp",
-                desc = "(定点数版)游戏数据结构",
+                desc = "(定点数版)游戏数据结构库",
                 versions = new string[] {"0.2.0", "main"},
                 gitUrl = "ssh://git@github.com/gamearki/ArkiDataStructure.git",
                 docuUrl = "https://www.github.com/gamearki/ArkiDataStructure",
@@ -62,6 +62,30 @@ namespace GameArki.Setup {
                 path = "?path=Assets/com.gamearki.fpphysics2d",
                 dependencies = new string[] { "FPMath", "ArkiDataStructure" },
                 assemblies = new string[] {"GameArki.FPPhysics2D"}
+            },
+
+            new SetupPackageModel {
+                title = "FPEasing",
+                name = "com.gamearki.fpeasing",
+                desc = "(浮点数版)缓动函数库",
+                versions = new string[] {"1.0.0", "2.3.1", "main"},
+                gitUrl = "ssh://git@github.com/gamearki/FPEasing.git",
+                docuUrl = "https://www.github.com/gamearki/FPEasing",
+                path = "?path=Assets/com.gamearki.fpeasing",
+                dependencies = new string[] { },
+                assemblies = new string[] {"GameArki.FPEasing"}
+            },
+
+            new SetupPackageModel {
+                title = "FPEasing",
+                name = "com.gamearki.fpeasing.fp",
+                desc = "(定点数版)缓动函数库",
+                versions = new string[] {"1.0.0", "2.3.1", "main"},
+                gitUrl = "ssh://git@github.com/gamearki/FPEasing.git",
+                docuUrl = "https://www.github.com/gamearki/FPEasing",
+                path = "?path=Assets/com.gamearki.fpeasing.fp",
+                dependencies = new string[] { "FPMath" },
+                assemblies = new string[] {"GameArki.FPEasing.FP"}
             },
 
             new SetupPackageModel {
