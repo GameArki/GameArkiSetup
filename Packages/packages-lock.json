@@ -84,6 +84,13 @@
       "dependencies": {},
       "hash": "82c99635f472732b155119e83da68fbb4ff4e84c"
     },
+    "com.gamearki.platformercamera": {
+      "version": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "78f5392deb10fadae8504139c87ce1145c4665f5"
+    },
     "com.gamearki.purebttree": {
       "version": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
       "depth": 0,

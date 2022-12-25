@@ -147,6 +147,19 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.TripodCamera"}
             },
 
+            // PlatformerCamera
+            new SetupPackageModel {
+                title = "PlatformerCamera",
+                name = "com.gamearki.platformercamera",
+                desc = "三角架——指令式透视相机库",
+                versions = new string[] { "0.2.1", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/platformercamera.git",
+                docuUrl = "https://www.github.com/gamearki/platformercamera",
+                path = "?path=Assets/com.gamearki.platformercamera",
+                dependencies = new string[] { "FPEasing" },
+                assemblies = new string[] {"GameArki.PlatformerCamera"}
+            },
+
             // BufferIOExtra
             new SetupPackageModel {
                 title = "BufferIOExtra",
