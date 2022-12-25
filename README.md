@@ -16,3 +16,4 @@
 注: 是要装 Git 本体, 不是 SourceTree / Fork / SmartGit 等客户端  
 2. 确认 Github 上是否配置了 SSH Key  
 3. 确认是否能正常从 Github 拉取仓库, 有的运商商网络经常会访问失败  
+以上方式都不能解决时, 可联系客服(杰克有茶): chenwansal1@163.com
