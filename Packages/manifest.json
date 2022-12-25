@@ -46,9 +46,10 @@
     "com.gamearki.bufferio": "ssh://git@github.com/gamearki/bufferio.git?path=Assets/com.gamearki.bufferio#main",
     "com.gamearki.csharpgen": "ssh://git@github.com/gamearki/ArkiCSharpGen.git?path=Assets/com.gamearki.csharpgen#main",
     "com.gamearki.bufferioextra": "ssh://git@github.com/gamearki/bufferioextra.git?path=Assets/com.gamearki.bufferioextra#main",
-    "com.gamearki.tripodcamera": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#main",
+    "com.gamearki.tripodcamera": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#0.6.0",
     "com.gamearki.networkweaver.tcp": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.tcp#main",
     "com.gamearki.networkweaver.udp": "ssh://git@github.com/gamearki/networkweaver.git?path=Assets/com.gamearki.networkweaver.udp#main",
-    "com.gamearki.platformercamera": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#main"
+    "com.gamearki.crossio": "ssh://git@github.com/gamearki/crossio.git?path=Assets/com.gamearki.crossio#main",
+    "com.gamearki.platformercamera": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#0.2.1"
   }
 }

@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "6c1f85ad50be28b1cd401c23c2d985c2b617bf15"
     },
+    "com.gamearki.crossio": {
+      "version": "ssh://git@github.com/gamearki/crossio.git?path=Assets/com.gamearki.crossio#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f2380eac9ac520efe10771868439c6c1f8ccb7a5"
+    },
     "com.gamearki.csharpgen": {
       "version": "ssh://git@github.com/gamearki/ArkiCSharpGen.git?path=Assets/com.gamearki.csharpgen#main",
       "depth": 0,
@@ -85,11 +92,11 @@
       "hash": "82c99635f472732b155119e83da68fbb4ff4e84c"
     },
     "com.gamearki.platformercamera": {
-      "version": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#main",
+      "version": "ssh://git@github.com/gamearki/platformercamera.git?path=Assets/com.gamearki.platformercamera#0.2.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "78f5392deb10fadae8504139c87ce1145c4665f5"
+      "hash": "33c67217036f65941c35b8c6a44e76434dc202d0"
     },
     "com.gamearki.purebttree": {
       "version": "ssh://git@github.com/gamearki/PureBTTree.git?path=Assets/com.gamearki.purebttree#main",
@@ -99,7 +106,7 @@
       "hash": "de14f67fc750c665b759cd2f4916a457effdb462"
     },
     "com.gamearki.tripodcamera": {
-      "version": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#main",
+      "version": "ssh://git@github.com/gamearki/TripodCamera.git?path=Assets/com.gamearki.tripodcamera#0.6.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},

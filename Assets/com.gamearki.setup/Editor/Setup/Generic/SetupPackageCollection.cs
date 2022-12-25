@@ -121,6 +121,19 @@ namespace GameArki.Setup {
                 assemblies = new string[] {"GameArki.BufferIO"}
             },
 
+            // CrossIO
+            new SetupPackageModel {
+                title = "CrossIO",
+                name = "com.gamearki.crossio",
+                desc = "Unity 文件存取库(同样适用于手机端)",
+                versions = new string[] {"1.0.0", "1.1.0", "main"},
+                gitUrl = "ssh://git@github.com/gamearki/crossio.git",
+                docuUrl = "https://www.github.com/gamearki/crossio",
+                path = "?path=Assets/com.gamearki.crossio",
+                dependencies = new string[] { "BufferIO" },
+                assemblies = new string[] {"GameArki.CrossIO"}
+            },
+
             // CSharpGen
             new SetupPackageModel {
                 title = "ArkiCSharpGen",
@@ -138,7 +151,7 @@ namespace GameArki.Setup {
             new SetupPackageModel {
                 title = "TripodCamera",
                 name = "com.gamearki.tripodcamera",
-                desc = "三角架——指令式透视相机库",
+                desc = "三脚架 - 3D 相机库(指令式)",
                 versions = new string[] { "0.5.0", "0.6.0", "main" },
                 gitUrl = "ssh://git@github.com/gamearki/TripodCamera.git",
                 docuUrl = "https://www.github.com/gamearki/TripodCamera",
@@ -151,7 +164,7 @@ namespace GameArki.Setup {
             new SetupPackageModel {
                 title = "PlatformerCamera",
                 name = "com.gamearki.platformercamera",
-                desc = "三角架——指令式透视相机库",
+                desc = "2D 相机库(指令式)",
                 versions = new string[] { "0.2.1", "main" },
                 gitUrl = "ssh://git@github.com/gamearki/platformercamera.git",
                 docuUrl = "https://www.github.com/gamearki/platformercamera",
