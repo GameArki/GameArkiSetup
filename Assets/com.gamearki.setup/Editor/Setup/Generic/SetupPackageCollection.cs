@@ -1,6 +1,8 @@
-namespace GameArki.Setup {
+namespace GameArki.Setup
+{
 
-    public static class SetupPackageCollection {
+    public static class SetupPackageCollection
+    {
 
         public readonly static SetupPackageModel[] packages = new SetupPackageModel[] {
 
@@ -210,6 +212,19 @@ namespace GameArki.Setup {
                 path = "?path=Assets/com.gamearki.networkweaver.udp",
                 dependencies = new string[] { "BufferIO", "BufferIOExtra", "ArkiCSharpGen" },
                 assemblies = new string[] {"GameArki.NetworkWeaver.UDP" }
+            },
+
+            // FreeInput
+            new SetupPackageModel {
+                title = "FreeInput",
+                name = "com.gamearki.freeinput",
+                desc = "控制器库(键鼠/手柄/触屏)",
+                versions = new string[] { "0.0.1", "main" },
+                gitUrl = "ssh://git@github.com/gamearki/FreeInput.git",
+                docuUrl = "https://www.github.com/gamearki/FreeInput",
+                path = "?path=Assets/com.gamearki.freeinput",
+                dependencies = new string[] {  },
+                assemblies = new string[] {"GameArki.FreeInput" }
             },
 
         };

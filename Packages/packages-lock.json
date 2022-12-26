@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.gamearki.fpmath": {
+      "version": "ssh://git@github.com/gamearki/fpmath.git?path=Assets/com.gamearki.fpmath#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "494d3770b3b02fefc6780364aa5763d6a3b756f0"
+    },
+    "com.gamearki.freeinput": {
+      "version": "ssh://git@github.com/gamearki/FreeInput.git?path=Assets/com.gamearki.freeinput#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d4c8f309903647fc03a9788ff755da29337cb892"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.4",
       "depth": 1,
