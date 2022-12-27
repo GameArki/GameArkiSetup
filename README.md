@@ -35,7 +35,7 @@
 13. CrossIO: Unity 跨平台文件存取库
 14. PureBTTree: 指令式行为树库
 15. ArkiDataStructure: 游戏数据结构库
-16. (暂未包含)FreeInput: 控制器库(键鼠/手柄/触屏)
+16. FreeInput: 控制器库(键鼠/手柄/触屏)
 17. (暂未包含)GenGen: 随机生成库(噪声/迷宫/地形)
 18. (暂未包含)ArkiPathFinding: 寻路库
 19. (暂未包含)ArkiRP: 渲染管线库
