@@ -154,7 +154,7 @@ namespace GameArki.Setup {
                         GUILayout.Space(40);
                         bool hasClickInstall;
                         if (hasInstalled) {
-                            if (installedVersion != version) {
+                            if (installedVersion != version.version) {
                                 hasClickInstall = GUILayout.Button("更新", w_40);
                             } else {
                                 hasClickInstall = false;
@@ -166,9 +166,9 @@ namespace GameArki.Setup {
                             hasClickInstall = GUILayout.Button("安装", w_40);
                         }
                         if (hasClickInstall) {
-                            GUI_ClickInstall(manifest, allPkgs, pkg, version);
+                            GUI_ClickInstall(manifest, allPkgs, pkg, version.version);
                         }
-                        GUILayout.Label(version);
+                        GUILayout.Label(version.version + version.suffix);
                         GUILayout.EndHorizontal();
                     }
                 }
