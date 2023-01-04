@@ -22,6 +22,8 @@ namespace GameArki.Setup {
 
         ManifestEntity manifest;
 
+        SetupPackageCollection collection;
+
         PackageDrawer drawer;
 
         void OnEnable() {
@@ -36,6 +38,7 @@ namespace GameArki.Setup {
         void LoadManifest() {
 
             manifest = new ManifestEntity();
+            collection = new SetupPackageCollection();
             manifest.ReadFromManifest();
 
         }
@@ -43,7 +46,7 @@ namespace GameArki.Setup {
         Vector2 scrollPos;
         void OnGUI() {
 
-            var gamearkiPackages = SetupPackageCollection.packages;
+            var gamearkiPackages = collection.packages;
 
             using (new GUILayout.HorizontalScope()) {
                 GUILayout.FlexibleSpace();
