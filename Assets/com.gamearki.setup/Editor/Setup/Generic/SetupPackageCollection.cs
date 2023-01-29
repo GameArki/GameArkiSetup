@@ -249,6 +249,19 @@ namespace GameArki.Setup {
                     assemblies = new string[] {"GameArki.FreeInput" }
                 },
 
+                // FreeParam
+                new SetupPackageModel {
+                    title = "FreeParam",
+                    name = "com.gamearki.freeparam",
+                    desc = "用文本替代参数的库，便于调试时不断修改参数值的情况（而不用重新编译代码）。",
+                    versions = new (string, string)[] { ("1.0.0", ""), ("main", "") },
+                    gitUrl = $"ssh://git@{GetGitSrc()}/FreeParam.git",
+                    docuUrl = "https://www.github.com/gamearki/FreeParam",
+                    path = "?path=Assets/com.gamearki.freeparam",
+                    dependencies = new string[] {  },
+                    assemblies = new string[] {"GameArki.FreeParam" }
+                },
+
             };
         }
 
