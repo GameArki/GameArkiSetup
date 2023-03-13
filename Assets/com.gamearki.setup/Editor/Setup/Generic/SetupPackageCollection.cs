@@ -262,6 +262,19 @@ namespace GameArki.Setup {
                     assemblies = new string[] {"GameArki.FreeParam" }
                 },
 
+                // ExcelIO
+                new SetupPackageModel {
+                    title = "ExcelIO",
+                    name = "com.gamearki.excelio",
+                    desc = "Excel(.xlsm/.xlsx) 读表工具",
+                    versions = new (string, string)[] { ("main", "") },
+                    gitUrl = $"ssh://git@{GetGitSrc()}/ExcelIO.git",
+                    docuUrl = "https://www.github.com/gamearki/ExcelIO",
+                    path = "?path=Assets/com.gamearki.excelio",
+                    dependencies = new string[] {  },
+                    assemblies = new string[] {"GameArki.ExcelIO" }
+                },
+
             };
         }
 
