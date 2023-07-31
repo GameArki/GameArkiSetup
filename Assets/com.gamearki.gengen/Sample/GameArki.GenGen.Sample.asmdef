@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.GenGen.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1b05b5b12b08d944da7b3bcf2ce03f22"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
