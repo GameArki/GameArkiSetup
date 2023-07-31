@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.bufferio",
+  "version": "1.3.0",
+  "description": "二进制数据序列化函数",
+  "displayName": "GameArki.BufferIO",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
