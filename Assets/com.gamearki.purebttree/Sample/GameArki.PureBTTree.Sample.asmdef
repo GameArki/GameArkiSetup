@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.PureBTTree.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:26219bfd92bcbe4429b9be592ae27124"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

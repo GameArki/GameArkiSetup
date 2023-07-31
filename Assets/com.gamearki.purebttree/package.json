@@ -1,0 +1,24 @@
+{
+  "name": "com.gamearki.purebttree",
+  "version": "0.3.0",
+  "description": "行为树",
+  "displayName": "GameArki.PureBTTree",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {
+  },
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
