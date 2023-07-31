@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.fpeasing",
+  "version": "2.7.0",
+  "description": "缓动函数库",
+  "displayName": "GameArki.FPEasing",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
