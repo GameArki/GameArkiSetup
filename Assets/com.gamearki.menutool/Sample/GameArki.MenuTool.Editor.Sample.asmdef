@@ -1,8 +1,8 @@
 {
-    "name": "GameArki.MenuTool.ToolbarEditor.Sample",
+    "name": "GameArki.MenuTool.Editor.Sample",
     "rootNamespace": "",
     "references": [
-        "GUID:df7c47c9d043d9746a975ff1d56c2df3"
+        "GUID:c05f9324e431a34469a6f9dce64249ee"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

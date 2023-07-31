@@ -1,5 +1,5 @@
 {
-    "name": "GameArki.MenuTool.CSProjGenerator",
+    "name": "GameArki.MenuTool.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:8b845b123ab418448a8be2935fa804e0"
@@ -10,9 +10,7 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "UNITY_EDITOR"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }
