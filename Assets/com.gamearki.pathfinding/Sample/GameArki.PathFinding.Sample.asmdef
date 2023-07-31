@@ -1,0 +1,18 @@
+{
+    "name": "GameArki.PathFinding.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ff27796e641e4f54d833ab08c6590a6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
