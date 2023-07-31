@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c2a4e2e6b1adf4c86419af67938098, type: 3}
+  m_Name: so_anymotion_sample
+  m_EditorClassIdentifier: 
+  transitions:
+  - stateName: Idle
+    clip: {fileID: 7400002, guid: a45eb8c6718b3914da5ce8ba982c3019, type: 3}
+    fadeInSec: 0
+    isDefault: 1
+  - stateName: Run
+    clip: {fileID: 7400002, guid: 091b04faaf7de614886c6e27a9bf787b, type: 3}
+    fadeInSec: 0
+    isDefault: 0
+  - stateName: Jump
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 0
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0
+    isDefault: 0
+  - stateName: 1
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 2
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 3
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 4
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 5
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 6
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 7
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 8
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 9
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
+  - stateName: 10
+    clip: {fileID: 7400002, guid: e1e7657d1755ea44ab58f8c02f14e437, type: 3}
+    fadeInSec: 0.1
+    isDefault: 0
