@@ -1,0 +1,19 @@
+{
+    "name": "GameArki.AttrInspector.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:901bca7226512a04bb918d5fe752d06c",
+        "GUID:b877872ff20df9646a22a797a7229832"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
