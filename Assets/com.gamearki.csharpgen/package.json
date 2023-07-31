@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.csharpgen",
+  "version": "1.1.0",
+  "description": "基于 Roslyn 的元编程工具",
+  "displayName": "GameArki.CSharpGen",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
