@@ -1,0 +1,21 @@
+{
+    "name": "GameArki.NativeBytes.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:33b913cc6a967af42a63322d26c76f03",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
