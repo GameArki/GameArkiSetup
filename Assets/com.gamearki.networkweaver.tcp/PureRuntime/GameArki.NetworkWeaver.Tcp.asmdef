@@ -1,0 +1,18 @@
+{
+    "name": "GameArki.NetworkWeaver.Tcp",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e265d67c03feb3243bf7d85067f9df99",
+        "GUID:72e53efc3db839d40ab26cd2f7fe819d",
+        "GUID:6ba71ab539627b94393871bc8d303b48"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}
