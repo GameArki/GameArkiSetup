@@ -1,0 +1,19 @@
+{
+    "name": "GameArki.FPPhysics2D.Unity",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eced3e3e98ed97a418f0f2fc7c242f01",
+        "GUID:456740c386b308542be128e7c798eefb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

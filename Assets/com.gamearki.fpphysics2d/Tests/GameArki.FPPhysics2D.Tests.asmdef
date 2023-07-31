@@ -1,0 +1,25 @@
+{
+    "name": "GameArki.FPPhysics2D.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eced3e3e98ed97a418f0f2fc7c242f01",
+        "GUID:456740c386b308542be128e7c798eefb",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

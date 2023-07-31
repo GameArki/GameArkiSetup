@@ -1,0 +1,21 @@
+{
+    "name": "GameArki.FPPhysics2D.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eced3e3e98ed97a418f0f2fc7c242f01",
+        "GUID:87092ffe7c2e8a44f9d623bc79f1fe6e",
+        "GUID:456740c386b308542be128e7c798eefb",
+        "GUID:4f555960a24a1c2439d9501259657a20"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
