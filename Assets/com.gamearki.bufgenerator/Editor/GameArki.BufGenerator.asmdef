@@ -1,0 +1,21 @@
+{
+    "name": "GameArki.BufGenerator",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1c4f517fe4e2f1144a9af5434b1fe0e2",
+        "GUID:e265d67c03feb3243bf7d85067f9df99",
+        "GUID:6af6e63ee40efcf4c97b36488e5dc456",
+        "GUID:33b913cc6a967af42a63322d26c76f03"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

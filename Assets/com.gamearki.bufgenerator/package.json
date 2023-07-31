@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.bufferioextra",
+  "version": "1.3.1",
+  "description": "二进制数据序列化协议, 含自动生成接口",
+  "displayName": "GameArki.BufferIOExtra",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "GameArki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
