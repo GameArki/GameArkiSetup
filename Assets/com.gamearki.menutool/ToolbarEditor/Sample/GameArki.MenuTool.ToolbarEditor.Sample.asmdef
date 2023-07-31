@@ -1,0 +1,19 @@
+{
+    "name": "GameArki.MenuTool.ToolbarEditor.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:df7c47c9d043d9746a975ff1d56c2df3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR",
+        "GAMEARKI_DEV"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
