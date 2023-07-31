@@ -1,0 +1,20 @@
+{
+    "name": "com.gamearki.vfxcore",
+    "version": "0.1.0",
+    "description": "基于Unity，管理视觉特效的生命周期以及对象池.",
+    "displayName": "GameArki.VFXCore",
+    "unity": "2019.4",
+    "author": {
+      "name": "GameArki",
+      "url": "https://github.com/GameArki"
+    },
+    "changelogUrl": "",
+    "dependencies": {},
+    "documentationUrl": "",
+    "hideInEditor": false,
+    "keywords": [],
+    "license": "",
+    "licensesUrl": "",
+    "samples": [],
+    "unityRelease": "16f1"
+  }

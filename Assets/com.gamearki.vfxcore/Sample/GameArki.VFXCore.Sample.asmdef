@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.VFXCore.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a2ed15d7043552f479cfd49e45bf8a28"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
