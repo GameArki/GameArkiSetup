@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.tripodcamera",
+  "version": "0.9.10",
+  "description": "(指令式)透视相机库",
+  "displayName": "GameArki.TripodCamera",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}

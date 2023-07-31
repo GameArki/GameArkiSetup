@@ -1,0 +1,19 @@
+{
+    "name": "GameArki.TripodCamera.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2e87284201eb2dc4982b2c0bffc3b7c6",
+        "GUID:136ec279c0f8a004a80595fc7e2cd1a2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

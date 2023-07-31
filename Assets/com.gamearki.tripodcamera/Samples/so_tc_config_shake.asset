@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e811a2ee8772c4d4c989fa6501df5778, type: 3}
+  m_Name: so_tc_config_shake
+  m_EditorClassIdentifier: 
+  tm:
+    id: 0
+    needSet_Follow: 0
+    followTM:
+      followType: 0
+      normalFollowOffset: {x: 0, y: 0, z: 0}
+      easingType_horizontal: 0
+      easingType_vertical: 0
+      duration_horizontal: 0
+      duration_vertical: 0
+    needSet_LookAt: 0
+    lookAtTM:
+      easingType_horizontal: 0
+      duration_horizontal: 0
+      easingType_vertical: 0
+      duration_vertical: 0
+      normalLookAngles: {x: 0, y: 0, z: 0}
+      normalLookActivated: 0
+      lookAtTargetOffset: {x: 0, y: 0, z: 0}
+      maxLookDownDegree: 0
+      maxLookUpDegree: 0
+      composerTM:
+        composerType: 0
+        screenNormalizedX: 0
+        screenNormalizedY: 0
+        deadZoneNormalizedW: 0
+        deadZoneNormalizedH: 0
+        softZoneNormalizedW: 0
+        softZoneNormalizedH: 0
+        normalDamping: 0
+        normalLookAngles: {x: 0, y: 0, z: 0}
+        normalLookActivated: 0
+    needSet_DollyTrack: 0
+    dollyTrackStateTM:
+      trackType: 0
+      bezierSlineTMArray: []
+    isExitReset_DollyTrack: 0
+    exitEasing_DollyTrack: 0
+    exitDuration_DollyTrack: 0
+    needSet_Shake: 1
+    shakeStateTMArray:
+    - amplitudeOffset: {x: 0, y: 0, z: 0.5}
+      easingType: 1
+      frequency: 50
+      duration: 0.5
+    isExitReset_Shake: 0
+    exitEasing_Shake: 0
+    exitDuration_Shake: 0
+    needSet_Movement: 0
+    movementStateTMArray: []
+    isExitReset_Movement: 0
+    exitEasing_Movement: 0
+    exitDuration_Movement: 0
+    needSet_Round: 0
+    roundStateTMArray: []
+    isExitReset_Round: 0
+    exitEasing_Round: 0
+    exitDuration_Round: 0
+    needSet_Rotate: 0
+    rotateStateTMArray: []
+    isExitReset_Rotate: 0
+    exitEasing_Rotate: 0
+    exitDuration_Rotate: 0
+    needSet_Push: 0
+    pushStateTMArray: []
+    isExitReset_Push: 0
+    exitEasing_Push: 0
+    exitDuration_Push: 0
+    needSet_FOV: 0
+    fovStateTMArray: []
+    isExitReset_FOV: 0
+    exitEasing_FOV: 0
+    exitDuration_FOV: 0
