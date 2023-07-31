@@ -1,0 +1,17 @@
+{
+    "name": "GameArki.DataStructure.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5a86d76ccd32ed8488688a84734653fb",
+        "GUID:456740c386b308542be128e7c798eefb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

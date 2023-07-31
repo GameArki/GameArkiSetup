@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.datastructure.fp",
+  "version": "0.3.0",
+  "description": "(定点数版)数据结构库, 用于游戏开发",
+  "displayName": "GameArki.DataStructure.FP",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://www.github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
