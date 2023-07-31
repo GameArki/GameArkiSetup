@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.platformercamera",
+  "version": "0.4.1",
+  "description": "Unity 2D 相机库, 指令式调用, 没有自动 Tick.",
+  "displayName": "GameArki.PlatformerCamera",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "gamearki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}

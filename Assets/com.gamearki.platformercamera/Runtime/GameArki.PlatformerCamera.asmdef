@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.PlatformerCamera",
+    "rootNamespace": "",
+    "references": [
+        "GUID:136ec279c0f8a004a80595fc7e2cd1a2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
