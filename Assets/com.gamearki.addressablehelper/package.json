@@ -1,0 +1,19 @@
+{
+    "name": "com.gamearki.addressablehelper",
+    "version": "0.1.0",
+    "description": "Unity Addressable 小帮手",
+    "displayName": "GameArki.AddressableHelper",
+    "unity": "2019.4",
+    "author": {
+        "name": ""
+    },
+    "changelogUrl": "",
+    "dependencies": {},
+    "documentationUrl": "",
+    "hideInEditor": false,
+    "keywords": [],
+    "license": "",
+    "licensesUrl": "",
+    "samples": [],
+    "unityRelease": "16f1"
+}
