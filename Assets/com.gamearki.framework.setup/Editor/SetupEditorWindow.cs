@@ -137,6 +137,11 @@ namespace GameArki.Setup.Editors {
                 DirectoryInfo info = new DirectoryInfo(dir);
                 info.Attributes = FileAttributes.Normal & FileAttributes.Directory;
             }
+            string[] files = Directory.GetFiles(root, "*", SearchOption.AllDirectories);
+            foreach (var file in files) {
+                FileInfo info = new FileInfo(file);
+                info.Attributes = FileAttributes.Normal & FileAttributes.Archive;
+            }
         }
 
     }
