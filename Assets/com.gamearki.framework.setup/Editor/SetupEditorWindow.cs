@@ -113,9 +113,8 @@ namespace GameArki.Setup.Editors {
                             }
 
                             if (Directory.Exists(gitRoot)) {
-                                DirectoryInfo info = new DirectoryInfo(gitRoot);
-                                info.Attributes = FileAttributes.Normal & FileAttributes.Directory;
-                                info.Delete(true);
+                                FromReadOnlyDirToNormalDir(gitRoot);
+                                Directory.Delete(gitRoot, true);
                             }
                         } finally {
                             UnityEditor.EditorUtility.ClearProgressBar();
@@ -130,6 +129,14 @@ namespace GameArki.Setup.Editors {
 
             GUILayout.Space(5);
 
+        }
+
+        void FromReadOnlyDirToNormalDir(string root) {
+            string[] dirs = Directory.GetDirectories(root, "*", SearchOption.AllDirectories);
+            foreach (var dir in dirs) {
+                DirectoryInfo info = new DirectoryInfo(dir);
+                info.Attributes = FileAttributes.Normal & FileAttributes.Directory;
+            }
         }
 
     }
