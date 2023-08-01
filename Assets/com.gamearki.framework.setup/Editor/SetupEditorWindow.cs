@@ -93,7 +93,9 @@ namespace GameArki.Setup.Editors {
                             // Copy Src Dir To Dest Dir
                             string output = Path.Combine(Application.dataPath, outputDir, packageName, dir);
                             if (Directory.Exists(output)) {
-                                Directory.Delete(output, true);
+                                DirectoryInfo info = new DirectoryInfo(output);
+                                info.Attributes = FileAttributes.Normal & FileAttributes.Directory;
+                                info.Delete(true);
                             }
                             Directory.CreateDirectory(output);
 
@@ -111,7 +113,9 @@ namespace GameArki.Setup.Editors {
                             }
 
                             if (Directory.Exists(gitRoot)) {
-                                Directory.Delete(gitRoot, true);
+                                DirectoryInfo info = new DirectoryInfo(gitRoot);
+                                info.Attributes = FileAttributes.Normal & FileAttributes.Directory;
+                                info.Delete(true);
                             }
                         } finally {
                             UnityEditor.EditorUtility.ClearProgressBar();
