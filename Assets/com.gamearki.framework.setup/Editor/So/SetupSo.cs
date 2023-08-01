@@ -28,7 +28,7 @@ namespace GameArki.Setup.Editors {
 
         void Scan(SetupSo so) {
             // Scan `Environment.CurrentDirectory/Assets` + which are start with `com.gamearki`
-            var rootDir = Environment.CurrentDirectory;
+            var rootDir = Path.Combine(Environment.CurrentDirectory, "Assets");
             var dirs = Directory.GetDirectories(rootDir, "com.gamearki*", SearchOption.AllDirectories);
             so.all = new List<SetupModel>();
             for (int i = 0; i < dirs.Length; i++) {

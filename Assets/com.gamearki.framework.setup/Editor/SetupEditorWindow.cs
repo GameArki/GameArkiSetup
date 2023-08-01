@@ -1,4 +1,4 @@
-using System.Linq;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +22,8 @@ namespace GameArki.Setup.Editors {
 
         SetupSo so;
         Vector2 scrollPos;
+        string hostPrefix = "github.com/GameArki/";
+        string outputDir = "Plugins";
 
         void OnEnable() {
             so = AssetDatabase.LoadAssetAtPath<SetupSo>("Assets/com.gamearki.framework.setup/Editor/SetupResource/SetupSo.asset");
@@ -40,6 +42,18 @@ namespace GameArki.Setup.Editors {
             }
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Host Prefix: ", GUILayout.Width(80));
+            hostPrefix = GUILayout.TextField(hostPrefix, GUILayout.Width(200));
+            GUILayout.Label("Example: github.com/GameArki/", GUILayout.Width(200));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Output Dir: ", GUILayout.Width(80));
+            outputDir = GUILayout.TextField(outputDir, GUILayout.Width(200));
+            GUILayout.Label("Example: Plugins. It'll join Assets/", GUILayout.Width(200));
+            GUILayout.EndHorizontal();
 
             // One SetupModel
             for (int i = 0; i < so.all.Count; i += 1) {
@@ -61,25 +75,54 @@ namespace GameArki.Setup.Editors {
             // One SetupModel's dirs
             GUILayout.BeginHorizontal();
             GUILayout.Label("导入: ", GUILayout.Width(40));
-            for (int i = 0; i < model.dirs.Count; i += 1) {
-                var dir = model.dirs[i];
-                GUI_DrawOneDir(dir);
-            }
-            GUILayout.EndHorizontal();
+            try {
+                for (int i = 0; i < model.dirs.Count; i += 1) {
+                    var dir = model.dirs[i];
+                    string packageName = model.packageName;
+                    if (GUILayout.Button(dir, GUILayout.Width(100))) {
+                        try {
+                            string exe = "cmd";
+                            packageName = packageName.Replace("GameArki.", "");
+                            const string SETUP_GIT = "GameArkiSetup.git";
+                            string args = "git clone " + "ssh://git@" + hostPrefix + SETUP_GIT;
+                            UnityEditor.EditorUtility.DisplayProgressBar("Setup", exe + " " + args, 0.1f);
+                            SetupProcess.StartProcess(exe, args);
 
-            GUILayout.EndVertical();
+                            // Copy Src Dir To Dest Dir
+                            string output = Path.Combine(Application.dataPath, outputDir, packageName, dir);
+                            if (Directory.Exists(output)) {
+                                Directory.Delete(output, true);
+                            }
+                            Directory.CreateDirectory(output);
+
+                            string gitRoot = Path.Combine(Environment.CurrentDirectory, "GameArkiSetup");
+                            string src = Path.Combine(gitRoot, "Assets", model.rootDir, dir);
+                            UnityEditor.EditorUtility.DisplayProgressBar("Copy Files", src + " to " + output, 0.1f);
+                            string[] files = Directory.GetFiles(src, "*", SearchOption.AllDirectories);
+                            foreach (var file in files) {
+                                string dest = file.Replace(src, output);
+                                string dirName = Path.GetDirectoryName(dest);
+                                if (!Directory.Exists(dirName)) {
+                                    Directory.CreateDirectory(dirName);
+                                }
+                                File.Copy(file, dest);
+                            }
+
+                            if (Directory.Exists(gitRoot)) {
+                                Directory.Delete(gitRoot, true);
+                            }
+                        } finally {
+                            UnityEditor.EditorUtility.ClearProgressBar();
+                        }
+
+                    }
+                }
+            } finally {
+                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
+            }
 
             GUILayout.Space(5);
-
-        }
-
-        void GUI_DrawOneDir(string dir) {
-            // Align: Right
-
-            // One SetupModel's dir
-            if (GUILayout.Button(dir, GUILayout.Width(100))) {
-
-            }
 
         }
 
