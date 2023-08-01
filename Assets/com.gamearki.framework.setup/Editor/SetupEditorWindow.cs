@@ -59,10 +59,14 @@ namespace GameArki.Setup.Editors {
             GUILayout.Label("描述: " + model.desc);
 
             // One SetupModel's dirs
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("导入: ", GUILayout.Width(40));
             for (int i = 0; i < model.dirs.Count; i += 1) {
                 var dir = model.dirs[i];
                 GUI_DrawOneDir(dir);
             }
+            GUILayout.EndHorizontal();
+
             GUILayout.EndVertical();
 
             GUILayout.Space(5);
@@ -71,12 +75,12 @@ namespace GameArki.Setup.Editors {
 
         void GUI_DrawOneDir(string dir) {
             // Align: Right
-            GUILayout.BeginHorizontal();
 
             // One SetupModel's dir
-            GUILayout.Button(dir, GUILayout.Width(100));
+            if (GUILayout.Button(dir, GUILayout.Width(100))) {
 
-            GUILayout.EndHorizontal();
+            }
+
         }
 
     }
