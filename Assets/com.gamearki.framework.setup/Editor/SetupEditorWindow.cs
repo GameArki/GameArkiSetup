@@ -26,7 +26,7 @@ namespace GameArki.Setup.Editors {
         string outputDir = "Plugins";
 
         void OnEnable() {
-            so = AssetDatabase.LoadAssetAtPath<SetupSo>("Assets/com.gamearki.framework.setup/Editor/SetupResource/SetupSo.asset");
+            so = Resources.Load<SetupSo>("SetupSo");
             if (so == null) {
                 Debug.LogError("Can't find SetupSo.asset");
             }
@@ -42,6 +42,8 @@ namespace GameArki.Setup.Editors {
             }
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
+
+            GUILayout.Label("欢迎使用 GameArki(游戏基底)!", new GUIStyle() { fontSize = 24, normal = new GUIStyleState() { textColor = new Color32(63, 163, 209, 255) }, contentOffset = new Vector2(6, 0) });
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Host Prefix: ", GUILayout.Width(80));

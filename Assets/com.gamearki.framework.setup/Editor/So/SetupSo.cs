@@ -6,12 +6,10 @@ using UnityEditor;
 
 namespace GameArki.Setup.Editors {
 
-#if GAMEARKI_DEV
     [CreateAssetMenu(fileName = "SetupSo", menuName = "GameArki/SetupSo", order = 0)]
-#endif
     public class SetupSo : ScriptableObject {
 
-        public List<SetupModel> all;
+        [SerializeField] public List<SetupModel> all;
 
     }
 
@@ -63,6 +61,7 @@ namespace GameArki.Setup.Editors {
 
                 so.all.Add(setupModel);
             }
+            EditorUtility.SetDirty(so);
 
         }
 
