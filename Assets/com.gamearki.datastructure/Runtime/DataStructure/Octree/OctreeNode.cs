@@ -122,7 +122,7 @@ namespace GameArki.DataStructure {
         }
 
         bool IsIntersectOrContains(in Bounds3 other) {
-            return bounds.IsIntersect(other) || bounds.IsContains(other);
+            return bounds.IsIntersect(other);
         }
 
         bool AndNotZero(byte a, byte b) {

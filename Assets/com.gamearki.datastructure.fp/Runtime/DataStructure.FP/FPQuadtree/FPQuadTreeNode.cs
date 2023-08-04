@@ -116,7 +116,7 @@ namespace GameArki.FPDataStructure {
         }
 
         bool IsIntersectOrContains(in FPBounds2 other) {
-            return bounds.IsIntersect(other) || bounds.IsContains(other);
+            return bounds.IsIntersect(other);
         }
 
         bool AndNotZero(byte a, byte b) {

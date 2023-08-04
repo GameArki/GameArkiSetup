@@ -18,22 +18,13 @@ namespace GameArki.DataStructure {
         }
 
         public bool IsIntersectOrContains(in Bounds3 other) {
-            return IsIntersect(other) || IsContains(other);
+            return IsIntersect(other);
         }
 
         public bool IsIntersect(in Bounds3 other) {
             return this.min.x <= other.max.x && this.max.x >= other.min.x &&
                    this.min.y <= other.max.y && this.max.y >= other.min.y &&
                    this.min.z <= other.max.z && this.max.z >= other.min.z;
-        }
-
-        public bool IsContains(in Bounds3 other) {
-            return (this.min.x <= other.min.x && this.max.x >= other.max.x &&
-                    this.min.y <= other.min.y && this.max.y >= other.max.y &&
-                    this.min.z <= other.min.z && this.max.z >= other.max.z) ||
-                   (this.min.x >= other.min.x && this.max.x <= other.max.x &&
-                    this.min.y >= other.min.y && this.max.y <= other.max.y &&
-                    this.min.z >= other.min.z && this.max.z <= other.max.z);
         }
 
         public string ToFullString() {
