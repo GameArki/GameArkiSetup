@@ -5,12 +5,13 @@ using System.Runtime.InteropServices;
 using NUnit.Framework;
 
 /*
-    for: 22.2ms
-    foreach: 23.16ms
-    while: 25.47ms
-    goto: 31.21ms
+    U32Bytes write: 8ms
+    U32Bytes read: 12ms
+    bit operation write: 9ms
+    bit operation read: 8ms
     
-    for Win!
+    U32Bytes write Win!
+    bit operation read Win!
 */
 public class Race_BinaryFormat {
 
