@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: so_tc_config_2
   m_EditorClassIdentifier: 
   tm:
-    id: 100
+    id: 0
     needSet_Follow: 1
     followTM:
       followType: 2
@@ -25,11 +25,11 @@ MonoBehaviour:
     needSet_LookAt: 1
     lookAtTM:
       easingType_horizontal: 1
-      duration_horizontal: 0
+      duration_horizontal: 1
       easingType_vertical: 1
-      duration_vertical: 0
+      duration_vertical: 1
       normalLookAngles: {x: 20, y: 0, z: 0}
-      normalLookActivated: 1
+      normalLookActivated: 0
       lookAtTargetOffset: {x: 0, y: 0, z: 0}
       maxLookDownDegree: 30
       maxLookUpDegree: 30

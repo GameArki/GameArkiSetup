@@ -16,11 +16,11 @@ MonoBehaviour:
     id: 0
     needSet_Follow: 1
     followTM:
-      followType: 2
+      followType: 3
       normalFollowOffset: {x: 0, y: 2, z: -7}
       easingType_horizontal: 1
       easingType_vertical: 1
-      duration_horizontal: 0
+      duration_horizontal: 0.5
       duration_vertical: 0
     needSet_LookAt: 1
     lookAtTM:
@@ -45,7 +45,9 @@ MonoBehaviour:
         normalLookAngles: {x: 20, y: 0, z: 0}
         normalLookActivated: 1
     needSet_DollyTrack: 0
-    dollyTrackStateTMArray: []
+    dollyTrackStateTM:
+      trackType: 0
+      bezierSlineTMArray: []
     isExitReset_DollyTrack: 0
     exitEasing_DollyTrack: 0
     exitDuration_DollyTrack: 0

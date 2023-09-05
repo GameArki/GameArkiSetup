@@ -26,62 +26,80 @@ namespace GameArki.TripodCamera.Domain {
             hook.Tick();
         }
 
-        public void ApplyNormal(TCCameraEntity tcCam, float dt) {
+        public void _ApplyNormal(TCCameraEntity tcCam, float dt) {
 
             tcCam.CopyBeforeInfo2AfterInfo(); // Mutable ReadFrom Base
 
-            ApplyNormal_Follow(tcCam, dt);
-            ApplyMISC_MoveSpeedLimit(tcCam, dt);
-            ApplyNormal_LookAt(tcCam, dt);
-            ApplyNormal_LookAtComposer(tcCam, dt);
-            ApplyNormal_PhysicsRecoil(tcCam, dt);
-            ApplyMISC_LookLimit(tcCam, dt);
+            _ApplyNormal_Follow(tcCam, dt);
+            _ApplyMISC_MoveSpeedLimit(tcCam, dt);
+            _ApplyNormal_LookAt(tcCam, dt);
+            _ApplyNormal_LookAtComposer(tcCam, dt);
+            _ApplyNormal_PhysicsRecoil(tcCam, dt);
+            _ApplyMISC_LookLimit(tcCam, dt);
 
             tcCam.CopyAfterInfo2BeforeInfo(); // Mutable WriteTo Base
 
         }
 
         // ==== Normal ====
-        void ApplyNormal_Follow(TCCameraEntity tcCam, float dt) {
+        void _ApplyNormal_Follow(TCCameraEntity tcCam, float dt) {
             var afterInfo = tcCam.AfterInfo;
             var followCom = tcCam.FollowComponent;
 
             var dollyTrackStateComponent = tcCam.DollyTrackStateComponent;
             if (dollyTrackStateComponent.IsActivated) {
-                var dollyPos = dollyTrackStateComponent.GetDollyPos();
-                afterInfo.SetPosition(dollyPos);
-                followCom.Tick(dt);
+                afterInfo.SetPosition(dollyTrackStateComponent.GetDollyPos());
                 return;
             }
 
             var targeterModel = tcCam.TargetorModel;
-            if (!targeterModel.HasFollowTarget) {
+            if (!targeterModel.HasFollowTarget) return;
+
+            ref var followModel = ref followCom.model;
+            var followType = followModel.followType;
+            followCom.Tick(dt);
+
+            if (followType == TCFollowType.Normal) {
+                Vector3 camPos = followCom.GetCameraEasedPos();
+                afterInfo.SetPosition(camPos);
                 return;
             }
 
-            followCom.Tick(dt);
-
-            var followType = followCom.model.followType;
-            if (followType == TCFollowType.Normal) {
-                Vector3 camPos = followCom.GetCurrentCameraPos();
-                afterInfo.SetPosition(camPos);
-            } else if (followType == TCFollowType.RoundWhenLookAt) {
-                var camPos = followCom.GetCurrentCameraPos();
+            if (followType == TCFollowType.RoundWhenLookAt) {
+                var camPos = followCom.GetCameraEasedPos();
                 var lookAtCom = tcCam.LookAtComponent;
                 if (lookAtCom.CanLookAt()) {
-                    var curCamOffset = followCom.GetCurrentCameraOffset();
-                    var followTargetPos = targeterModel.FollowTargetPos;
-                    camPos = followTargetPos + afterInfo.Rotation * curCamOffset;
+                    camPos = followCom.GetTargetEasedPos() + afterInfo.Rotation * followModel.normalFollowOffset;
                 }
                 afterInfo.SetPosition(camPos);
+                return;
+            }
+
+            if (followType == TCFollowType.MachineArm) {
+                var followTargetPos = followCom.GetTargetEasedPos();
+                var camPos = afterInfo.Position;
+                var dir = followTargetPos - camPos;
+                dir.y = 0;
+                dir.Normalize();
+
+                var normalFollowOffset = followModel.normalFollowOffset;
+                var camOffset = Quaternion.LookRotation(dir) * normalFollowOffset;
+                afterInfo.SetPosition(followTargetPos + camOffset);
+
+                var newCamRot = Quaternion.LookRotation(-camOffset.normalized);
+                afterInfo.SetRotation(newCamRot);
+
+                Debug.DrawLine(camPos, camPos + newCamRot * Vector3.forward * 10, Color.red, 1f);
+                return;
             }
         }
 
-        void ApplyNormal_LookAt(TCCameraEntity tcCam, float dt) {
-            var lookAtCom = tcCam.LookAtComponent;
-            lookAtCom.Tick(dt);
-
+        void _ApplyNormal_LookAt(TCCameraEntity tcCam, float dt) {
             var afterInfo = tcCam.AfterInfo;
+
+            var lookAtCom = tcCam.LookAtComponent;
+            lookAtCom.Tick(afterInfo, dt);
+
             var composerModel = tcCam.LookAtComponent.model.composerModel;
             if (composerModel.composerType != TCLookAtComposerType.None
             && !tcCam.RoundStateComponent.IsActivated
@@ -89,10 +107,13 @@ namespace GameArki.TripodCamera.Domain {
                 return;
             }
 
+            var followCom = tcCam.FollowComponent;
+            var followType = followCom.model.followType;
             var targeterModel = tcCam.TargetorModel;
-            if (lookAtCom.CanLookAt()) {
+            if (followType != TCFollowType.MachineArm && lookAtCom.CanLookAt()) {
                 // - Look at target
-                Quaternion rot = Quaternion.LookRotation(lookAtCom.GetTargetEasedPos() - afterInfo.Position, Vector3.up);
+                var targetEasedPos = lookAtCom.GetTargetEasedPos();
+                var rot = Quaternion.LookRotation(targetEasedPos - afterInfo.Position);
                 afterInfo.SetRotation(rot);
             } else {
                 // - Look as normal angles
@@ -101,13 +122,16 @@ namespace GameArki.TripodCamera.Domain {
             }
         }
 
-        void ApplyNormal_LookAtComposer(TCCameraEntity tcCam, float dt) {
+        void _ApplyNormal_LookAtComposer(TCCameraEntity tcCam, float dt) {
             if (tcCam.RoundStateComponent.IsActivated) return;
             if (tcCam.MovementStateComponent.IsActivated) return;
 
             var composer = tcCam.LookAtComponent.model.composerModel;
             var composerType = composer.composerType;
             if (composerType == TCLookAtComposerType.None) return;
+
+            var followType = tcCam.FollowComponent.model.followType;
+            if (followType == TCFollowType.MachineArm) return;
 
             var targeterModel = tcCam.TargetorModel;
             var afterInfo = tcCam.AfterInfo;
@@ -136,20 +160,20 @@ namespace GameArki.TripodCamera.Domain {
                     return;
                 }
 
-                var lookAtCom = tcCam.LookAtComponent;
-                var lookAtTargetEasedPos = lookAtCom.GetTargetEasedPos();
+                var lookAtTargetPos = targeterModel.LookAtTargetPos;
                 var projectionMatrix = cameraDomain.GetProjectionMatrix(eyePos,
                                                                         fov,
                                                                         aspect,
                                                                         nearClipPlane,
                                                                         farClipPlane);
-                eyeRot = cameraDomain.LookAtComposer_OneTarget(lookAtTargetEasedPos,
+                eyeRot = cameraDomain.LookAtComposer_OneTarget(lookAtTargetPos,
                                                                eyePos,
                                                                eyeRot,
                                                                composer,
                                                                projectionMatrix,
                                                                screenWidth,
                                                                screenHeight);
+                // TODO : 设置为死区模型的DST Rotation, 在LookAtComponent进行Easing
                 afterInfo.SetRotation(eyeRot);
                 afterInfo.SetPosition(eyePos);
             }
@@ -180,14 +204,13 @@ namespace GameArki.TripodCamera.Domain {
                     normalRot = eyeRot * strideRot;
                 }
 
-                var lookAtCom = tcCam.LookAtComponent;
-                var lookAtTargetEasedPos = lookAtCom.GetTargetEasedPos();
+                var lookAtTargetPos = targeterModel.LookAtTargetPos;
                 var projectionMatrix = cameraDomain.GetProjectionMatrix(eyePos,
                                                                         fov,
                                                                         aspect,
                                                                         nearClipPlane,
                                                                         farClipPlane);
-                Vector3 screenPoint = cameraDomain.WorldToScreenPoint(lookAtTargetEasedPos,
+                Vector3 screenPoint = cameraDomain.WorldToScreenPoint(lookAtTargetPos,
                                                                       eyePos,
                                                                       normalRot,
                                                                       projectionMatrix,
@@ -203,7 +226,7 @@ namespace GameArki.TripodCamera.Domain {
             }
         }
 
-        void ApplyNormal_PhysicsRecoil(TCCameraEntity tcCam, float dt) {
+        void _ApplyNormal_PhysicsRecoil(TCCameraEntity tcCam, float dt) {
             var composerModel = tcCam.LookAtComponent.model.composerModel;
             if (composerModel.composerType == TCLookAtComposerType.None) {
                 return;
@@ -243,7 +266,7 @@ namespace GameArki.TripodCamera.Domain {
             }
         }
 
-        void ApplyMISC_LookLimit(TCCameraEntity tcCam, float dt) {
+        void _ApplyMISC_LookLimit(TCCameraEntity tcCam, float dt) {
             var miscCom = tcCam.MISCComponent;
             if (miscCom.lookLimitActivated) {
                 var maxLookDownDegree = miscCom.maxLookDownDegree;
@@ -269,7 +292,7 @@ namespace GameArki.TripodCamera.Domain {
             }
         }
 
-        void ApplyMISC_MoveSpeedLimit(TCCameraEntity tcCam, float dt) {
+        void _ApplyMISC_MoveSpeedLimit(TCCameraEntity tcCam, float dt) {
             if (tcCam.DollyTrackStateComponent.IsActivated) {
                 return;
             }

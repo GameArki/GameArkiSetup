@@ -32,7 +32,7 @@ namespace GameArki.TripodCamera.Controller {
             // - All cameras logic.
             var camRepo = context.CameraRepo;
             camRepo.ForeachAll((cam) => {
-                applyDomain.ApplyNormal(cam, dt);
+                applyDomain._ApplyNormal(cam, dt);
                 applyDomain.ApplyStateEffect(cam, dt);
             });
 
