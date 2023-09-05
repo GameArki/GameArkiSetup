@@ -27,7 +27,6 @@ namespace GameArki.TripodCamera.Entities {
             easingElement = new EasingElement();
         }
 
-
         public void SetEasing(EasingType easingType_horizontal, float duration_horizontal, EasingType easingType_vertical, float duration_vertical) {
             this.model.easingType_horizontal = easingType_horizontal;
             this.model.duration_horizontal = duration_horizontal;
@@ -36,9 +35,20 @@ namespace GameArki.TripodCamera.Entities {
             this.model.duration_vertical = duration_vertical;
         }
 
-        public void Tick(float dt) {
+        Vector3 lastFollowTargetPos;
+        public void Tick(TCInfoModel infoModel, float dt) {
             if (!targetorModel.HasLookAtTarget) {
                 return;
+            }
+
+            var dstTargetPos = targetorModel.LookAtTargetPos;
+            var curFollowTargetPos = targetorModel.FollowTargetPos;
+            if (lastFollowTargetPos != curFollowTargetPos) {
+                lastFollowTargetPos = curFollowTargetPos;
+                var curCamPos = infoModel.Position;
+                var dis = Vector3.Distance(curCamPos, dstTargetPos);
+                var newStartTargetPos = infoModel.Position + infoModel.Rotation * Vector3.forward * dis;
+                easingElement.Reset(newStartTargetPos);
             }
 
             easingElement.TickEasing(dt,
@@ -46,7 +56,7 @@ namespace GameArki.TripodCamera.Entities {
                                      model.duration_horizontal,
                                      model.easingType_vertical,
                                      model.duration_vertical,
-                                     targetorModel.LookAtTargetPos);
+                                     dstTargetPos);
         }
 
         [System.Obsolete]

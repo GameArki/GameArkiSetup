@@ -13,10 +13,10 @@ namespace GameArki.TripodCamera.Entities {
         public Vector3 roundOffset;
         public Vector3 physicsRecoilOffset;
         public Vector3 faceLookOffset;
-        EasingElement easingElement;
+        EasingElement followTargetPosEasingElement;
 
         public TCCameraFollowComponent() {
-            easingElement = new EasingElement();
+            followTargetPosEasingElement = new EasingElement();
         }
 
         public void SetEasing(EasingType easingType_horizontal, float duration_horizontal, EasingType easingType_vertical, float duration_vertical) {
@@ -32,18 +32,18 @@ namespace GameArki.TripodCamera.Entities {
                 return;
             }
 
-            easingElement.TickEasing(dt,
+            followTargetPosEasingElement.TickEasing(dt,
                                      model.easingType_horizontal,
                                      model.duration_horizontal,
                                      model.easingType_vertical,
                                      model.duration_vertical,
-                                     GetCameraDstPos());
+                                     _GetTargetDstPos());
 
         }
 
         public void ResetOffset() {
             if (targetorModel.HasFollowTarget) {
-                easingElement.Reset(targetorModel.FollowTargetPos);
+                followTargetPosEasingElement.Reset(targetorModel.FollowTargetPos);
             }
             roundOffset = Vector3.zero;
             faceLookOffset = Vector3.zero;
@@ -73,16 +73,16 @@ namespace GameArki.TripodCamera.Entities {
             this.model.duration_vertical = duration;
         }
 
-        public Vector3 GetCurrentCameraPos() {
-            return easingElement.EaseValue;
+        public Vector3 GetCameraEasedPos() {
+            return followTargetPosEasingElement.EaseValue + model.normalFollowOffset + faceLookOffset + physicsRecoilOffset;
         }
 
-        public Vector3 GetCurrentCameraOffset() {
-            return easingElement.EaseValue - targetorModel.FollowTargetPos;
+        public Vector3 GetTargetEasedPos() {
+            return followTargetPosEasingElement.EaseValue;
         }
 
-        Vector3 GetCameraDstPos() {
-            return targetorModel.FollowTargetPos + model.normalFollowOffset + faceLookOffset + physicsRecoilOffset;
+        Vector3 _GetTargetDstPos() {
+            return targetorModel.FollowTargetPos;
         }
 
     }

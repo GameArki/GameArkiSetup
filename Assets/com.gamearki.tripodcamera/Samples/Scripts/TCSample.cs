@@ -230,28 +230,6 @@ namespace GameArki.TripodCamera.Sample {
 
             var setter = tcCore.SetterAPI;
 
-            // GUILayout.Space(MENU_PADDING_TOP);
-
-            // GUILayout.Label($"跟随类型: {followType}");
-            // followType = (TCFollowType)GUILayout.SelectionGrid((int)followType, new string[] { TCFollowType.None.ToString(), TCFollowType.Normal.ToString(), TCFollowType.RoundWhenLookAt.ToString() }, 3);
-            // setter.Follow_SetFollowType(followType);
-
-            // GUILayout.Label($"跟随过渡时间_水平方向:{follow_duration_horizontal.ToString("F2")}");
-            // follow_duration_horizontal = GUILayout.HorizontalSlider(follow_duration_horizontal, 0, 2, GUILayout.Width(100));
-
-            // GUILayout.Label($"跟随过渡时间_垂直方向:{follow_duration_vertical.ToString("F2")}");
-            // follow_duration_vertical = GUILayout.HorizontalSlider(follow_duration_vertical, 0, 2, GUILayout.Width(100));
-
-            // GUILayout.Label($"跟随偏移量: {followOffset}");
-            // followOffset.x = float.Parse(GUILayout.TextField(followOffset.x.ToString()));
-            // followOffset.y = float.Parse(GUILayout.TextField(followOffset.y.ToString()));
-            // followOffset.z = float.Parse(GUILayout.TextField(followOffset.z.ToString()));
-            // followOffset = followOffset == Vector3.zero ? new Vector3(0, 2.5f, -6f) : followOffset;
-
-            // GUILayout.Label($"过渡至正常跟随的阻尼: {follow_blendToNormalDamping.ToString("F2")}");
-            // follow_blendToNormalDamping = GUILayout.HorizontalSlider(follow_blendToNormalDamping, 0, 3, GUILayout.Width(100));
-            // follow_blendToNormalDamping = follow_blendToNormalDamping == 0 ? 2f : follow_blendToNormalDamping;
-
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("跟随 默认跟随目标")) {
                 followTarget = GameObject.Find("默认跟随目标");
