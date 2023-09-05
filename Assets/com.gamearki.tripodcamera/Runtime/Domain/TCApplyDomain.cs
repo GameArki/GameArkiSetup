@@ -88,8 +88,6 @@ namespace GameArki.TripodCamera.Domain {
 
                 var newCamRot = Quaternion.LookRotation(-camOffset.normalized);
                 afterInfo.SetRotation(newCamRot);
-
-                Debug.DrawLine(camPos, camPos + newCamRot * Vector3.forward * 10, Color.red, 1f);
                 return;
             }
         }

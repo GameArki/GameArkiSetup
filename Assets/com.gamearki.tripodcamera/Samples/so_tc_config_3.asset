@@ -20,7 +20,7 @@ MonoBehaviour:
       normalFollowOffset: {x: 0, y: 2, z: -7}
       easingType_horizontal: 1
       easingType_vertical: 1
-      duration_horizontal: 0.5
+      duration_horizontal: 0
       duration_vertical: 0
     needSet_LookAt: 1
     lookAtTM:
