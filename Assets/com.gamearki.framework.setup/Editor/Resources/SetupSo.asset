@@ -183,7 +183,7 @@ MonoBehaviour:
     - Runtime
     - Samples
     packageName: GameArki.TripodCamera
-    version: 0.10.1
+    version: 0.10.2
     desc: "(\u6307\u4EE4\u5F0F)\u900F\u89C6\u76F8\u673A\u5E93"
   - rootDir: com.gamearki.unityrace
     dirs:
