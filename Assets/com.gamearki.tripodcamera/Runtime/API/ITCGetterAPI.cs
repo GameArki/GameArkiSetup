@@ -5,18 +5,24 @@ using GameArki.TripodCamera.Hook;
 namespace GameArki.TripodCamera.API {
 
     public interface ITCGetterAPI {
-        
-        bool HasFollowTarget();
-        Transform GetFollowTransform(int id);
 
-        bool HasLookAtTarget();
-        TCLookAtComposerType GetLookAtComposerType();
-        Vector2 GetLookAtDeadZoneLT_LookAt();
-        Vector2 GetLookAtDeadZoneRB_LookAt();
-        Transform GetLookAtTransform(int id);
+        // ======== Follow ========
+        bool Follow_HasTarget(int id);
+        Transform Follow_GetTransform(int id);
+        Vector3 Follow_GetNormalOffset(int id);
 
-        bool IsDollyTrackActivated();
+        // ======== LookAt ========
+        bool LookAt_HasTarget();
+        TCLookAtComposerType LookAt_GetComposerType();
+        Vector2 LookAt_GetDeadZoneLT();
+        Vector2 LookAt_GetDeadZoneRB();
+        Transform LookAt_GetTransform(int id);
+        Vector3 LookAt_GetNormalAngle(int id);
 
+        // ======== Dolly ========
+        bool DollyTrack_IsActivated();
+
+        // ======== Common ========
         Quaternion FromToScreenPoint(in Vector3 fromScreenPoint,
                                      in Vector3 toScreenPoint,
                                      in Matrix4x4 projectionMatrix,

@@ -1,4 +1,3 @@
-using UnityEngine;
 using GameArki.TripodCamera.Entities;
 
 namespace GameArki.TripodCamera.Template {
@@ -154,8 +153,8 @@ namespace GameArki.TripodCamera.Template {
             model.easingType_vertical = tm.easingType_vertical;
             model.duration_horizontal = tm.duration_horizontal;
             model.duration_vertical = tm.duration_vertical;
-            model.normalLookAngles = tm.normalLookAngles;
             model.normalLookActivated = tm.normalLookActivated;
+            model.normalLookAngles = tm.normalLookAngles;
             model.lookAtTargetOffset = tm.lookAtTargetOffset;
 
             model.maxLookDownDegree = tm.maxLookDownDegree;

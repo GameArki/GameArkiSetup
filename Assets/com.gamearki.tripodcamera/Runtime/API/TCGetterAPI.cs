@@ -18,22 +18,22 @@ namespace GameArki.TripodCamera.API {
             this.domain = domain;
         }
 
-        bool ITCGetterAPI.HasFollowTarget() {
-            var curCam = context.CameraRepo.CurrentTCCam;
-            if (curCam == null) {
-                return false;
-            }
-
-            var targeterModel = curCam.TargetorModel;
-            return targeterModel.HasFollowTarget;
-        }
-
-        Transform ITCGetterAPI.GetFollowTransform(int id) {
+        bool ITCGetterAPI.Follow_HasTarget(int id) {
             var camDomain = domain.CameraDomain;
-            return camDomain.GetFollowTransform(id);
+            return camDomain.Follow_HasTarget(id);
         }
 
-        bool ITCGetterAPI.HasLookAtTarget() {
+        Transform ITCGetterAPI.Follow_GetTransform(int id) {
+            var camDomain = domain.CameraDomain;
+            return camDomain.Follow_GetTransform(id);
+        }
+
+        Vector3 ITCGetterAPI.Follow_GetNormalOffset(int id) {
+            var camDomain = domain.CameraDomain;
+            return camDomain.Follow_GetNormalOffset(id);
+        }
+
+        bool ITCGetterAPI.LookAt_HasTarget() {
             var curCam = context.CameraRepo.CurrentTCCam;
             if (curCam == null) {
                 return false;
@@ -43,7 +43,7 @@ namespace GameArki.TripodCamera.API {
             return targeterModel.HasLookAtTarget;
         }
 
-        Vector2 ITCGetterAPI.GetLookAtDeadZoneRB_LookAt() {
+        Vector2 ITCGetterAPI.LookAt_GetDeadZoneRB() {
             var tcCam = context.CameraRepo.CurrentTCCam;
             if (tcCam == null) {
                 return Vector2.zero;
@@ -56,12 +56,17 @@ namespace GameArki.TripodCamera.API {
             return composerModel.GetDeadZoneRB(screenWidth, screenHeight);
         }
 
-        Transform ITCGetterAPI.GetLookAtTransform(int id) {
+        Transform ITCGetterAPI.LookAt_GetTransform(int id) {
             var camDomain = domain.CameraDomain;
-            return camDomain.GetLookAtTransform(id);
+            return camDomain.LookAt_GetTransform(id);
         }
 
-        bool ITCGetterAPI.IsDollyTrackActivated() {
+        Vector3 ITCGetterAPI.LookAt_GetNormalAngle(int id){
+            var camDomain = domain.CameraDomain;
+            return camDomain.LookAt_GetNormalAngle(id);
+        }
+
+        bool ITCGetterAPI.DollyTrack_IsActivated() {
             var curCam = context.CameraRepo.CurrentTCCam;
             if (curCam == null) {
                 return false;
@@ -121,12 +126,12 @@ namespace GameArki.TripodCamera.API {
             return camDomain.GetProjectionMatrix(cameraPosition, fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
         }
 
-        TCLookAtComposerType ITCGetterAPI.GetLookAtComposerType() {
+        TCLookAtComposerType ITCGetterAPI.LookAt_GetComposerType() {
             var activeCam = context.CameraRepo.CurrentTCCam;
             return activeCam == null ? TCLookAtComposerType.None : activeCam.LookAtComponent.model.composerModel.composerType;
         }
 
-        Vector2 ITCGetterAPI.GetLookAtDeadZoneLT_LookAt() {
+        Vector2 ITCGetterAPI.LookAt_GetDeadZoneLT() {
             var tcCam = context.CameraRepo.CurrentTCCam;
             if (tcCam == null) {
                 return Vector2.zero;

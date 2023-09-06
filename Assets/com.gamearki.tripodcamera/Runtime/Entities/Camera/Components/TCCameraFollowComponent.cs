@@ -50,17 +50,13 @@ namespace GameArki.TripodCamera.Entities {
             physicsRecoilOffset = Vector3.zero;
         }
 
-        public void AddNormalFollowOffset(Vector3 offset) {
-            if (targetorModel.HasFollowTarget) {
-                model.normalFollowOffset += offset;
-            }
+        public void SetNormalFollowOffset(Vector3 offset) {
+            if (offset == Vector3.zero) offset.z = -0.01f;
+            this.model.normalFollowOffset = offset;
         }
 
-        public void SetNormalFollowOffset(Vector3 offset) {
-            if (offset == Vector3.zero) {
-                offset.z = -0.01f;
-            }
-            this.model.normalFollowOffset = offset;
+        public Vector3 GetNormalOffset() {
+            return this.model.normalFollowOffset;
         }
 
         public void ChangeXEasing(EasingType easingType, float duration) {

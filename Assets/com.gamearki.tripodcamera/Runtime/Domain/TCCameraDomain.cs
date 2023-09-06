@@ -83,23 +83,8 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         // ==== Basic ====
-        internal TCCameraHook SpawnHook(int id) {
-            var repo = context.CameraRepo;
-            bool has = repo.TryGet(id, out var cam);
-            if (has) {
-                var go = new GameObject($"tc_hook_{id}");
-                var hook = go.AddComponent<TCCameraHook>();
-                hook.Ctor(cam);
-                context.HookRepo.Add(hook);
-                return hook;
-            } else {
-                return null;
-            }
-        }
-
         public void Rotate_Horizontal(float degree, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             var curInfoCom = tcCam.BeforeInfo;
             var euler = curInfoCom.Rotation.eulerAngles;
             euler.y += degree;
@@ -108,8 +93,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Rotate_Vertical(float degree, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
-
             var curInfoCom = tcCam.BeforeInfo;
             var euler = curInfoCom.Rotation.eulerAngles;
             euler.x += degree;
@@ -118,8 +101,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Rotate_Roll(float degree, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
-
             var curInfoCom = tcCam.BeforeInfo;
             var euler = curInfoCom.Rotation.eulerAngles;
             euler.z += degree;
@@ -128,7 +109,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Zoom_In(float addition, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             var infoCom = tcCam.BeforeInfo;
             infoCom.SetFOVByClamp(addition);
         }
@@ -148,7 +128,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Follow_SetEasing(EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             tcCam.Follow_SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
@@ -160,23 +139,29 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Follow_ChangeOffset(Vector3 offset, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             tcCam.Follow_ChangeOffset(offset);
         }
 
         public void Follow_SetFollowType(TCFollowType followType, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             var followCom = tcCam.FollowComponent;
             followCom.model.followType = followType;
         }
 
-        public Transform GetFollowTransform(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) {
-                return null;
-            }
+        public bool Follow_HasTarget(int id)  {
+            if (!_TryGetTCCameraByID(id, out var tcCam)) return false;
+            var targeterModel = tcCam.TargetorModel;
+            return targeterModel.HasFollowTarget;
+        }
 
+        public Transform Follow_GetTransform(int id) {
+            if (!_TryGetTCCameraByID(id, out var tcCam)) return null;
             return tcCam.TargetorModel.FollowTarget;
+        }
+
+        public Vector3 Follow_GetNormalOffset(int id) {
+            if (!_TryGetTCCameraByID(id, out var tcCam)) return Vector3.zero;
+            return tcCam.FollowComponent.GetNormalOffset();
         }
 
         //- LookAt
@@ -185,20 +170,6 @@ namespace GameArki.TripodCamera.Domain {
 
             var lookAtComponent = tcCam.LookAtComponent;
             lookAtComponent.SetLookAtEnable(flag);
-
-            // if (flag == false) {
-            //     var composer = lookAtComponent.model.composerModel;
-            //     var composerType = composer.composerType;
-            //     if (composerType == TCLookAtComposerType.LookAtTarget) {
-            //         composer.composerType = TCLookAtComposerType.None;
-            //     }
-
-            //     var followCom = tcCam.FollowComponent;
-            //     followCom.ResetOffset();
-
-            //     var beforeInfo = tcCam.BeforeInfo;
-            //     beforeInfo.SetRotation(Quaternion.identity);
-            // }
         }
 
         public void LookAt_SetInit(Transform target,
@@ -270,12 +241,20 @@ namespace GameArki.TripodCamera.Domain {
             lookAtComponent.SetComposerNormalDamping(damping);
         }
 
-        public Transform GetLookAtTransform(int id) {
+        public Transform LookAt_GetTransform(int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) {
                 return null;
             }
 
             return tcCam.TargetorModel.LookAtTarget;
+        }
+
+        public Vector3 LookAt_GetNormalAngle(int id) {
+            if (!_TryGetTCCameraByID(id, out var tcCam)) {
+                return Vector3.zero;
+            }
+
+            return tcCam.LookAtComponent.model.normalLookAngles;
         }
 
         // ==== State ====
@@ -303,21 +282,18 @@ namespace GameArki.TripodCamera.Domain {
         //- Rotation
         public void Enter_Rotation(TCRotateStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             tcCam.RotateStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Push
         public void Enter_Push(TCPushStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             tcCam.PushStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- FOV
         public void Enter_FOV(TCFOVStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             tcCam.FOVStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
@@ -325,7 +301,6 @@ namespace GameArki.TripodCamera.Domain {
         public void SetAutoFacing(EasingType easingType, float duration, float minAngleDiff, float sameForwardBreakTime, int id) {
             var repo = context.CameraRepo;
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             var targeterModel = tcCam.TargetorModel;
             var autoFacingStateComponent = tcCam.AutoFacingStateComponent;
             var camTF = context.MainCamera.transform;
@@ -341,7 +316,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void SetLookAtComposer(TCLookAtComposerModel composer, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
             composer.deadZoneNormalizedW = composer.deadZoneNormalizedW < 0 ? 0 : composer.deadZoneNormalizedW;
             composer.deadZoneNormalizedH = composer.deadZoneNormalizedH < 0 ? 0 : composer.deadZoneNormalizedH;
             composer.softZoneNormalizedW = composer.softZoneNormalizedW < 0 ? 0 : composer.softZoneNormalizedW;
@@ -351,8 +325,6 @@ namespace GameArki.TripodCamera.Domain {
 
         public void SetLookAtComposerType(TCLookAtComposerType composerType, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
-
             var targeterModel = tcCam.TargetorModel;
             if (composerType == TCLookAtComposerType.LookAtTarget && !targeterModel.HasLookAtTarget) {
                 Debug.LogWarning("SetLookAtComposerType: LookAtTarget but no lookAtTarget");

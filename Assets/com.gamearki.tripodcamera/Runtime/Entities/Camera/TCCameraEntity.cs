@@ -199,7 +199,6 @@ namespace GameArki.TripodCamera.Entities {
                                    float verticalEasingTime) {
             targetorModel.SetLookAtTarget(target);
             lookAtComponent.model.lookAtTargetOffset = lookAtTargetOffset;
-            lookAtComponent.SetLookAtEnable(true);
             lookAtComponent.SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 

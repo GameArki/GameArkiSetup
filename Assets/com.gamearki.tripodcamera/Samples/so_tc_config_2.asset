@@ -16,7 +16,7 @@ MonoBehaviour:
     id: 0
     needSet_Follow: 1
     followTM:
-      followType: 2
+      followType: 3
       normalFollowOffset: {x: 0, y: 3, z: -6}
       easingType_horizontal: 1
       easingType_vertical: 1

@@ -384,7 +384,7 @@ namespace GameArki.TripodCamera.Sample {
                     softZoneNormalizedH = 0,
                 }, -1);
             } else {
-                composerType = getter.GetLookAtComposerType();
+                composerType = getter.LookAt_GetComposerType();
             }
 
             if (GUILayout.Button(isDrawingDeadZone ? "绘制 相机死区 中......" : "绘制  相机死区 ", GUILayout.Width(150), GUILayout.Height(30))) {

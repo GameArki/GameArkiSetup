@@ -111,8 +111,7 @@ namespace GameArki.TripodCamera.Domain {
                 var targetEasedPos = lookAtCom.GetTargetEasedPos();
                 var rot = Quaternion.LookRotation(targetEasedPos - afterInfo.Position);
                 afterInfo.SetRotation(rot);
-            } else {
-                // - Look as normal angles
+            } else if (lookAtCom.model.normalLookActivated) {
                 Quaternion camRot = Quaternion.Euler(lookAtCom.model.normalLookAngles);
                 afterInfo.SetRotation(camRot);
             }
