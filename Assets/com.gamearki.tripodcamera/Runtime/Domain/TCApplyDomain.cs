@@ -264,9 +264,9 @@ namespace GameArki.TripodCamera.Domain {
 
         void _ApplyMISC_LookLimit(TCCameraEntity tcCam, float dt) {
             var miscCom = tcCam.MISCComponent;
-            if (miscCom.lookLimitActivated) {
-                var maxLookDownDegree = miscCom.maxLookDownDegree;
-                var maxLookUpDegree = miscCom.maxLookUpDegree;
+            if (miscCom.model.lookLimitActivated) {
+                var maxLookDownDegree = miscCom.model.maxLookDownDegree;
+                var maxLookUpDegree = miscCom.model.maxLookUpDegree;
                 var afterInfo = tcCam.AfterInfo;
                 var returnRot = afterInfo.Rotation;
                 if (maxLookDownDegree != 0) {
@@ -294,12 +294,12 @@ namespace GameArki.TripodCamera.Domain {
             }
 
             var miscCom = tcCam.MISCComponent;
-            if (miscCom.moveSpeedLimitActivated) {
+            if (miscCom.model.moveSpeedLimitActivated) {
                 var beforeInfo = tcCam.BeforeInfo;
                 var afterInfo = tcCam.AfterInfo;
                 var posOffset = afterInfo.Position - beforeInfo.Position;
                 var curMoveSpeed = posOffset.magnitude / dt;
-                var maxMoveSpeed = miscCom.maxMoveSpeed;
+                var maxMoveSpeed = miscCom.model.maxMoveSpeed;
 
                 if (curMoveSpeed > maxMoveSpeed) {
                     var newOffset = posOffset.normalized * maxMoveSpeed * dt;
@@ -433,6 +433,8 @@ namespace GameArki.TripodCamera.Domain {
 
             if (tm.needSet_LookAt) tcCam.LookAtComponent.model = TCTM2RuntimeUtil.ToTCLookAtModel(tm.lookAtTM);
 
+            if (tm.needSet_Misc) tcCam.MISCComponent.model = TCTM2RuntimeUtil.ToTCMiscModel(tm.miscTM);
+          
             if (tm.needSet_Movement) tcCam.MovementStateComponent.Enter(TCTM2RuntimeUtil.ToTCMovementStateModelArray(tm.movementStateTMArray), tm.isExitReset_Movement, tm.exitEasing_Movement, tm.exitDuration_Movement);
 
             if (tm.needSet_Round) tcCam.RoundStateComponent.Enter(TCTM2RuntimeUtil.ToTCRoundStateModelArray(tm.roundStateTMArray), tm.isExitReset_Round, tm.exitEasing_Round, tm.exitDuration_Round);

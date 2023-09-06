@@ -58,6 +58,9 @@ namespace GameArki.TripodCamera.Template {
         public EasingType exitEasing_FOV;
         public float exitDuration_FOV;
 
+        public bool needSet_Misc;
+        public TCMiscTM miscTM;
+
     }
 
 }

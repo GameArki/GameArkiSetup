@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 using GameArki.FPEasing;
 
 namespace GameArki.TripodCamera.Entities {
 
-    [Serializable]
     public struct TCLookAtModel {
 
         public EasingType easingType_horizontal;

@@ -163,6 +163,16 @@ namespace GameArki.TripodCamera.Template {
             return model;
         }
 
+        public static TCMiscModel ToTCMiscModel(in TCMiscTM tm) {
+            TCMiscModel model;
+            model.maxLookUpDegree = tm.maxLookUpDegree;
+            model.maxLookDownDegree = tm.maxLookDownDegree;
+            model.lookLimitActivated = tm.lookLimitActivated;
+            model.maxMoveSpeed = tm.maxMoveSpeed;
+            model.moveSpeedLimitActivated = tm.moveSpeedLimitActivated;
+            return model;
+        }
+
         public static TCLookAtComposerModel ToTCLookAtComposerModel(in TCLookAtComposerTM tm) {
             TCLookAtComposerModel model;
             model.composerType = tm.composerType;
@@ -204,7 +214,6 @@ namespace GameArki.TripodCamera.Template {
             model.isInherit = tm.isInherit;
             return model;
         }
-
 
     }
 

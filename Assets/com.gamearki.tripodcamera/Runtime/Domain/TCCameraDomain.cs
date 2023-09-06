@@ -750,7 +750,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tcCam == null) return;
 
             var miscCom = tcCam.MISCComponent;
-            miscCom.maxLookDownDegree = degree;
+            miscCom.model.maxLookDownDegree = degree;
         }
 
         public void MISC_SetMaxLookUpDegree(float degree, int id) {
@@ -758,7 +758,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tcCam == null) return;
 
             var miscCom = tcCam.MISCComponent;
-            miscCom.maxLookUpDegree = degree;
+            miscCom.model.maxLookUpDegree = degree;
         }
 
         public void MISC_SetLookLimitActivated(bool activated, int id) {
@@ -766,7 +766,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tcCam == null) return;
 
             var miscCom = tcCam.MISCComponent;
-            miscCom.lookLimitActivated = activated;
+            miscCom.model.lookLimitActivated = activated;
         }
 
         public void MISC_SetMoveSpeedLimitActivated(bool activated, int id) {
@@ -774,7 +774,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tcCam == null) return;
 
             var miscCom = tcCam.MISCComponent;
-            miscCom.moveSpeedLimitActivated = activated;
+            miscCom.model.moveSpeedLimitActivated = activated;
         }
 
         public void MISC_SetMaxMoveSpeed(float speed, int id) {
@@ -782,7 +782,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tcCam == null) return;
 
             var miscCom = tcCam.MISCComponent;
-            miscCom.maxMoveSpeed = speed;
+            miscCom.model.maxMoveSpeed = speed;
         }
 
         public TCCameraEntity GetTCCamera(int id) {
