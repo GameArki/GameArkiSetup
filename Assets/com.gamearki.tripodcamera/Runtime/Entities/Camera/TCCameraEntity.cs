@@ -13,6 +13,9 @@ namespace GameArki.TripodCamera.Entities {
         public bool Activated => activated;
         public void SetActivated(bool value) => activated = value;
 
+        public void SetPosition(in Vector3 pos) => beforeInfo.SetPosition(pos);
+        public void SetRotation(in Quaternion rot) => beforeInfo.SetRotation(rot);
+
         // ==== Info ====
         TCInfoModel beforeInfo; // 一帧开始时的相机信息
         public TCInfoModel BeforeInfo => beforeInfo;

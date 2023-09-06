@@ -87,7 +87,7 @@ namespace GameArki.TripodCamera {
             controller.Tick(dt);
         }
 
-        bool isGUIOpen;
+        bool isGUIShowDeadZone;
         public void TickGUI() {
             if (!isInit || isPause) {
                 return;
@@ -98,34 +98,36 @@ namespace GameArki.TripodCamera {
                 return;
             }
 
-            Color color = GUI.color;
+            // ======== 绘制 相机死区
+            {
+                Color color = GUI.color;
 
-            GUI.color = isGUIOpen ? Color.red : Color.white;
-            if (GUILayout.Button(!isGUIOpen ? "打开TCCamera调试面板" : "关闭TCCamera调试面板", GUILayout.Width(200), GUILayout.Height(50))) {
-                isGUIOpen = !isGUIOpen;
+                GUI.color = isGUIShowDeadZone ? Color.red : Color.white;
+                if (GUILayout.Button(!isGUIShowDeadZone ? "TC-显示死区" : "TC-关闭死区", GUILayout.Width(100), GUILayout.Height(25))) {
+                    isGUIShowDeadZone = !isGUIShowDeadZone;
+                }
+
+                if (!isGUIShowDeadZone) return;
+
+                var beforeInfo = curTCCam.BeforeInfo;
+                var composerModel = curTCCam.LookAtComponent.model.composerModel;
+                var screenWidth = beforeInfo.ScreenWidth;
+                var screenHeight = beforeInfo.ScreenHeight;
+                var deadZoneLT = composerModel.GetDeadZoneLT(screenWidth, screenHeight);
+                var deadZoneRB = composerModel.GetDeadZoneRB(screenWidth, screenHeight);
+                var lt = new Vector2(deadZoneLT.x, Screen.height - deadZoneLT.y);
+                var rb = new Vector2(deadZoneRB.x, Screen.height - deadZoneRB.y);
+                var composerType = composerModel.composerType;
+
+                if (composerType != TCLookAtComposerType.None) GUI.color = Color.green;
+                else GUI.color = Color.black;
+
+                var text = composerType == TCLookAtComposerType.None ? "无" :
+                            composerType == TCLookAtComposerType.LookAtTarget ? "仅看向点" : "未知";
+                GUI.Box(new Rect(lt.x, lt.y, rb.x - lt.x, rb.y - lt.y), $"相机死区[{text}]: {deadZoneLT} - {deadZoneRB}");
+
+                GUI.color = color;
             }
-
-            if (!isGUIOpen) return;
-
-            // 绘制 相机死区
-            var beforeInfo = curTCCam.BeforeInfo;
-            var composerModel = curTCCam.LookAtComponent.model.composerModel;
-            var screenWidth = beforeInfo.ScreenWidth;
-            var screenHeight = beforeInfo.ScreenHeight;
-            var deadZoneLT = composerModel.GetDeadZoneLT(screenWidth, screenHeight);
-            var deadZoneRB = composerModel.GetDeadZoneRB(screenWidth, screenHeight);
-            var lt = new Vector2(deadZoneLT.x, Screen.height - deadZoneLT.y);
-            var rb = new Vector2(deadZoneRB.x, Screen.height - deadZoneRB.y);
-            var composerType = composerModel.composerType;
-
-            if (composerType != TCLookAtComposerType.None) GUI.color = Color.green;
-            else GUI.color = Color.black;
-
-            var text = composerType == TCLookAtComposerType.None ? "无" :
-                        composerType == TCLookAtComposerType.LookAtTarget ? "仅看向点" : "未知";
-            GUI.Box(new Rect(lt.x, lt.y, rb.x - lt.x, rb.y - lt.y), $"相机死区[{text}]: {deadZoneLT} - {deadZoneRB}");
-
-            GUI.color = color;
         }
 
         public void TickDrawGizmos() {
@@ -138,20 +140,23 @@ namespace GameArki.TripodCamera {
                 return;
             }
 
-            var targeterModel = curTCCam.TargetorModel;
-            var followCom = curTCCam.FollowComponent;
-            var lookAtCom = curTCCam.LookAtComponent;
-            if (targeterModel.HasFollowTarget) {
-                Color color = Gizmos.color;
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(targeterModel.FollowTargetPos, 0.2f);
-                Gizmos.color = color;
-            }
+            // ======== 跟随点 & 聚焦点 绘制
+            {
+                var targeterModel = curTCCam.TargetorModel;
+                var followCom = curTCCam.FollowComponent;
+                var lookAtCom = curTCCam.LookAtComponent;
+                if (targeterModel.HasFollowTarget) {
+                    Color color = Gizmos.color;
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawSphere(targeterModel.FollowTargetPos, 0.2f);
+                    Gizmos.color = color;
+                }
 
-            if (targeterModel.HasLookAtTarget) {
-                Color color = Gizmos.color;
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(targeterModel.LookAtTargetPos, 0.2f);
+                if (targeterModel.HasLookAtTarget) {
+                    Color color = Gizmos.color;
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawSphere(targeterModel.LookAtTargetPos, 0.2f);
+                }
             }
         }
 

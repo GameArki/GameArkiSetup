@@ -21,11 +21,6 @@ namespace GameArki.TripodCamera.API {
         }
 
         // ==== Spawn ====
-
-        void ITCSetterAPI.ApplyCameraTM(in TCCameraTM tm, int id) {
-            domain.ApplyDomain.ApplyCameraTM(tm, id);
-        }
-
         int ITCSetterAPI.SpawnTCCamera() {
             var cam = context.MainCamera;
             var tf = cam.transform;
@@ -40,20 +35,29 @@ namespace GameArki.TripodCamera.API {
             domain.CameraDomain.Remove(id);
         }
 
+        void ITCSetterAPI.ApplyCameraTM(in TCCameraTM tm, int id) {
+            domain.ApplyDomain.ApplyCameraTM(tm, id);
+        }
+
         bool ITCSetterAPI.SetTCCameraActive(bool active, int id) {
             return domain.CameraDomain.SetTCCameraActive(active, id);
         }
 
+        void ITCSetterAPI.SetTCCameraPosition(in Vector3 pos, int id) {
+            domain.CameraDomain.SetTCCameraPosition(pos, id);
+        }
+
+        void ITCSetterAPI.SetTCCameraRotation(in Quaternion rot, int id) {
+            domain.CameraDomain.SetTCCameraRotation(rot, id);
+        }
+
+        // ==== Blend ====
         bool ITCSetterAPI.CutToTCCamera(int id) {
             return domain.DirectorDomain.CutToTCCamera(id);
         }
 
         bool ITCSetterAPI.BlendToTCCamera(EasingType easingType, float duration, int id) {
             return domain.DirectorDomain.BlendToTCCamera(easingType, duration, id);
-        }
-
-        TCCameraHook ITCSetterAPI.GetHook(int id) {
-            return domain.CameraDomain.SpawnHook(id);
         }
 
         // ==== Basic ====

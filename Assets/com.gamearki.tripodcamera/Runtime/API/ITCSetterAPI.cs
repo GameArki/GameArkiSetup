@@ -1,6 +1,5 @@
 using UnityEngine;
 using GameArki.FPEasing;
-using GameArki.TripodCamera.Hook;
 using GameArki.TripodCamera.Entities;
 using GameArki.TripodCamera.Template;
 
@@ -8,28 +7,26 @@ namespace GameArki.TripodCamera.API {
 
     public interface ITCSetterAPI {
 
-        // ==== Apply ====
-        void ApplyCameraTM(in TCCameraTM tm, int id);
-
         // ==== Spawn ====
         int SpawnTCCamera();
         int SpawnTCCamera(Vector3 position, Quaternion rotation, float fov);
         void RemoveTCCamera(int id);
+        void ApplyCameraTM(in TCCameraTM tm, int id);
         bool SetTCCameraActive(bool active, int id);
+        void SetTCCameraPosition(in Vector3 pos, int id);
+        void SetTCCameraRotation(in Quaternion rot, int id);
+
+        // ==== Blend ====
         bool CutToTCCamera(int id);
         bool BlendToTCCamera(EasingType easingType, float duration, int id);
-        TCCameraHook GetHook(int id);
 
         // ==== Basic ====
         void Push_In(float value, int id);
-
         void Move(Vector2 value, int id);
         void Move_AndChangeLookAtOffset(Vector2 value, int id);
-
         void Rotate_Horizontal(float x, int id);
         void Rotate_Vertical(float y, int id);
         void Rotate_Roll(float z, int id);
-
         void Zoom_In(float value, int id);
 
         // ==== Follow ====
