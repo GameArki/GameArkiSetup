@@ -13,9 +13,6 @@ namespace GameArki.TripodCamera.Entities {
         public bool normalLookActivated;
         public Vector3 lookAtTargetOffset;
         
-        public float maxLookDownDegree;
-        public float maxLookUpDegree;
-
         public TCLookAtComposerModel composerModel;
 
     }

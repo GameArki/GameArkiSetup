@@ -156,9 +156,6 @@ namespace GameArki.TripodCamera.Template {
             model.normalLookActivated = tm.normalLookActivated;
             model.normalLookAngles = tm.normalLookAngles;
             model.lookAtTargetOffset = tm.lookAtTargetOffset;
-
-            model.maxLookDownDegree = tm.maxLookDownDegree;
-            model.maxLookUpDegree = tm.maxLookUpDegree;
             model.composerModel = ToTCLookAtComposerModel(tm.composerTM);
             return model;
         }
