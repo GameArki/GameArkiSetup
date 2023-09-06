@@ -88,27 +88,25 @@ namespace GameArki.TripodCamera.Domain {
 
                 var newCamRot = Quaternion.LookRotation(-camOffset.normalized);
                 afterInfo.SetRotation(newCamRot);
+
                 return;
             }
         }
 
         void _ApplyNormal_LookAt(TCCameraEntity tcCam, float dt) {
-            var afterInfo = tcCam.AfterInfo;
-
-            var lookAtCom = tcCam.LookAtComponent;
-            lookAtCom.Tick(afterInfo, dt);
-
             var composerModel = tcCam.LookAtComponent.model.composerModel;
             if (composerModel.composerType != TCLookAtComposerType.None
             && !tcCam.RoundStateComponent.IsActivated
-            && !tcCam.MovementStateComponent.IsActivated) {
-                return;
-            }
+            && !tcCam.MovementStateComponent.IsActivated) return;
+            var followType = tcCam.FollowComponent.model.followType;
+            if (followType == TCFollowType.MachineArm) return;
 
-            var followCom = tcCam.FollowComponent;
-            var followType = followCom.model.followType;
+            var lookAtCom = tcCam.LookAtComponent;
+            var afterInfo = tcCam.AfterInfo;
+            lookAtCom.Tick(afterInfo, dt);
             var targeterModel = tcCam.TargetorModel;
-            if (followType != TCFollowType.MachineArm && lookAtCom.CanLookAt()) {
+
+            if (lookAtCom.CanLookAt()) {
                 // - Look at target
                 var targetEasedPos = lookAtCom.GetTargetEasedPos();
                 var rot = Quaternion.LookRotation(targetEasedPos - afterInfo.Position);
@@ -118,6 +116,7 @@ namespace GameArki.TripodCamera.Domain {
                 Quaternion camRot = Quaternion.Euler(lookAtCom.model.normalLookAngles);
                 afterInfo.SetRotation(camRot);
             }
+
         }
 
         void _ApplyNormal_LookAtComposer(TCCameraEntity tcCam, float dt) {
