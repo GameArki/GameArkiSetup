@@ -98,24 +98,32 @@ namespace GameArki.TripodCamera.Domain {
             if (composerModel.composerType != TCLookAtComposerType.None
             && !tcCam.RoundStateComponent.IsActivated
             && !tcCam.MovementStateComponent.IsActivated) return;
-            var followType = tcCam.FollowComponent.model.followType;
-            if (followType == TCFollowType.MachineArm) return;
 
             var lookAtCom = tcCam.LookAtComponent;
             var afterInfo = tcCam.AfterInfo;
-            lookAtCom.Tick(afterInfo, dt);
-            var targeterModel = tcCam.TargetorModel;
+            var followType = tcCam.FollowComponent.model.followType;
 
-            if (lookAtCom.CanLookAt()) {
-                // - Look at target
+            // - Look at target
+            if (lookAtCom.CanLookAt() && followType != TCFollowType.MachineArm) {
                 var targetEasedPos = lookAtCom.GetTargetEasedPos();
                 var rot = Quaternion.LookRotation(targetEasedPos - afterInfo.Position);
+                lookAtCom.Tick(afterInfo, dt);
                 afterInfo.SetRotation(rot);
-            } else if (lookAtCom.model.normalLookActivated) {
-                Quaternion camRot = Quaternion.Euler(lookAtCom.model.normalLookAngles);
-                afterInfo.SetRotation(camRot);
+                return;
             }
 
+            // - Normal Look Angle
+            if (followType != TCFollowType.MachineArm && lookAtCom.model.normalLookActivated) {
+                afterInfo.SetRotation(Quaternion.Euler(lookAtCom.model.normalLookAngles));
+                return;
+            }
+
+            if (followType == TCFollowType.MachineArm && lookAtCom.model.normalLookActivated) {
+                var normalLookAngles = lookAtCom.model.normalLookAngles;
+                var afterAngleY = afterInfo.Rotation.eulerAngles.y;
+                afterInfo.SetRotation(Quaternion.Euler(normalLookAngles.x, afterAngleY, normalLookAngles.z));
+                return;
+            }
         }
 
         void _ApplyNormal_LookAtComposer(TCCameraEntity tcCam, float dt) {
@@ -434,7 +442,7 @@ namespace GameArki.TripodCamera.Domain {
             if (tm.needSet_LookAt) tcCam.LookAtComponent.model = TCTM2RuntimeUtil.ToTCLookAtModel(tm.lookAtTM);
 
             if (tm.needSet_Misc) tcCam.MISCComponent.model = TCTM2RuntimeUtil.ToTCMiscModel(tm.miscTM);
-          
+
             if (tm.needSet_Movement) tcCam.MovementStateComponent.Enter(TCTM2RuntimeUtil.ToTCMovementStateModelArray(tm.movementStateTMArray), tm.isExitReset_Movement, tm.exitEasing_Movement, tm.exitDuration_Movement);
 
             if (tm.needSet_Round) tcCam.RoundStateComponent.Enter(TCTM2RuntimeUtil.ToTCRoundStateModelArray(tm.roundStateTMArray), tm.isExitReset_Round, tm.exitEasing_Round, tm.exitDuration_Round);
