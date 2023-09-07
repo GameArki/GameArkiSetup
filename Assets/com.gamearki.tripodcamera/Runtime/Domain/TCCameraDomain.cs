@@ -3,7 +3,6 @@ using UnityEngine;
 using GameArki.FPEasing;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Entities;
-using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.Domain {
 
@@ -45,12 +44,12 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void SetTCCameraPosition(in Vector3 pos, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.SetPosition(pos);
         }
 
         public void SetTCCameraRotation(in Quaternion rot, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.SetRotation(rot);
         }
 
@@ -61,7 +60,7 @@ namespace GameArki.TripodCamera.Domain {
 
         // ==== Basic ====
         public void Push_In(float value, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
 
             var infoCom = tcCam.BeforeInfo;
@@ -71,36 +70,20 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void Move(Vector2 value, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.Move(value);
         }
 
         public void Move_AndChangeLookAtOffset(Vector2 value, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.Move_AndChangeLookAtOffset(value);
         }
 
         // ==== Basic ====
-        public void Rotate_Horizontal(float degree, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-            var curInfoCom = tcCam.BeforeInfo;
-            var euler = curInfoCom.Rotation.eulerAngles;
-            euler.y += degree;
-            curInfoCom.SetRotation(Quaternion.Euler(euler));
-        }
-
-        public void Rotate_Vertical(float degree, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-            var curInfoCom = tcCam.BeforeInfo;
-            var euler = curInfoCom.Rotation.eulerAngles;
-            euler.x += degree;
-            curInfoCom.SetRotation(Quaternion.Euler(euler));
-        }
-
         public void Rotate_Roll(float degree, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var curInfoCom = tcCam.BeforeInfo;
             var euler = curInfoCom.Rotation.eulerAngles;
             euler.z += degree;
@@ -108,7 +91,7 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void Zoom_In(float addition, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var infoCom = tcCam.BeforeInfo;
             infoCom.SetFOVByClamp(addition);
         }
@@ -122,51 +105,51 @@ namespace GameArki.TripodCamera.Domain {
                                            EasingType easingType_vertical,
                                            float easingTime_vertical,
                                            int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.Follow_SetInit(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
         public void Follow_SetEasing(EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.Follow_SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
         public void Follow_ChangeTarget(Transform target, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.Follow_ChangeTarget(target);
         }
 
         public void Follow_ChangeOffset(Vector3 offset, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.Follow_ChangeOffset(offset);
         }
 
         public void Follow_SetFollowType(TCFollowType followType, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var followCom = tcCam.FollowComponent;
             followCom.model.followType = followType;
         }
 
         public bool Follow_HasTarget(int id)  {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return false;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return false;
             var targeterModel = tcCam.TargetorModel;
             return targeterModel.HasFollowTarget;
         }
 
         public Transform Follow_GetTransform(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return null;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return null;
             return tcCam.TargetorModel.FollowTarget;
         }
 
         public Vector3 Follow_GetNormalOffset(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return Vector3.zero;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return Vector3.zero;
             return tcCam.FollowComponent.GetNormalOffset();
         }
 
         //- LookAt
         public void LookAt_SetEnable(bool flag, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             var lookAtComponent = tcCam.LookAtComponent;
             lookAtComponent.SetLookAtEnable(flag);
@@ -179,20 +162,20 @@ namespace GameArki.TripodCamera.Domain {
                                            EasingType verticalEasingType,
                                            float verticalEasingTime,
                                            int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAt_SetInit(target, offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 
         public void LookAt_SetNormalLookActivated(bool flag, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             var lookAtComponent = tcCam.LookAtComponent;
             lookAtComponent.model.normalLookActivated = flag;
         }
 
         public void LookAt_SetNormalAngles(Vector3 eulerAngles, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             var lookAtComponent = tcCam.LookAtComponent;
             lookAtComponent.SetNormalLookAngles(eulerAngles);
@@ -203,13 +186,13 @@ namespace GameArki.TripodCamera.Domain {
                                      EasingType verticalEasingType,
                                      float verticalEasingTime,
                                      int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAt_SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 
         public void LookAt_ChangeTarget(Transform target, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAt_ChangeTarget(target);
 
@@ -223,26 +206,26 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void LookAt_SetComposerNormalLookActivated(bool flag, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAtComponent.SetComposerNormalLookActivated(flag);
         }
 
         public void LookAt_SetComposerNormalAngles(in Vector3 angles, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAtComponent.SetComposerNormalLookAngles(angles);
         }
 
         public void LookAt_SetComposerNormalDamping(float damping, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             var lookAtComponent = tcCam.LookAtComponent;
             lookAtComponent.SetComposerNormalDamping(damping);
         }
 
         public Transform LookAt_GetTransform(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) {
+            if (!TryGetTCCameraByID(id, out var tcCam)) {
                 return null;
             }
 
@@ -250,7 +233,7 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public Vector3 LookAt_GetNormalAngle(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) {
+            if (!TryGetTCCameraByID(id, out var tcCam)) {
                 return Vector3.zero;
             }
 
@@ -260,47 +243,47 @@ namespace GameArki.TripodCamera.Domain {
         // ==== State ====
         //- Shake
         public void Enter_Shake(TCShakeStateModel[] mods, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.ShakeStateComponent.Enter(mods);
         }
 
         //- Movement
         public void Enter_Movement(TCMovementStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.MovementStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Round
         public void Enter_Round(TCRoundStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.RoundStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Rotation
         public void Enter_Rotation(TCRotateStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.RotateStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Push
         public void Enter_Push(TCPushStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.PushStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- FOV
         public void Enter_FOV(TCFOVStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.FOVStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Auto Facing
         public void SetAutoFacing(EasingType easingType, float duration, float minAngleDiff, float sameForwardBreakTime, int id) {
             var repo = context.CameraRepo;
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var targeterModel = tcCam.TargetorModel;
             var autoFacingStateComponent = tcCam.AutoFacingStateComponent;
             var camTF = context.MainCamera.transform;
@@ -315,7 +298,7 @@ namespace GameArki.TripodCamera.Domain {
         #region [Look At Composer]
 
         public void SetLookAtComposer(TCLookAtComposerModel composer, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             composer.deadZoneNormalizedW = composer.deadZoneNormalizedW < 0 ? 0 : composer.deadZoneNormalizedW;
             composer.deadZoneNormalizedH = composer.deadZoneNormalizedH < 0 ? 0 : composer.deadZoneNormalizedH;
             composer.softZoneNormalizedW = composer.softZoneNormalizedW < 0 ? 0 : composer.softZoneNormalizedW;
@@ -324,7 +307,7 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void SetLookAtComposerType(TCLookAtComposerType composerType, int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var targeterModel = tcCam.TargetorModel;
             if (composerType == TCLookAtComposerType.LookAtTarget && !targeterModel.HasLookAtTarget) {
                 Debug.LogWarning("SetLookAtComposerType: LookAtTarget but no lookAtTarget");
@@ -366,7 +349,7 @@ namespace GameArki.TripodCamera.Domain {
             }
         }
 
-        bool _TryGetTCCameraByID(int id, out TCCameraEntity tcCam) {
+        public bool TryGetTCCameraByID(int id, out TCCameraEntity tcCam) {
             var repo = context.CameraRepo;
             if (id == -1) {
                 tcCam = repo.CurrentTCCam;

@@ -73,12 +73,12 @@ namespace GameArki.TripodCamera.API {
             domain.CameraDomain.Move_AndChangeLookAtOffset(value, id);
         }
 
-        void ITCSetterAPI.Rotate_Horizontal(float x, int id) {
-            domain.CameraDomain.Rotate_Horizontal(x, id);
+        void ITCSetterAPI.ManualRounding_Horizontal(float degreeY, float duration, EasingType exitEasingType, float exitDuration) {
+            domain.DirectorDomain.ManualRounding_Horizontal(degreeY, duration, exitEasingType, exitDuration);
         }
 
-        void ITCSetterAPI.Rotate_Vertical(float y, int id) {
-            domain.CameraDomain.Rotate_Vertical(y, id);
+        void ITCSetterAPI.ManualRounding_Vertical(float degreeX, float duration, EasingType exitEasingType, float exitDuration) {
+            domain.DirectorDomain.ManualRounding_Vertical(degreeX, duration, exitEasingType, exitDuration);
         }
 
         void ITCSetterAPI.Rotate_Roll(float z, int id) {

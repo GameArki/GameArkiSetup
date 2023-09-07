@@ -119,13 +119,6 @@ namespace GameArki.TripodCamera.Sample {
                 }
             }
 
-            if (Input.GetMouseButton(1)) {
-                var mouseDelta = (Vector2)Input.mousePosition - mousePos;
-                if (mouseDelta != Vector2.zero) {
-                    setter.Rotate_Horizontal(mouseDelta.x, -1);
-                    setter.Rotate_Vertical(mouseDelta.y, -1);
-                }
-            }
             mousePos = Input.mousePosition;
         }
 
@@ -468,19 +461,6 @@ namespace GameArki.TripodCamera.Sample {
             }
 
             GUILayout.Space(MENU_PADDING_TOP);
-
-            if (GUILayout.RepeatButton("左看")) {
-                setter.Rotate_Horizontal(-sensitivity, -1);
-            }
-            if (GUILayout.RepeatButton("右看")) {
-                setter.Rotate_Horizontal(sensitivity, -1);
-            }
-            if (GUILayout.RepeatButton("上看")) {
-                setter.Rotate_Vertical(sensitivity, -1);
-            }
-            if (GUILayout.RepeatButton("下看")) {
-                setter.Rotate_Vertical(-sensitivity, -1);
-            }
 
             GUILayout.Space(MENU_PADDING_TOP);
 

@@ -24,10 +24,10 @@ namespace GameArki.TripodCamera.API {
         void Push_In(float value, int id);
         void Move(Vector2 value, int id);
         void Move_AndChangeLookAtOffset(Vector2 value, int id);
-        void Rotate_Horizontal(float x, int id);
-        void Rotate_Vertical(float y, int id);
         void Rotate_Roll(float z, int id);
         void Zoom_In(float value, int id);
+        void ManualRounding_Horizontal(float degreeY, float duration, EasingType exitEasingType, float exitDuration);
+        void ManualRounding_Vertical(float degreeX, float duration, EasingType exitEasingType, float exitDuration);
 
         // ==== Follow ====
         void Follow_SetInit(Transform target, Vector3 offset, int id);

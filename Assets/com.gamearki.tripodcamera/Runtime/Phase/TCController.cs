@@ -32,13 +32,13 @@ namespace GameArki.TripodCamera.Controller {
             // - All cameras logic.
             var camRepo = context.CameraRepo;
             camRepo.ForeachAll((cam) => {
-                applyDomain._ApplyNormal(cam, dt);
+                applyDomain.ApplyNormal(cam, dt);
                 applyDomain.ApplyStateEffect(cam, dt);
             });
 
             // - Director FSM.
             var directorDomain = domain.DirectorDomain;
-            directorDomain.ApplyFSM(dt);
+            directorDomain.TickFSM(dt);
 
             var mainCam = context.MainCamera;
             var curTCCamera = camRepo.CurrentTCCam;

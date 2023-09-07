@@ -26,7 +26,7 @@ namespace GameArki.TripodCamera.Domain {
             hook.Tick();
         }
 
-        public void _ApplyNormal(TCCameraEntity tcCam, float dt) {
+        public void ApplyNormal(TCCameraEntity tcCam, float dt) {
 
             tcCam.CopyBeforeInfo2AfterInfo(); // Mutable ReadFrom Base
 
@@ -423,9 +423,12 @@ namespace GameArki.TripodCamera.Domain {
         // ==== Final ====
         public void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
             var afterInfo = tcCam.AfterInfo;
-            mainCam.transform.position = afterInfo.Position;
-            mainCam.transform.rotation = afterInfo.Rotation;
-            mainCam.fieldOfView = afterInfo.FOV;
+            var applyPosition = afterInfo.Position;
+            var applyRotation = afterInfo.Rotation;
+            var applyFOV = afterInfo.FOV;
+            mainCam.transform.position = applyPosition;
+            mainCam.transform.rotation = applyRotation;
+            mainCam.fieldOfView = applyFOV;
         }
 
         public void ApplyCameraTM(in TCCameraTM tm, int id = -1) {
