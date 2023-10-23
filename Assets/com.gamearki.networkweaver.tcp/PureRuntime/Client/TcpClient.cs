@@ -8,6 +8,7 @@ namespace GameArki.Network {
 
         TcpLowLevelClient client;
         IProtocolService protocolService;
+        Pool<byte[]> pool;
 
         public string Host => client.Host;
         public int Port => client.Port;
@@ -21,6 +22,7 @@ namespace GameArki.Network {
         public TcpClient() {
             client = new TcpLowLevelClient();
             dic = new Dictionary<ushort, Action<ArraySegment<byte>>>();
+            pool = new Pool<byte[]>();
         }
 
         public void Inject(IProtocolService protocolService) {
@@ -33,6 +35,8 @@ namespace GameArki.Network {
             client.OnConnectedHandle += OnConnected;
             client.OnDataHandle += OnRecvData;
             client.OnDisconnectedHandle += OnDisconnected;
+
+            pool.SetGenerator(() => new byte[maxMessageSize]);
         }
 
         public void Tick(int processLimit = 100) {
@@ -66,15 +70,13 @@ namespace GameArki.Network {
         }
 
         public void Send<T>(byte serviceId, byte messageId, T msg) where T : IBufferIOMessage<T> {
-            byte[] buffer = msg.ToBytes();
-            byte[] dst = new byte[buffer.Length + 2];
+            byte[] buffer = pool.Take();
             int offset = 0;
-            dst[offset] = serviceId;
-            offset += 1;
-            dst[offset] = messageId;
-            offset += 1;
-            Buffer.BlockCopy(buffer, 0, dst, offset, buffer.Length);
-            client.Send(dst);
+            buffer[offset++] = serviceId;
+            buffer[offset++] = messageId;
+            msg.WriteTo(buffer, ref offset);
+            client.Send(new ArraySegment<byte>(buffer, 0, offset));
+            pool.Return(buffer);
         }
 
         public void On<T>(byte serviceId, byte messageId, Func<T> generateHandle, Action<T> handle) where T : IBufferIOMessage<T> {
