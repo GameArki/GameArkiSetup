@@ -6,13 +6,13 @@ namespace GameArki.TripodCamera.Controller {
 
     internal class TCController {
 
-        TCContext context;
+        TCContext tcContext;
         TCDomain domain;
 
         internal TCController() { }
 
         internal void Inject(TCContext context, TCDomain domain) {
-            this.context = context;
+            this.tcContext = context;
             this.domain = domain;
         }
 
@@ -21,27 +21,28 @@ namespace GameArki.TripodCamera.Controller {
         }
 
         internal void Tick(float dt) {
-
             var applyDomain = domain.ApplyDomain;
 
-            var hooks = context.HookRepo.GetAll();
-            foreach (var hook in hooks) {
-                applyDomain.ApplyHook(hook);
-            }
-
             // - All cameras logic.
-            var camRepo = context.CameraRepo;
+            var camRepo = tcContext.CameraRepo;
             camRepo.ForeachAll((cam) => {
-                applyDomain.ApplyNormal(cam, dt);
-                applyDomain.ApplyStateEffect(cam, dt);
+                if (!cam.Activated) return;
+                applyDomain.TickAndApply(cam, dt);
+                applyDomain.Tick_StateEffect(cam, dt);
+#if UNITY_EDITOR
+                Color color = cam == camRepo.CurrentTCCam ? Color.green : Color.gray;
+                color = cam.ID == 2 ? Color.red : color;
+                Debug.DrawLine(cam.AfterInfo.Position, cam.AfterInfo.Position + cam.AfterInfo.Rotation * Vector3.forward * 100f, color);
+#endif                                                                                                                      
             });
 
             // - Director FSM.
             var directorDomain = domain.DirectorDomain;
             directorDomain.TickFSM(dt);
 
-            var mainCam = context.MainCamera;
+            var mainCam = tcContext.MainCamera;
             var curTCCamera = camRepo.CurrentTCCam;
+            var directorFSMState = tcContext.directorEntity.FSMComponent.FSMState;
             applyDomain.ApplyToMain(curTCCamera, mainCam);
         }
 

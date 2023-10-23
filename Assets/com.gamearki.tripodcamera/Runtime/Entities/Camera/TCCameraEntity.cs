@@ -46,10 +46,10 @@ namespace GameArki.TripodCamera.Entities {
 
         // - Move State
         TCCameraMovementStateComponent movementStateComponent;
-        public TCCameraMovementStateComponent MovementStateComponent => movementStateComponent;
+        public TCCameraMovementStateComponent MovementStateCom => movementStateComponent;
 
         TCCameraRoundStateComponent roundStateComponent;
-        public TCCameraRoundStateComponent RoundStateComponent => roundStateComponent;
+        public TCCameraRoundStateComponent RoundStateCom => roundStateComponent;
 
         // - Rotate State
         TCCameraRotateStateComponent rotateStateComponent;
@@ -57,7 +57,7 @@ namespace GameArki.TripodCamera.Entities {
 
         // - Push State
         TCCameraPushStateComponent pushStateComponent;
-        public TCCameraPushStateComponent PushStateComponent => pushStateComponent;
+        public TCCameraPushStateComponent PushStateCom => pushStateComponent;
 
         // - Auto Facing State
         TCCameraAutoFacingStateComponent autoFacingStateComponent;

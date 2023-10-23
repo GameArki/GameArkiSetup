@@ -13,9 +13,6 @@ namespace GameArki.TripodCamera.Facades {
         TCCameraRepo cameraRepo;
         public TCCameraRepo CameraRepo => cameraRepo;
 
-        TCCameraHookRepo hookRepo;
-        public TCCameraHookRepo HookRepo => hookRepo;
-
         int cameraID;
         public int FetchCameraID() => cameraID++;
 
@@ -23,7 +20,6 @@ namespace GameArki.TripodCamera.Facades {
 
         public TCContext() {
             this.cameraRepo = new TCCameraRepo();
-            this.hookRepo = new TCCameraHookRepo();
             this.directorEntity = new TCDirectorEntity();
         }
 

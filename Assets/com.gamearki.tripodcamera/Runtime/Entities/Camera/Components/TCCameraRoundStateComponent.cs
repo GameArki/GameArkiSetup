@@ -29,17 +29,13 @@ namespace GameArki.TripodCamera.Entities {
         bool isActivated;
         public bool IsActivated => isActivated;
 
-        bool isDeactivateTriggered;
-        public bool IsDeactivateTriggered => isDeactivateTriggered;
-        public void TurnOffDeactivateTrigger() => isDeactivateTriggered = false;
-
         bool isExiting;
 
         public TCCameraRoundStateComponent() { }
 
         public void Enter(TCRoundStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
-
             if (args.Length == 0) return;
+
             var args_0 = args[0];
             if (args_0.isInherit) {
                 resOffset_inherit = resOffset;
@@ -65,10 +61,9 @@ namespace GameArki.TripodCamera.Entities {
 
             if (isExiting) {
                 if (isExitReset) {
-                    TickExiting(dt);
+                    Exiting(dt);
                 } else {
                     isActivated = false;
-                    isDeactivateTriggered = true;
                     isExiting = false;
                 }
 
@@ -118,15 +113,14 @@ namespace GameArki.TripodCamera.Entities {
 
         }
 
-        void TickExiting(float dt) {
+        void Exiting(float dt) {
             exitTime += dt;
             resOffset = EasingHelper.Ease2D(exitEasing, exitTime, exitDuration, exitStartOffset, Vector2.zero);
 
             if (exitTime >= exitDuration) {
                 exitTime = 0;
-                isActivated = false;
-                isDeactivateTriggered = true;
                 isExiting = false;
+                isActivated = false;
             }
         }
 

@@ -2,7 +2,6 @@ using UnityEngine;
 using GameArki.FPEasing;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Domain;
-using GameArki.TripodCamera.Hook;
 using GameArki.TripodCamera.Entities;
 using GameArki.TripodCamera.Template;
 
@@ -57,7 +56,7 @@ namespace GameArki.TripodCamera.API {
         }
 
         bool ITCSetterAPI.BlendToTCCamera(EasingType easingType, float duration, int id) {
-            return domain.DirectorDomain.BlendToTCCamera(easingType, duration, id);
+            return domain.DirectorDomain.Enter_Blend(easingType, duration, id);
         }
 
         // ==== Basic ====

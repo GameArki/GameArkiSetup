@@ -79,11 +79,6 @@ namespace GameArki.TripodCamera {
                 return;
             }
 
-            var activeCam = context.CameraRepo.CurrentTCCam;
-            if (activeCam == null) {
-                return;
-            }
-
             controller.Tick(dt);
         }
 

@@ -44,18 +44,6 @@ namespace GameArki.TripodCamera.Entities {
             return IsInZone_Vertical(screenPoint, screenWidth, screenHeight, deadZoneNormalizedH, screenNormalizedY, out pixelOffset);
         }
 
-        public bool IsInSoftZone(in Vector3 screenPoint, float screenWidth, float screenHeight) {
-            return IsInZone(screenPoint, screenWidth, screenHeight, softZoneNormalizedW, softZoneNormalizedH, screenNormalizedX, screenNormalizedY);
-        }
-
-        public bool IsInSoftZone_Horizontal(in Vector3 screenPoint, float screenWidth, float screenHeight, out float pixelOffset) {
-            return IsInZone_Horizontal(screenPoint, screenWidth, screenHeight, softZoneNormalizedW, screenNormalizedX, out pixelOffset);
-        }
-
-        public bool IsInSoftZone_Vertical(in Vector3 screenPoint, float screenWidth, float screenHeight, out float pixelOffset) {
-            return IsInZone_Vertical(screenPoint, screenWidth, screenHeight, softZoneNormalizedH, screenNormalizedY, out pixelOffset);
-        }
-
         bool IsInZone(in Vector3 screenPoint, float screenWidth, float screenHeight, float zoneNormalizedW, float zoneNormalizedH, float sx, float sy) {
             float width = screenWidth * zoneNormalizedW;
             float height = screenHeight * zoneNormalizedH;
@@ -66,22 +54,22 @@ namespace GameArki.TripodCamera.Entities {
             return screenPoint.z >= 0 && screenPoint.x >= lt.x && screenPoint.x <= rb.x && screenPoint.y <= lt.y && screenPoint.y >= rb.y;
         }
 
-        bool IsInZone_Horizontal(in Vector3 screenPoint, float screenWidth, float screenHeight, float zoneNormalizedW, float sx, out float pixelOffset) {
+        bool IsInZone_Horizontal(in Vector3 screenPoint, float screenWidth, float screenHeight, float zoneNormalizedW, float screenNormalizedX, out float pixelOffset) {
             float width = screenWidth * zoneNormalizedW;
-            float screenX = sx * screenWidth;
+            float screenX = screenNormalizedX * screenWidth;
             float l = screenX - width / 2;
             float r = l + width;
             pixelOffset = screenPoint.x - screenX;
-            return screenPoint.z >= 0 && screenPoint.x >= l && screenPoint.x <= r;
+            return screenPoint.z >= 0 && l <= screenPoint.x && screenPoint.x <= r;
         }
 
-        bool IsInZone_Vertical(in Vector3 screenPoint, float screenWidth, float screenHeight, float zoneNormalizedH, float sy, out float pixelOffset) {
+        bool IsInZone_Vertical(in Vector3 screenPoint, float screenWidth, float screenHeight, float zoneNormalizedH, float screenNormalizedY, out float pixelOffset) {
             float height = screenHeight * zoneNormalizedH;
-            float screenY = sy * screenHeight;
+            float screenY = screenNormalizedY * screenHeight;
             float t = screenY + height / 2;
             float b = t - height;
             pixelOffset = screenPoint.y - screenY;
-            return screenPoint.z >= 0 && screenPoint.y <= t && screenPoint.y >= b;
+            return screenPoint.y >= b && screenPoint.y <= t;
         }
 
     }

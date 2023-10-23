@@ -13,12 +13,14 @@ namespace GameArki.TripodCamera.Entities {
         public void SetRotation(Quaternion value) => rotation = value;
 
         // - FOV
+        float initFOV;
+
         float fov;
         public float FOV => fov;
-        public void SetFOVByClamp(float addition) => fov = Mathf.Clamp(fov + addition, fovRange.x, fovRange.y);
+        public void SetFOVAsInit() => fov = initFOV;
+        public void AddFOV(float addition) => fov = Mathf.Clamp(fov + addition, fovRange.x, fovRange.y);
 
         Vector2 fovRange;
-        public Vector2 FOVRange => fovRange;
         public void SetFOVRange(Vector2 value) => fovRange = value;
 
         float aspect;
@@ -53,18 +55,20 @@ namespace GameArki.TripodCamera.Entities {
                          int screenHeight) {
             this.position = pos;
             this.rotation = rot;
+            this.initFOV = fov;
             this.fov = fov;
             this.aspect = aspect;
             this.nearClipPlane = nearClipPlane;
             this.farClipPlane = farClipPlane;
             this.screenWidth = screenWidth;
             this.screenHeight = screenHeight;
-            Debug.Log($"TCCameraInfoComponent Init. pos: {pos}, rot: {rot}, fov: {fov}, aspect: {aspect}, nearClipPlane: {nearClipPlane}, farClipPlane: {farClipPlane}, screenWidth: {screenWidth}, screenHeight: {screenHeight}");
+            Debug.Log($"[TCInfoModel] Init: {this}");
         }
 
         public void CopyFrom(TCInfoModel other) {
             this.position = other.position;
             this.rotation = other.rotation;
+            this.initFOV = other.initFOV;
             this.fov = other.fov;
             this.fovRange = other.fovRange;
             this.aspect = other.aspect;
@@ -73,6 +77,11 @@ namespace GameArki.TripodCamera.Entities {
             this.screenWidth = other.screenWidth;
             this.screenHeight = other.screenHeight;
         }
+
+        public override string ToString() {
+            return $"[TCInfoModel] pos: {position}, rot: {rotation}, fov: {fov}, aspect: {aspect}, near: {nearClipPlane}, far: {farClipPlane}, screen: {screenWidth}x{screenHeight}";
+        }
+
     }
 
 }

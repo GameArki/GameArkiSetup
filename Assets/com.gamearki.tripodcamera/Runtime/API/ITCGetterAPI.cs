@@ -1,6 +1,5 @@
 using UnityEngine;
 using GameArki.FPEasing;
-using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.API {
 

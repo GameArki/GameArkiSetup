@@ -75,7 +75,7 @@ namespace GameArki.TripodCamera.Domain {
             tcCam.Move(value);
         }
 
-        public void Move_AndChangeLookAtOffset(Vector2 value, int id) {
+        public void Move_AndChangeLookAtOffset(in Vector2 value, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.Move_AndChangeLookAtOffset(value);
@@ -93,18 +93,18 @@ namespace GameArki.TripodCamera.Domain {
         public void Zoom_In(float addition, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
             var infoCom = tcCam.BeforeInfo;
-            infoCom.SetFOVByClamp(addition);
+            infoCom.AddFOV(addition);
         }
 
         // ==== Advance ====
         //- Follow
         public void Follow_SetInit(Transform target,
-                                           Vector3 offset,
-                                           EasingType easingType_horizontal,
-                                           float easingTime_horizontal,
-                                           EasingType easingType_vertical,
-                                           float easingTime_vertical,
-                                           int id) {
+                                   in Vector3 offset,
+                                   EasingType easingType_horizontal,
+                                   float easingTime_horizontal,
+                                   EasingType easingType_vertical,
+                                   float easingTime_vertical,
+                                   int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
             tcCam.Follow_SetInit(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
@@ -131,7 +131,7 @@ namespace GameArki.TripodCamera.Domain {
             followCom.model.followType = followType;
         }
 
-        public bool Follow_HasTarget(int id)  {
+        public bool Follow_HasTarget(int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return false;
             var targeterModel = tcCam.TargetorModel;
             return targeterModel.HasFollowTarget;
@@ -156,12 +156,12 @@ namespace GameArki.TripodCamera.Domain {
         }
 
         public void LookAt_SetInit(Transform target,
-                                           Vector3 offset,
-                                           EasingType horizontalEasingType,
-                                           float horizontalEasingTime,
-                                           EasingType verticalEasingType,
-                                           float verticalEasingTime,
-                                           int id) {
+                                   Vector3 offset,
+                                   EasingType horizontalEasingType,
+                                   float horizontalEasingTime,
+                                   EasingType verticalEasingType,
+                                   float verticalEasingTime,
+                                   int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             tcCam.LookAt_SetInit(target, offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
@@ -174,7 +174,7 @@ namespace GameArki.TripodCamera.Domain {
             lookAtComponent.model.normalLookActivated = flag;
         }
 
-        public void LookAt_SetNormalAngles(Vector3 eulerAngles, int id) {
+        public void LookAt_SetNormalAngles(in Vector3 eulerAngles, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
             var lookAtComponent = tcCam.LookAtComponent;
@@ -252,14 +252,14 @@ namespace GameArki.TripodCamera.Domain {
         public void Enter_Movement(TCMovementStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
-            tcCam.MovementStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
+            tcCam.MovementStateCom.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Round
         public void Enter_Round(TCRoundStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
 
-            tcCam.RoundStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
+            tcCam.RoundStateCom.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- Rotation
@@ -271,7 +271,7 @@ namespace GameArki.TripodCamera.Domain {
         //- Push
         public void Enter_Push(TCPushStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration, int id) {
             if (!TryGetTCCameraByID(id, out var tcCam)) return;
-            tcCam.PushStateComponent.Enter(mods, isExitReset, exitEasing, exitDuration);
+            tcCam.PushStateCom.Enter(mods, isExitReset, exitEasing, exitDuration);
         }
 
         //- FOV
@@ -327,26 +327,6 @@ namespace GameArki.TripodCamera.Domain {
             //- Reset 
             var infoCom = tcCam.BeforeInfo;
             infoCom.SetRotation(Quaternion.identity);
-
-            //- Reset 
-            if (composerType == TCLookAtComposerType.LookAtTarget) {
-                //- Make sure the follow point is in the dead zone.
-                var miscCom = tcCam.MISCComponent;
-                var targetorModel = tcCam.TargetorModel;
-                var lookAtTargetPos = targetorModel.LookAtTargetPos;
-                var eyePos = infoCom.Position;
-                var eyeRot = infoCom.Rotation;
-                var projectionMatrix = GetProjectionMatrix(eyePos, infoCom.FOV, infoCom.Aspect, infoCom.NearClipPlane, infoCom.FarClipPlane);
-                var composer = tcCam.LookAtComponent.model.composerModel;
-                var rot = LookAtComposer_OneTarget(lookAtTargetPos,
-                                                   eyePos,
-                                                   eyeRot,
-                                                   composer,
-                                                   projectionMatrix,
-                                                   infoCom.ScreenWidth,
-                                                   infoCom.ScreenHeight
-                                                   );
-            }
         }
 
         public bool TryGetTCCameraByID(int id, out TCCameraEntity tcCam) {
@@ -360,224 +340,136 @@ namespace GameArki.TripodCamera.Domain {
             return tcCam != null;
         }
 
-        public Quaternion LookAtComposer_OneTarget(in Vector3 targetPos,
-                                                   in Vector3 eyePos,
-                                                   in Quaternion eyeRot,
-                                                   in TCLookAtComposerModel composer,
-                                                   in Matrix4x4 projectionMatrix,
-                                                   int screenWidth,
-                                                   int screenHeight) {
+        public Quaternion LookAtComposer_Horizontal(in Vector3 lookAtTargetPos,
+                                                    in Vector3 eyePos,
+                                                    in Quaternion eyeRot,
+                                                    in TCLookAtComposerModel composer,
+                                                    in Matrix4x4 projectionMatrix,
+                                                    int screenWidth,
+                                                    int screenHeight) {
             Quaternion returnRot = eyeRot;
 
-            Vector3 screenPoint = WorldToScreenPoint(targetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
-            if (composer.IsInDeadZone(screenPoint, screenWidth, screenHeight)) {
+            Vector3 screenPoint = WorldToScreenPoint(lookAtTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
+            if (composer.IsInDeadZone_Horizontal(screenPoint, screenWidth, screenHeight, out float pixelOffsetX)) {
                 return returnRot;
             }
 
-            if (!composer.IsInDeadZone_Horizontal(screenPoint, screenWidth, screenHeight, out float pixelOffsetX)) {
-                if (pixelOffsetX > 0) {
-                    Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
-                    Quaternion rot = FromToScreenPoint(new Vector3(deadZoneRB.x, screenPoint.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
-                    returnRot = rot * returnRot;
-                } else {
-                    Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
-                    Quaternion rot = FromToScreenPoint(new Vector3(deadZoneLT.x, screenPoint.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
-                    returnRot = rot * returnRot;
-                }
+            Quaternion rot = Quaternion.identity;
+            if (pixelOffsetX > 0) {
+                Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
+                Vector3 fromPoint = new Vector3(deadZoneRB.x, screenPoint.y, 1);
+                rot = FromToScreenPoint(fromPoint, screenPoint, projectionMatrix, screenWidth, screenHeight);
+            } else {
+                Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
+                rot = FromToScreenPoint(new Vector3(deadZoneLT.x, screenPoint.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
             }
 
-            if (!composer.IsInDeadZone_Vertical(screenPoint, screenWidth, screenHeight, out float pixelOffsetY)) {
-                if (pixelOffsetY > 0) {
-                    Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
-                    Quaternion rot = FromToScreenPoint(new Vector3(screenPoint.x, deadZoneLT.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
-                    returnRot = returnRot * rot;
-                } else {
-                    Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
-                    Quaternion rot = FromToScreenPoint(new Vector3(screenPoint.x, deadZoneRB.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
-                    returnRot = returnRot * rot;
-                }
+            var eulerAngles = rot.eulerAngles;
+            if (screenPoint.z <= 0) rot = Quaternion.Euler(eulerAngles.x, eulerAngles.y + 180, eulerAngles.z);
+            returnRot = rot * returnRot;
+
+            return returnRot;
+        }
+
+        public Quaternion LookAtComposer_Vertical(in Vector3 lookAtTargetPos,
+                                                  in Vector3 followTargetPos,
+                                                  in Vector3 eyePos,
+                                                  in Quaternion eyeRot,
+                                                  in TCLookAtComposerModel composer,
+                                                  in Matrix4x4 projectionMatrix,
+                                                  int screenWidth,
+                                                  int screenHeight) {
+            Quaternion returnRot = eyeRot;
+
+            Vector3 screenPoint_lt = WorldToScreenPoint(lookAtTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
+            Vector3 screenPoint_ft = WorldToScreenPoint(followTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
+
+            // Compare camera distance between follow target and lookAt target.
+            if (screenPoint_lt.z < screenPoint_ft.z) {
+                return returnRot;
+            }
+
+            if (composer.IsInDeadZone_Vertical(screenPoint_lt, screenWidth, screenHeight, out float pixelOffsetY)) {
+                return returnRot;
+            }
+
+            if (pixelOffsetY > 0) {
+                Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
+                Quaternion rot = FromToScreenPoint(new Vector3(screenPoint_lt.x, deadZoneLT.y, 1), screenPoint_lt, projectionMatrix, screenWidth, screenHeight);
+                var eulerAngles = rot.eulerAngles;
+                returnRot = returnRot * rot;
+            } else {
+                Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
+                Quaternion rot = FromToScreenPoint(new Vector3(screenPoint_lt.x, deadZoneRB.y, 1), screenPoint_lt, projectionMatrix, screenWidth, screenHeight);
+                var eulerAngles = rot.eulerAngles;
+                returnRot = returnRot * rot;
             }
 
             return returnRot;
         }
 
-        [Obsolete("Use LookAtComposer_OneTarget instead")]
-        public (Quaternion, Vector3) LookAtComposer_TwoTarget(in Vector3 followTargetPos,
-                                                                      in Vector3 lookAtTargetPos,
-                                                                      in Vector3 eyePos,
-                                                                      in Quaternion eyeRot,
-                                                                      float maxLookDownDegree,
-                                                                      float maxLookUpDegree,
-                                                                      in TCLookAtComposerModel composer,
-                                                                      Matrix4x4 projectionMatrix,
-                                                                      float nearClipPlane,
-                                                                      float farClipPlane,
-                                                                      float aspect,
-                                                                      float fov,
-                                                                      int screenWidth,
-                                                                      int screenHeight,
-                                                                      Vector3 normalLookAngles,
-                                                                      float blendToNormalDamping_look,
-                                                                      Vector3 normalFollowOffset,
-                                                                      float dt) {
-
-            Vector3 returnPos = eyePos;
-            Vector3 camFollowOffset = returnPos - followTargetPos;
+        public Quaternion LookAtComposer_Horizontal(in Vector3 eyePos,
+                                                    in Quaternion eyeRot,
+                                                    in TCLookAtComposerModel composer,
+                                                    in Matrix4x4 projectionMatrix,
+                                                    int screenWidth,
+                                                    int screenHeight,
+                                                    in Vector3 screenPoint) {
             Quaternion returnRot = eyeRot;
 
-            //====== Check the lookAt point is in the dead zone.
-            Vector3 lookAtScreenPoint = WorldToScreenPoint(lookAtTargetPos,
-                                                           eyePos,
-                                                           eyeRot,
-                                                           projectionMatrix,
-                                                           screenWidth,
-                                                           screenHeight);
-
-            if (composer.IsInDeadZone(lookAtScreenPoint, screenWidth, screenHeight)) {
-                return (returnRot, returnPos);
+            if (composer.IsInDeadZone_Horizontal(screenPoint, screenWidth, screenHeight, out float pixelOffsetX)) {
+                return returnRot;
             }
 
-            //====== Keep Follow Target In Dead Zone.
-            returnRot = LookAtComposer_OneTarget(followTargetPos,
-                                                 returnPos,
-                                                 returnRot,
-                                                 composer,
-                                                 projectionMatrix,
-                                                 screenWidth,
-                                                 screenHeight);
-
-            //====== Keep LookAt Target In Dead Zone.
-            Quaternion afterRot = LookAtComposer_OneTarget(lookAtTargetPos,
-                                                           returnPos,
-                                                           returnRot,
-                                                           composer,
-                                                           projectionMatrix,
-                                                           screenWidth,
-                                                           screenHeight);
-
-            projectionMatrix = GetProjectionMatrix(returnPos, fov, aspect, nearClipPlane, farClipPlane);
-
-            Vector3 afterFollowScreenPoint = WorldToScreenPoint(followTargetPos,
-                                                                returnPos,
-                                                                afterRot,
-                                                                projectionMatrix,
-                                                                screenWidth,
-                                                                screenHeight);
-            if (composer.IsInDeadZone(afterFollowScreenPoint, screenWidth, screenHeight)) {
-                return (afterRot, returnPos);
-            }
-
-            if (composer.IsInDeadZone_Horizontal(afterFollowScreenPoint, screenWidth, screenHeight, out float pox)) {
-                returnRot.eulerAngles = new Vector3(returnRot.eulerAngles.x, afterRot.eulerAngles.y, returnRot.eulerAngles.z);
+            Quaternion rot = Quaternion.identity;
+            if (pixelOffsetX > 0) {
+                Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
+                Vector3 fromPoint = new Vector3(deadZoneRB.x, screenPoint.y, 1);
+                rot = FromToScreenPoint(fromPoint, screenPoint, projectionMatrix, screenWidth, screenHeight);
             } else {
-                lookAtScreenPoint = WorldToScreenPoint(lookAtTargetPos, returnPos, returnRot, projectionMatrix, screenWidth, screenHeight);
-                if (!composer.IsInDeadZone_Horizontal(lookAtScreenPoint, screenWidth, screenHeight, out float pixelOffsetX)) {
-                    int iterateCount = 0;
-                    float halfWidth = composer.deadZoneNormalizedW / 2;
-                    float rightPixelOffsetX = halfWidth;
-                    float leftPixelOffsetX = -halfWidth;
-                    bool isFront = lookAtScreenPoint.z > 0;
-                    bool turnRight = pixelOffsetX > (isFront ? rightPixelOffsetX : 0);
-                    float targetPixelOffsetX = turnRight ? rightPixelOffsetX : leftPixelOffsetX;
-                    float left = 0;
-                    float right = 0;
-                    if (turnRight) {
-                        if (isFront) {
-                            left = 0;
-                            right = 90;
-                        } else {
-                            left = 90;
-                            right = 180;
-                        }
-                    } else {
-                        if (isFront) {
-                            left = -90;
-                            right = 0;
-                        } else {
-                            left = -180;
-                            right = -90;
-                        }
-                    }
-                    float mid = (left + right) / 2;
-                    bool isInside = false;
-
-                    Quaternion baseRot = returnRot;
-                    while (!isInside || Mathf.Abs(pixelOffsetX - targetPixelOffsetX) > 1f) {
-                        iterateCount++;
-                        if (iterateCount > TCDefaultConfig.MAX_ITERATION_COUNT) {
-                            // Debug.LogError($"DeadZone: Dichotomy DeadLoop - Horizontal. > TCDefaultConfig.MAX_ITERATION_COUNT} Pixel Diff {pixelOffsetX - targetPixelOffsetX}");
-                            return (eyeRot, eyePos);
-                        }
-                        Quaternion midRot = Quaternion.Euler(0, mid, 0);
-                        returnRot = midRot * baseRot;
-                        returnPos = followTargetPos + midRot * camFollowOffset;
-                        projectionMatrix = GetProjectionMatrix(returnPos, fov, aspect, nearClipPlane, farClipPlane);
-                        lookAtScreenPoint = WorldToScreenPoint(lookAtTargetPos, returnPos, returnRot, projectionMatrix, screenWidth, screenHeight);
-                        isInside = composer.IsInDeadZone_Horizontal(lookAtScreenPoint, screenWidth, screenHeight, out pixelOffsetX);
-
-                        turnRight = pixelOffsetX > targetPixelOffsetX;
-                        if (turnRight) {
-                            left = mid;
-                        } else {
-                            right = mid;
-                        }
-                        mid = (left + right) / 2;
-                    }
-                }
+                Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
+                rot = FromToScreenPoint(new Vector3(deadZoneLT.x, screenPoint.y, 1), screenPoint, projectionMatrix, screenWidth, screenHeight);
             }
-            if (composer.IsInDeadZone_Vertical(afterFollowScreenPoint, screenWidth, screenHeight, out float poy)) {
-                returnRot = Quaternion.Euler(afterRot.eulerAngles.x, returnRot.eulerAngles.y, returnRot.eulerAngles.z);
+
+            var eulerAngles = rot.eulerAngles;
+            if (screenPoint.z <= 0) rot = Quaternion.Euler(eulerAngles.x, eulerAngles.y + 180, eulerAngles.z);
+            returnRot = rot * returnRot;
+
+            return returnRot;
+        }
+
+        public Quaternion LookAtComposer_Vertical(in Vector3 eyePos,
+                                                  in Quaternion eyeRot,
+                                                  in TCLookAtComposerModel composer,
+                                                  in Matrix4x4 projectionMatrix,
+                                                  int screenWidth,
+                                                  int screenHeight,
+                                                  in Vector3 screenPoint_lt,
+                                                  in Vector3 screenPoint_ft) {
+            Quaternion returnRot = eyeRot;
+
+            // Compare camera distance between follow target and lookAt target.
+            if (screenPoint_lt.z < screenPoint_ft.z) {
+                return returnRot;
+            }
+
+            if (composer.IsInDeadZone_Vertical(screenPoint_lt, screenWidth, screenHeight, out float pixelOffsetY)) {
+                return returnRot;
+            }
+
+            if (pixelOffsetY > 0) {
+                Vector2 deadZoneLT = composer.GetDeadZoneLT(screenWidth, screenHeight);
+                Quaternion rot = FromToScreenPoint(new Vector3(screenPoint_lt.x, deadZoneLT.y, 1), screenPoint_lt, projectionMatrix, screenWidth, screenHeight);
+                var eulerAngles = rot.eulerAngles;
+                returnRot = returnRot * rot;
             } else {
-                if (!composer.IsInDeadZone_Vertical(lookAtScreenPoint, screenWidth, screenHeight, out float pixelOffsetY)) {
-                    int iterateCount = 0;
-                    float halfHeight = composer.deadZoneNormalizedH / 2;
-                    float upPixelOffsetY = halfHeight;
-                    float downPixelOffsetY = -halfHeight;
-                    bool turnUp = pixelOffsetY > upPixelOffsetY;
-                    float targetPixelOffsetY = turnUp ? upPixelOffsetY : downPixelOffsetY;
-                    float l = 0;
-                    float r = 0;
-                    if (turnUp) {
-                        l = -90;
-                        r = 0;
-                    } else {
-                        l = 0;
-                        r = 90;
-                    }
-                    float mid = (l + r) / 2;
-                    bool isInside = false;
-
-                    Quaternion baseRot = returnRot;
-                    Vector3 basePos = returnPos;
-                    float baseAngleY = baseRot.eulerAngles.y;
-                    Vector3 baseAxis = Quaternion.Euler(0, baseAngleY, 0) * Vector3.right;
-                    camFollowOffset = returnPos - followTargetPos;
-                    while (!isInside || Mathf.Abs(pixelOffsetY - targetPixelOffsetY) > 1f) {
-                        iterateCount++;
-                        if (iterateCount > TCDefaultConfig.MAX_ITERATION_COUNT) {
-                            // Debug.LogError($"DeadZone: Dichotomy DeadLoop - Vertical. > TCDefaultConfig.MAX_ITERATION_COUNT} Pixel Diff {pixelOffsetY - targetPixelOffsetY}");
-                            return (baseRot, basePos);
-                        }
-
-                        returnRot = baseRot * Quaternion.Euler(mid, 0, 0);
-                        returnPos = followTargetPos + Quaternion.AngleAxis(mid, baseAxis) * camFollowOffset;
-
-                        projectionMatrix = GetProjectionMatrix(returnPos, fov, aspect, nearClipPlane, farClipPlane);
-                        lookAtScreenPoint = WorldToScreenPoint(lookAtTargetPos, returnPos, returnRot, projectionMatrix, screenWidth, screenHeight);
-                        isInside = composer.IsInDeadZone_Vertical(lookAtScreenPoint, screenWidth, screenHeight, out pixelOffsetY);
-                        turnUp = pixelOffsetY > targetPixelOffsetY;
-
-                        if (turnUp) {
-                            r = mid;
-                        } else {
-                            l = mid;
-                        }
-                        mid = (l + r) / 2;
-                    }
-                }
+                Vector2 deadZoneRB = composer.GetDeadZoneRB(screenWidth, screenHeight);
+                Quaternion rot = FromToScreenPoint(new Vector3(screenPoint_lt.x, deadZoneRB.y, 1), screenPoint_lt, projectionMatrix, screenWidth, screenHeight);
+                var eulerAngles = rot.eulerAngles;
+                returnRot = returnRot * rot;
             }
 
-            return (returnRot, returnPos);
+            return returnRot;
         }
 
         #endregion
@@ -701,21 +593,19 @@ namespace GameArki.TripodCamera.Domain {
                                             in Matrix4x4 projectionMatrix,
                                             int screenWidth,
                                             int screenHeight) {
-            if (fromScreenPoint == toScreenPoint) {
-                return Quaternion.identity;
-            }
+            if ((fromScreenPoint - toScreenPoint).sqrMagnitude < float.Epsilon) return Quaternion.identity;
 
             var fromViewPortPos = ScreenToViewportPoint(fromScreenPoint, screenWidth, screenHeight);
             var toViewportPos = ScreenToViewportPoint(toScreenPoint, screenWidth, screenHeight);
 
             Quaternion rotation = Quaternion.identity;
-            if (fromScreenPoint.x != toScreenPoint.x) {
+            if (Mathf.Abs(fromScreenPoint.x - toScreenPoint.x) > float.Epsilon) {
                 var viewportOffsetX = toViewportPos.x - fromViewPortPos.x;
                 var rotationAngleY = viewportOffsetX != 0f ? Mathf.Rad2Deg * Mathf.Atan2(viewportOffsetX, projectionMatrix.m00) * 2f : 0f;
                 rotation = Quaternion.Euler(0f, rotationAngleY, 0f) * rotation;
             }
 
-            if (fromScreenPoint.y != toScreenPoint.y) {
+            if (Mathf.Abs(fromScreenPoint.y - toScreenPoint.y) > float.Epsilon) {
                 var viewportOffsetY = toViewportPos.y - fromViewPortPos.y;
                 var rotationAngleX = viewportOffsetY != 0f ? Mathf.Rad2Deg * Mathf.Atan2(viewportOffsetY, projectionMatrix.m00 / projectionMatrix.m11) / -2f : 0f;
                 rotation = rotation * Quaternion.Euler(rotationAngleX, 0f, 0f);

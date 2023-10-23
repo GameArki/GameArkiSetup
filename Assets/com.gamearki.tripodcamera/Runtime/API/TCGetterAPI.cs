@@ -2,7 +2,6 @@ using UnityEngine;
 using GameArki.FPEasing;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Domain;
-using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.API {
 

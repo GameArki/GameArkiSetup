@@ -9,7 +9,6 @@ namespace GameArki.TripodCamera.Entities {
         public void SetTargetorModel(TCTargetorModel targetorModel) => this.targetorModel = targetorModel;
 
         bool isLookAtEnabled;
-        public bool IsLookAtEnabled => isLookAtEnabled;
         public void SetLookAtEnable(bool enable) => this.isLookAtEnabled = enable;
 
         public TCLookAtModel model;

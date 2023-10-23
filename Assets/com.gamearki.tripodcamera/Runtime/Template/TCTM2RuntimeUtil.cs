@@ -167,6 +167,8 @@ namespace GameArki.TripodCamera.Template {
             model.lookLimitActivated = tm.lookLimitActivated;
             model.maxMoveSpeed = tm.maxMoveSpeed;
             model.moveSpeedLimitActivated = tm.moveSpeedLimitActivated;
+            model.maxRotateSpeed = tm.maxRotateSpeed;
+            model.rotateSpeedLimitActivated = tm.rotateSpeedLimitActivated;
             return model;
         }
 

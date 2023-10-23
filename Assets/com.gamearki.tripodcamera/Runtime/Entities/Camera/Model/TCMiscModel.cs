@@ -9,6 +9,9 @@ namespace GameArki.TripodCamera.Entities {
         public float maxMoveSpeed;
         public bool moveSpeedLimitActivated;
 
+        public float maxRotateSpeed;
+        public bool rotateSpeedLimitActivated;
+
     }
 
 }
