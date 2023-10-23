@@ -132,7 +132,7 @@ MonoBehaviour:
     - PureRuntime
     - Sample
     packageName: GameArki.NetworkWeaver.TCP
-    version: 1.3.0
+    version: 1.3.1
     desc: "(TCP)\u7F51\u7EDC\u901A\u4FE1\u534F\u8BAE\u5E93"
   - rootDir: com.gamearki.networkweaver.udp
     dirs:
