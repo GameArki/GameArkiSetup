@@ -9,6 +9,7 @@ namespace GameArki.Network {
         TcpLowLevelServer server;
         int maxMessageSize;
         IProtocolService protocolService;
+        Pool<byte[]> pool;
 
         Dictionary<ushort, Action<int, ArraySegment<byte>>> dic;
 
@@ -18,6 +19,7 @@ namespace GameArki.Network {
         public TcpServer() {
             server = new TcpLowLevelServer();
             dic = new Dictionary<ushort, Action<int, ArraySegment<byte>>>();
+            pool = new Pool<byte[]>();
         }
 
         public void Inject(IProtocolService protocolService) {
@@ -31,6 +33,8 @@ namespace GameArki.Network {
             server.OnConnectedHandle += OnConnected;
             server.OnDisconnectedHandle += OnDisconnected;
             server.OnDataHandle += OnRecvData;
+
+            pool.SetGenerator(() => new byte[maxMessageSize]);
         }
 
         public void Tick() {
@@ -60,18 +64,16 @@ namespace GameArki.Network {
         }
 
         public void Send<T>(byte serviceId, byte messageId, int connId, T msg) where T : IBufferIOMessage<T> {
-            byte[] data = msg.ToBytes();
-            if (data.Length >= maxMessageSize - 2) {
+            byte[] buffer = pool.Take();
+            int offset = 0;
+            buffer[offset++] = serviceId;
+            buffer[offset++] = messageId;
+            msg.WriteTo(buffer, ref offset);
+            if (offset >= maxMessageSize - 2) {
                 throw new Exception("Message is too long");
             }
-            byte[] dst = new byte[data.Length + 2];
-            int offset = 0;
-            dst[offset] = serviceId;
-            offset += 1;
-            dst[offset] = messageId;
-            offset += 1;
-            Buffer.BlockCopy(data, 0, dst, offset, data.Length);
-            server.Send(connId, dst);
+            server.Send(connId, new ArraySegment<byte>(buffer, 0, offset));
+            pool.Return(buffer);
         }
 
         public void On<T>(byte serviceId, byte messageId, Func<T> generateHandle, Action<int, T> handle) where T : IBufferIOMessage<T> {
