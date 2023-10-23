@@ -8,12 +8,9 @@ namespace GameArki.Network {
         Stack<T> objs;
         Func<T> generator;
 
-        public Pool() {
-            objs = new Stack<T>(20);
-        }
-
-        public Pool(Func<T> func) : this() {
+        public Pool(Func<T> func = null, int capacity = 20) {
             generator = func;
+            objs = new Stack<T>(capacity);
         }
 
         public void SetGenerator(Func<T> func) {
@@ -21,7 +18,7 @@ namespace GameArki.Network {
         }
 
         public T Take() {
-            return objs.Count == 0 ? generator() : objs.Pop();
+            return objs.Count == 0 ? generator.Invoke() : objs.Pop();
         }
 
         public void Return(T obj) {
