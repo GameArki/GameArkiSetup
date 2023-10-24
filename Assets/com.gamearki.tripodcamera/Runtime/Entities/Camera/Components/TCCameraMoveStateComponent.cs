@@ -14,11 +14,11 @@ namespace GameArki.TripodCamera.Entities {
 
         // Temp
         int index;
-        Vector2 resOffset;
-        Vector2 resOffset_inherit;
+        Vector3 resOffset;
+        Vector3 resOffset_inherit;
         float time;
 
-        Vector2 exitStartOffset;
+        Vector3 exitStartOffset;
         float exitTime;
 
         public event Action OnEndHandle;
@@ -78,9 +78,9 @@ namespace GameArki.TripodCamera.Entities {
 
             var cur = modelArray[index];
             if (cur.isInherit) {
-                resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, resOffset_inherit, cur.offset);
+                resOffset = EasingHelper.Ease3D(cur.easingType, time, cur.duration, resOffset_inherit, cur.offset);
             } else {
-                resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, Vector2.zero, cur.offset);
+                resOffset = EasingHelper.Ease3D(cur.easingType, time, cur.duration, Vector3.zero, cur.offset);
             }
 
             if (time >= cur.duration) {
@@ -94,7 +94,7 @@ namespace GameArki.TripodCamera.Entities {
                         next.offset += resOffset;
                         resOffset_inherit = resOffset;
                     } else {
-                        resOffset = Vector2.zero;
+                        resOffset = Vector3.zero;
                     }
                 } else {
                     if (OnEndHandle != null) {
@@ -109,7 +109,7 @@ namespace GameArki.TripodCamera.Entities {
 
         void TickExiting(float dt) {
             exitTime += dt;
-            resOffset = EasingHelper.Ease2D(exitEasing, exitTime, exitDuration, exitStartOffset, Vector2.zero);
+            resOffset = EasingHelper.Ease2D(exitEasing, exitTime, exitDuration, exitStartOffset, Vector3.zero);
 
             if (exitTime >= exitDuration) {
                 exitTime = 0;

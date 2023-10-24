@@ -123,29 +123,6 @@ namespace GameArki.TripodCamera.Domain {
             return true;
         }
 
-        public void ManualRounding_Horizontal(float degreeY, float duration, EasingType exitEasingType, float exitDuration) {
-            _ManualRounding(new Vector3(0, degreeY, 0), duration, exitEasingType, exitDuration);
-        }
-
-        public void ManualRounding_Vertical(float degreeX, float duration, EasingType exitEasingType, float exitDuration) {
-            _ManualRounding(new Vector3(degreeX, 0, 0), duration, exitEasingType, exitDuration);
-        }
-
-        void _ManualRounding(in Vector3 addEulerAngles, float duration, EasingType exitEasingType, float exitDuration) {
-            if (addEulerAngles == Vector3.zero) return;
-
-            var director = context.directorEntity;
-            var fsmCom = director.FSMComponent;
-            var fsmState = fsmCom.FSMState;
-            var stateModel = fsmCom.ManualRoundingStateModel;
-
-            if (fsmState != TCDirectorFSMState.ManualRounding) fsmCom.EnterManualRounding(duration);
-            else fsmCom.ManualRoundingStateModel.SetDuration(duration);
-
-            stateModel.AddRoundingEulerAngles(addEulerAngles);
-            stateModel.SetExitEasingType(exitEasingType);
-        }
-
         void Enter_None() {
             context.directorEntity.FSMComponent.EnterNone();
         }

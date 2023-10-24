@@ -7,11 +7,11 @@ namespace GameArki.TripodCamera.Controller {
     internal class TCController {
 
         TCContext tcContext;
-        TCDomain domain;
+        TCRootDomain domain;
 
         internal TCController() { }
 
-        internal void Inject(TCContext context, TCDomain domain) {
+        internal void Inject(TCContext context, TCRootDomain domain) {
             this.tcContext = context;
             this.domain = domain;
         }
@@ -42,7 +42,6 @@ namespace GameArki.TripodCamera.Controller {
 
             var mainCam = tcContext.MainCamera;
             var curTCCamera = camRepo.CurrentTCCam;
-            var directorFSMState = tcContext.directorEntity.FSMComponent.FSMState;
             applyDomain.ApplyToMain(curTCCamera, mainCam);
         }
 
