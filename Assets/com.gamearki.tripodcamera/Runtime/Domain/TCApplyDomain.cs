@@ -162,23 +162,23 @@ namespace GameArki.TripodCamera.Domain {
             }
 
             void ApplyComposer_OneTarget() {
-                var projectionMatrix = cameraDomain.GetProjectionMatrix(eyePos,
+                var projectionMatrix = TCMathUtil.GetProjectionMatrix(eyePos,
                                                                         fov,
                                                                         aspect,
                                                                         nearClipPlane,
                                                                         farClipPlane);
 
-                Vector3 screenPoint_lt = cameraDomain.WorldToScreenPoint(targetorModel.LookAtTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
-                Vector3 screenPoint_ft = cameraDomain.WorldToScreenPoint(targetorModel.FollowTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
+                Vector3 screenPoint_lt = TCMathUtil.WorldToScreenPoint(targetorModel.LookAtTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
+                Vector3 screenPoint_ft = TCMathUtil.WorldToScreenPoint(targetorModel.FollowTargetPos, eyePos, eyeRot, projectionMatrix, screenWidth, screenHeight);
 
-                eyeRot = cameraDomain.LookAtComposer_Horizontal(eyePos,
+                eyeRot = TCMathUtil.LookAtComposer_Horizontal(eyePos,
                                                                 eyeRot,
                                                                 composer,
                                                                 projectionMatrix,
                                                                 screenWidth,
                                                                 screenHeight,
                                                                 screenPoint_lt);
-                eyeRot = cameraDomain.LookAtComposer_Vertical(eyePos,
+                eyeRot = TCMathUtil.LookAtComposer_Vertical(eyePos,
                                                               eyeRot,
                                                               composer,
                                                               projectionMatrix,
@@ -220,12 +220,12 @@ namespace GameArki.TripodCamera.Domain {
                 }
 
                 var lookAtTargetPos = targetorModel.LookAtTargetPos;
-                var projectionMatrix = cameraDomain.GetProjectionMatrix(eyePos,
+                var projectionMatrix = TCMathUtil.GetProjectionMatrix(eyePos,
                                                                         fov,
                                                                         aspect,
                                                                         nearClipPlane,
                                                                         farClipPlane);
-                Vector3 screenPoint = cameraDomain.WorldToScreenPoint(lookAtTargetPos,
+                Vector3 screenPoint = TCMathUtil.WorldToScreenPoint(lookAtTargetPos,
                                                                       eyePos,
                                                                       normalRot,
                                                                       projectionMatrix,
@@ -258,7 +258,7 @@ namespace GameArki.TripodCamera.Domain {
             var mutablePos = afterInfo.Position;
             var screenWidth = afterInfo.ScreenWidth;
             var screenHeight = afterInfo.ScreenHeight;
-            var projectionMatrix = cameraDomain.GetProjectionMatrix(
+            var projectionMatrix = TCMathUtil.GetProjectionMatrix(
                 mutablePos,
                 afterInfo.FOV,
                 afterInfo.Aspect,
@@ -268,8 +268,8 @@ namespace GameArki.TripodCamera.Domain {
 
             float borderY = followTargetPos.y - 0.75f;
             if (mutablePos.y <= borderY) {
-                Vector3 screenPoint = cameraDomain.WorldToScreenPoint(followTargetPos, mutablePos, mutableRot, projectionMatrix, screenWidth, screenHeight);
-                Vector3 dir = cameraDomain.ScreenPointToDir(screenPoint, mutablePos, mutableRot, projectionMatrix, screenWidth, screenHeight);
+                Vector3 screenPoint = TCMathUtil.WorldToScreenPoint(followTargetPos, mutablePos, mutableRot, projectionMatrix, screenWidth, screenHeight);
+                Vector3 dir = TCMathUtil.ScreenPointToDir(screenPoint, mutablePos, mutableRot, projectionMatrix, screenWidth, screenHeight);
                 Debug.DrawLine(mutablePos, mutablePos + dir * 10, Color.blue, 1f);
                 float dis = (borderY - mutablePos.y) / Vector3.Dot(dir, Vector3.up);
                 Vector3 physicsRecoilOffset = dir * dis;

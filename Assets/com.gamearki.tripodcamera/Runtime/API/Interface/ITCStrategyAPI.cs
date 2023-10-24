@@ -2,7 +2,7 @@ using GameArki.FPEasing;
 
 namespace GameArki.TripodCamera.API {
 
-    public interface IStrategySetterAPI {
+    public interface ITCStrategyAPI {
 
         /// <summary>
         /// 设置指定ID相机 最大俯视角度
@@ -34,10 +34,10 @@ namespace GameArki.TripodCamera.API {
         /// </summary>
         void SetAutoFacing(EasingType easingType, float duration, float minAngleDiff, float sameForwardBreakTime, int id);
 
-          /// <summary>
+        /// <summary>
         /// 关闭指定ID相机 自动面向功能
         /// </summary>
-        void QuitAutoFacing();
+        void QuitAutoFacing(int id);
 
     }
 

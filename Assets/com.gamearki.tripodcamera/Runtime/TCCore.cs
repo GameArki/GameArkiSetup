@@ -14,15 +14,12 @@ namespace GameArki.TripodCamera {
         public bool IsPause => isPause;
 
         // ==== API ====
-        TCSetterAPI setterAPI;
-        public ITCSetterAPI SetterAPI => setterAPI;
-
-        TCGetterAPI getterAPI;
-        public ITCGetterAPI GetterAPI => getterAPI;
+        TCAPI api;
+        public TCAPI API => api;
 
         // ==== Facades ====
         TCContext context;
-        TCDomain domain;
+        TCRootDomain rootDomain;
 
         // ==== Controller ====
         TCController controller;
@@ -32,11 +29,10 @@ namespace GameArki.TripodCamera {
             this.isInit = false;
             this.isPause = false;
 
-            this.setterAPI = new TCSetterAPI();
-            this.getterAPI = new TCGetterAPI();
+            this.api = new TCAPI();
 
             this.context = new TCContext();
-            this.domain = new TCDomain();
+            this.rootDomain = new TCRootDomain();
 
             this.controller = new TCController();
 
@@ -45,16 +41,10 @@ namespace GameArki.TripodCamera {
         public void Initialize(Camera mainCamera) {
 
             // ==== Inject ====
-            // - API
-            setterAPI.Inject(context, domain);
-            getterAPI.Inject(context, domain);
-
-            // - Facades
             context.Inject(mainCamera);
-            domain.Inject(context);
-
-            // - Controller
-            controller.Inject(context, domain);
+            rootDomain.Inject(context);
+            controller.Inject(context, rootDomain);
+            api.Inject(rootDomain);
 
             // ==== Init ====
             controller.Init();
@@ -160,8 +150,8 @@ namespace GameArki.TripodCamera {
             return context;
         }
 
-        public TCDomain GetDomainThatYouCanVisitEverythingButNotRecommended() {
-            return domain;
+        public TCRootDomain GetDomainThatYouCanVisitEverythingButNotRecommended() {
+            return rootDomain;
         }
 
     }

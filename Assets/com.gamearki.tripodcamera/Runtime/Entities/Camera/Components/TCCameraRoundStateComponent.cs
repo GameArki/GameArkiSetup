@@ -125,7 +125,7 @@ namespace GameArki.TripodCamera.Entities {
         }
 
         public Vector3 GetRoundOffset(Vector3 pos) {
-            if (modelArray == null) {
+            if (modelArray == null || !targetorModel.HasFollowTarget) {
                 return Vector3.zero;
             }
 

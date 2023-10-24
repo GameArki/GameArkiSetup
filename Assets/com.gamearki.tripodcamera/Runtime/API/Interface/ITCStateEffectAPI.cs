@@ -3,7 +3,7 @@ using GameArki.FPEasing;
 
 namespace GameArki.TripodCamera.API {
 
-    public interface ICameraStateEffectAPI {
+    public interface ITCStateEffectAPI {
 
         /// <summary>
         /// 设置指定ID相机的状态效果: 相机震屏

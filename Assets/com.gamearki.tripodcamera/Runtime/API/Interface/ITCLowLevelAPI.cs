@@ -1,14 +1,13 @@
 using UnityEngine;
-using GameArki.FPEasing;
 
 namespace GameArki.TripodCamera.API {
 
     /// <summary>
     /// 包括基本的 推/拉、旋转、移动、缩放
     /// </summary>
-    public interface ILowLevelSetterAPI {
+    public interface ITCLowLevelAPI {
 
-        void Push_In(float value, int id);
+        void Push(float value, int id);
 
         void Rotate_Roll(float z, int id);
 
@@ -16,7 +15,7 @@ namespace GameArki.TripodCamera.API {
 
         void Move_AndChangeLookAtOffset(Vector2 value, int id);
 
-        void Zoom_In(float value, int id);
+        void Zoom(float value, int id);
 
     }
 
