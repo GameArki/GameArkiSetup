@@ -19,7 +19,6 @@ namespace GameArki.TripodCamera.Entities {
         Vector3 resOffset_inherit;
         float time;
 
-
         Vector2 exitStartOffset;
         bool isExiting;
         float exitTime;

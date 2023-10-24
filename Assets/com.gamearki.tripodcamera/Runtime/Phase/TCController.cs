@@ -42,7 +42,6 @@ namespace GameArki.TripodCamera.Controller {
 
             var mainCam = tcContext.MainCamera;
             var curTCCamera = camRepo.CurrentTCCam;
-            var directorFSMState = tcContext.directorEntity.FSMComponent.FSMState;
             applyDomain.ApplyToMain(curTCCamera, mainCam);
         }
 
