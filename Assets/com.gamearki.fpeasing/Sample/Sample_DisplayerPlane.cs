@@ -41,22 +41,13 @@ namespace GameArki.FPEasing.Sample {
             a.Release();
 
             GetComponentInChildren<Text>().text = functionName;
+
+            DrawFunction(1000);
         }
 
         void Update() {
             float v = GetFuntionResult(functionName , t);
-            for (int x = 0; x < circleSize; x++) {
-                for (int y = 0; y < circleSize; y++) {
-                    int xp = x - circleSize / 2 + (int)(canvasSize * t) + 56;
-                    int yp = y - circleSize / 2 + (int)(canvasSize * v) + 56;
-                    Color color = circle.GetPixel(x, y);
-                    if (color == Color.black&& xp >= 0 && yp >= 0 && xp < canvasSize+112 && yp < canvasSize+112) {
-                        converted.SetPixel(xp, yp, color);
-                    }
-                }
-            }
-            converted.Apply();
-
+            
             float lenth = 3;
             cube.localPosition = new Vector3(0,1 + lenth * v,0);
             
@@ -64,8 +55,6 @@ namespace GameArki.FPEasing.Sample {
             if (t > 1) {
                 t = 0;
             }
-
-            displayer.material.SetTexture("_MainTex", converted);
         }
 
         float GetFuntionResult(string cal , float t) {
@@ -107,6 +96,25 @@ namespace GameArki.FPEasing.Sample {
 
             c.Apply();
             return c;
+        }
+
+        void DrawFunction(int precision) {
+
+            for (int i = 0; i < precision; i++) {
+                float v = GetFuntionResult(functionName , (float)i/precision);
+                for (int x = 0; x < circleSize; x++) {
+                    for (int y = 0; y < circleSize; y++) {
+                        int xp = x - circleSize / 2 + (int)(canvasSize * i/precision) + 56;
+                        int yp = y - circleSize / 2 + (int)(canvasSize * v) + 56;
+                        Color color = circle.GetPixel(x, y);
+                        if (color == Color.black && xp >= 0 && yp >= 0 && xp < canvasSize + 112 && yp < canvasSize + 112) {
+                            converted.SetPixel(xp, yp, color);
+                        }
+                    }
+                }
+            }
+            converted.Apply();
+            displayer.material.SetTexture("_MainTex", converted);
         }
     }
 }
