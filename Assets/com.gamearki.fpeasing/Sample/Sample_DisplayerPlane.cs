@@ -8,22 +8,30 @@ namespace GameArki.FPEasing.Sample {
     public class Sample_DisplayerPlane : MonoBehaviour {
         MeshRenderer displayer;
         Transform cube;
+        Transform sphere;
         Texture2D converted;
         Texture2D circle;
 
         public int circleSize = 512;
         public string functionName = "EaseInSine";
-
+        
+        Vector3 a = new (0, 1, 0);
+        Vector3 b = new (0, 4, 0);
+        
         float t;
+        float l;
         int canvasSize;
-
+        
         void Start() {
             displayer = GetChild(transform, "Displayer").GetComponent<MeshRenderer>();
             cube = GetChild(transform, "CubeA");
+            sphere = GetChild(displayer.transform, "Sphere");
             
             Texture texture = displayer.material.GetTexture("_MainTex");
             circle = DrawCircle(circleSize);
             canvasSize = texture.height;
+            l = (56f / (canvasSize + 112f))*10f;
+            
             converted = new Texture2D(canvasSize+112, canvasSize+112);
             for (int x = 0; x < canvasSize+112; x++) {
                 for (int y = 0; y < canvasSize+112; y++) {
@@ -32,24 +40,24 @@ namespace GameArki.FPEasing.Sample {
             }
 
             RenderTexture currentRT = RenderTexture.active;
-            RenderTexture a = new RenderTexture(canvasSize, canvasSize, 0);
-            RenderTexture.active = a;
+            RenderTexture renderTexture = new RenderTexture(canvasSize, canvasSize, 0);
+            RenderTexture.active = renderTexture;
             Graphics.Blit(texture, RenderTexture.active);
             converted.ReadPixels(new Rect(0, 0, canvasSize, canvasSize), 56, 56);
             converted.Apply();
             RenderTexture.active = currentRT;
-            a.Release();
+            renderTexture.Release();
 
             GetComponentInChildren<Text>().text = functionName;
 
             DrawFunction(1000);
         }
-
+        
         void Update() {
             float v = GetFuntionResult(functionName , t);
             
-            float lenth = 3;
-            cube.localPosition = new Vector3(0,1 + lenth * v,0);
+            cube.localPosition = Vector3.LerpUnclamped(a, b, v);
+            sphere.localPosition = new Vector3(Mathf.LerpUnclamped(5f - l, -5f + l, t), 0, Mathf.LerpUnclamped(5f - l, -5f + l, v));
             
             t += Time.deltaTime;
             if (t > 1) {
@@ -61,7 +69,7 @@ namespace GameArki.FPEasing.Sample {
             Type type = typeof(FunctionHelper);
             MethodInfo methodInfo = type.GetMethod(cal, BindingFlags.Public | BindingFlags.Static);
             object[] p = { t };
-            object o = methodInfo.Invoke( cal , p);
+            object o = methodInfo.Invoke( cal , p );
             float result = (float)o;
             
             return result;

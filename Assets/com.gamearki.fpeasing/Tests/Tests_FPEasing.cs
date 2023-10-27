@@ -12,7 +12,6 @@ namespace GameArki.FPEasing.Tests {
             Assert.That(IsNear(func(x), y, 0.000001f));
         }
         
-        
         [Test]
         public void Test_EasingFunction() {
 
