@@ -22,8 +22,7 @@ namespace GameArki.TripodCamera.Domain {
             lookAtComponent.SetLookAtEnable(flag);
         }
 
-        public void SetInit(Transform target,
-                            in Vector3 offset,
+        public void SetInit(in Vector3 offset,
                             EasingType horizontalEasingType,
                             float horizontalEasingTime,
                             EasingType verticalEasingType,
@@ -31,7 +30,7 @@ namespace GameArki.TripodCamera.Domain {
                             int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
 
-            tcCam.LookAt_SetInit(target, offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
+            tcCam.LookAt_SetInit(offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 
         public void SetNormalLookActivated(bool flag, int id) {
@@ -58,17 +57,21 @@ namespace GameArki.TripodCamera.Domain {
             tcCam.LookAt_SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 
-        public void ChangeTarget(Transform target, int id) {
+        public void TickLookAtPos(Vector3 pos, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
 
-            tcCam.LookAt_ChangeTarget(target);
+            tcCam.LookAt_TickLookAtPos(pos);
+        }
 
-            if (target == null) {
-                var composerModel = tcCam.LookAtComponent.model.composerModel;
-                var composerType = composerModel.composerType;
-                if (composerType == TCLookAtComposerType.LookAtTarget) {
-                    composerModel.composerType = TCLookAtComposerType.None;
-                }
+        public void CancelLookAt(int id) {
+            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+
+            tcCam.LookAt_CancelLookAt();
+
+            var composerModel = tcCam.LookAtComponent.model.composerModel;
+            var composerType = composerModel.composerType;
+            if (composerType == TCLookAtComposerType.LookAtTarget) {
+                composerModel.composerType = TCLookAtComposerType.None;
             }
         }
 
@@ -99,20 +102,20 @@ namespace GameArki.TripodCamera.Domain {
             return tcCam.LookAtComponent.model.normalLookAngles;
         }
 
-        public Transform GetTransform(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) {
-                return null;
-            }
+        // public Transform GetTransform(int id) {
+        //     if (!_TryGetTCCameraByID(id, out var tcCam)) {
+        //         return null;
+        //     }
 
-            return tcCam.TargetorModel.LookAtTarget;
-        }
+        //     return tcCam.TargetorModel.LookAtTarget;
+        // }
 
         public bool HasTarget(int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) {
                 return false;
             }
 
-            return tcCam.TargetorModel.LookAtTarget != null;
+            return tcCam.TargetorModel.HasLookAtTarget;
         }
 
         public void SetComposer(TCLookAtComposerModel composer, int id) {

@@ -8,13 +8,17 @@ namespace GameArki.TripodCamera.API {
         /// <summary>
         /// 初始化指定ID相机的 #跟随点 #跟随位置偏移 #缓动函数(水平方向) #缓动时间(水平方向) #缓动函数(垂直方向) #缓动时间(垂直方向)
         /// </summary>
-        void SetInit(Transform target,
-                            in Vector3 offset,
-                            EasingType easingType_horizontal,
-                            float easingTime_horizontal,
-                            EasingType easingType_vertical,
-                            float easingTime_vertical,
-                            int id);
+        void SetInit(   in Vector3 offset,
+                        EasingType easingType_horizontal,
+                        float easingTime_horizontal,
+                        EasingType easingType_vertical,
+                        float easingTime_vertical,
+                        int id);
+
+        /// <summary>
+        /// 设置指定ID相机的 #跟随点 #跟随点的旋转
+        /// </summary>
+        void TickFollowPos(in Vector3 pos, in Quaternion rot, int id);
 
         /// <summary>
         /// 设置指定ID相机的 #缓动函数(水平方向) #缓动时间(水平方向) #缓动函数(垂直方向) #缓动时间(垂直方向)
@@ -22,9 +26,9 @@ namespace GameArki.TripodCamera.API {
         void SetEasing(EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id);
 
         /// <summary>
-        /// 设置指定ID相机的 #跟随点
+        /// 设置指定ID相机的 #跟随点 ---- 因transform被抽离，此功能应该由外部实现
         /// </summary>
-        void ChangeTarget(Transform target, int id);
+        // void ChangeTarget(Transform target, int id);
 
         /// <summary>
         /// 设置指定ID相机的 #跟随位置偏移
@@ -46,9 +50,14 @@ namespace GameArki.TripodCamera.API {
         /// </summary>
         void ManualRounding_Vertical(float degreeX, float duration, EasingType exitEasingType, float exitDuration);
 
+        /// <summary>
+        /// 取消指定ID相机的跟随目标
+        /// </summary>
+        void CancelFollow(int id);
+
         bool HasTarget(int id);
         Vector3 GetNormalOffset(int id);
-        Transform GetTransform(int id);
+        // Transform GetTransform(int id);
 
     }
 

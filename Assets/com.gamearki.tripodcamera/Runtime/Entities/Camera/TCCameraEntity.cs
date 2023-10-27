@@ -148,13 +148,11 @@ namespace GameArki.TripodCamera.Entities {
 
         // ==== Advance ====
         // - Follow
-        public void Follow_SetInit(Transform target,
-                                   Vector3 normalFollowOffset,
+        public void Follow_SetInit(Vector3 normalFollowOffset,
                                    EasingType easingType_horizontal,
                                    float easingTime_horizontal,
                                    EasingType easingType_vertical,
                                    float easingTime_vertical) {
-            targetorModel.SetFollowTarget(target);
             followComponent.SetNormalFollowOffset(normalFollowOffset);
             followComponent.SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
@@ -166,9 +164,18 @@ namespace GameArki.TripodCamera.Entities {
             followComponent.SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
-        public void Follow_ChangeTarget(Transform target) {
-            targetorModel.SetFollowTarget(target);
+        public void Follow_TickFollowPos(Vector3 pos, Quaternion rot){
+            targetorModel.SetFollowPos(pos);
+            targetorModel.SetFollowRotaion(rot);
         }
+
+        public void Follow_CancelFollow(){
+            targetorModel.SetFollowPos(null);
+        }
+
+        // public void Follow_ChangeTarget(Transform target) {
+        //     targetorModel.SetFollowTarget(target);
+        // }
 
         public void Follow_ChangeXEasing(EasingType easingType, float easingTime) {
             followComponent.ChangeXEasing(easingType, easingTime);
@@ -191,13 +198,11 @@ namespace GameArki.TripodCamera.Entities {
         }
 
         // - LookAt
-        public void LookAt_SetInit(Transform target,
-                                   Vector3 lookAtTargetOffset,
+        public void LookAt_SetInit(Vector3 lookAtTargetOffset,
                                    EasingType horizontalEasingType,
                                    float horizontalEasingTime,
                                    EasingType verticalEasingType,
                                    float verticalEasingTime) {
-            targetorModel.SetLookAtTarget(target);
             lookAtComponent.model.lookAtTargetOffset = lookAtTargetOffset;
             lookAtComponent.SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
@@ -209,9 +214,17 @@ namespace GameArki.TripodCamera.Entities {
             lookAtComponent.SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime);
         }
 
-        public void LookAt_ChangeTarget(Transform target) {
-            targetorModel.SetLookAtTarget(target);
+        public void LookAt_TickLookAtPos(Vector3 pos){
+            targetorModel.SetLookAtTarget(pos);
         }
+
+        public void LookAt_CancelLookAt(){
+            targetorModel.SetLookAtTarget(null);
+        }
+
+        // public void LookAt_ChangeTarget(Transform target) {
+        //     targetorModel.SetLookAtTarget(target);
+        // }
 
     }
 

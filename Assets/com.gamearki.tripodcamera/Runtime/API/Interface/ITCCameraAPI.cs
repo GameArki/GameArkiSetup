@@ -35,6 +35,11 @@ namespace GameArki.TripodCamera.API {
         /// 直接设置指定ID相机的旋转
         /// </summary>
         void SetRotation(in Quaternion rot, int id);
+        
+        /// <summary>
+        /// 获取当前设定的相机id
+        /// </summary>
+        bool TryGetCurrentCameraID(out int ID);
 
     }
 

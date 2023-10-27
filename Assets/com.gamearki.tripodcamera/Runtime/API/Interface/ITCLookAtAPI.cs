@@ -12,10 +12,9 @@ namespace GameArki.TripodCamera.API {
         void SetEnabled(bool enabled, int id);
 
         /// <summary>
-        /// 初始化指定ID相机的 #看向点 #看向位置偏移 #缓动函数(水平方向) #缓动时间(水平方向) #缓动函数(垂直方向) #缓动时间(垂直方向)
+        /// 初始化指定ID相机的 #看向位置偏移 #缓动函数(水平方向) #缓动时间(水平方向) #缓动函数(垂直方向) #缓动时间(垂直方向)
         /// </summary>
-        void SetInit(Transform target,
-                     in Vector3 offset,
+        void SetInit(in Vector3 offset,
                      EasingType horizontalEasingType,
                      float horizontalEasingTime,
                      EasingType verticalEasingType,
@@ -29,9 +28,19 @@ namespace GameArki.TripodCamera.API {
         void SetEasing(EasingType horizontalEasingType, float horizontalEasingTime, EasingType verticalEasingType, float verticalEasingTime, int id);
 
         /// <summary>
-        /// 设置指定ID相机的 #看向点
+        /// 刷新指定ID相机的 #看向点
         /// </summary>
-        void ChangeTarget(Transform target, int id);
+        void TickLookAtPos(Vector3 pos, int id);
+
+        /// <summary>
+        /// 取消指定ID相机的LookAt
+        /// </summary>
+        void CancelLookAt(int id);
+
+        /// <summary>
+        /// 设置指定ID相机的 #看向点 ---- 因transform被抽离，此功能应该由外部实现
+        /// </summary>
+        // void ChangeTarget(Transform target, int id);
 
         /// <summary>
         /// 启用或关闭指定ID相机的 正常看向角度
@@ -72,7 +81,7 @@ namespace GameArki.TripodCamera.API {
         TCLookAtComposerType GetComposerType(int id);
         Vector2 GetDeadZoneLT(int id);
         Vector2 GetDeadZoneRB(int id);
-        Transform GetTransform(int id);
+        // Transform GetTransform(int id);
         Vector3 GetNormalAngle(int id);
 
     }
