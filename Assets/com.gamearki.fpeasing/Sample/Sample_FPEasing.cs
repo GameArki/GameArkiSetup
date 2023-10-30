@@ -6,11 +6,8 @@ namespace GameArki.FPEasing.Sample {
 
         Vector2[] points;
 
-        int a;
-
         void Awake() {
             points = new Vector2[360];
-            a = 10;
         }
 
         float rest;
@@ -26,7 +23,7 @@ namespace GameArki.FPEasing.Sample {
 
             // t: x
             // v: y
-            float v = FunctionHelper.EaseInSine(t);
+            float v = FunctionHelper.EaseInOutBounce(t);
 
             int index = (int)(t * 360);
             points[index] = new Vector2(t, v);
@@ -35,9 +32,6 @@ namespace GameArki.FPEasing.Sample {
             if (t > 1) {
                 t = 0;
             }
-
-            Debug.Assert(a == 10);
-
         }
 
         void OnGUI() {
@@ -45,12 +39,19 @@ namespace GameArki.FPEasing.Sample {
                 return;
             }
 
-            for (int i = 0; i < points.Length; i += 1) {
+            int step = 0;
+            string s = "";
+            for (int i = 0; i < points.Length; i += 10) {
                 Vector2 point = points[i];
-                GUI.Label(new Rect(100, 100 + i * 15, 1000, 100), "x: " + point.x + "                    y: " + point.y);
+                if (point.x != 0) {
+                    GUI.Label(new Rect(100, 100 + step * 15, 1000, 100),
+                        "x: " + point.x + "                    y: " + point.y);
+                    s += "Test_RunFunction(func," + point.x + "f," + point.y + "f);\n\n";
+                    step++;
+                }
             }
         }
-
+        
         void OnDrawGizmos() {
             if (points == null) {
                 return;
@@ -62,6 +63,6 @@ namespace GameArki.FPEasing.Sample {
                 Gizmos.DrawSphere(point, 0.1f);
             }
         }
-
+       
     }
 }
