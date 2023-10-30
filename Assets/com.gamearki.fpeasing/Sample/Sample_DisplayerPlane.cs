@@ -34,6 +34,11 @@ namespace GameArki.FPEasing.Sample {
             canvasSize = texture.height;
             l = (56f / (canvasSize + 112f))*10f;
             
+            displayer = GetChild(transform, "Displayer").GetComponent<MeshRenderer>();
+            cube = GetChild(transform, "CubeA");
+            sphere = GetChild(displayer.transform, "Sphere");
+            
+            
             converted = new Texture2D(canvasSize+112, canvasSize+112);
             for (int x = 0; x < canvasSize+112; x++) {
                 for (int y = 0; y < canvasSize+112; y++) {
