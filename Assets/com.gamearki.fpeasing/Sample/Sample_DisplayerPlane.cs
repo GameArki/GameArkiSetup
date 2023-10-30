@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace GameArki.FPEasing.Sample {
     
     public class Sample_DisplayerPlane : MonoBehaviour {
+        
         MeshRenderer displayer;
         Transform cube;
         Transform sphere;
@@ -23,6 +24,7 @@ namespace GameArki.FPEasing.Sample {
         int canvasSize;
         
         void Start() {
+            
             displayer = GetChild(transform, "Displayer").GetComponent<MeshRenderer>();
             cube = GetChild(transform, "CubeA");
             sphere = GetChild(displayer.transform, "Sphere");
@@ -51,11 +53,12 @@ namespace GameArki.FPEasing.Sample {
             GetComponentInChildren<Text>().text = functionName;
 
             DrawFunction(1000);
+            
         }
         
         void Update() {
-            float v = GetFuntionResult(functionName , t);
             
+            float v = GetFuntionResult(functionName , t);
             cube.localPosition = Vector3.LerpUnclamped(a, b, v);
             sphere.localPosition = new Vector3(Mathf.LerpUnclamped(5f - l, -5f + l, t), 0, Mathf.LerpUnclamped(5f - l, -5f + l, v));
             
@@ -63,9 +66,11 @@ namespace GameArki.FPEasing.Sample {
             if (t > 1) {
                 t = 0;
             }
+            
         }
 
         float GetFuntionResult(string cal , float t) {
+            
             Type type = typeof(FunctionHelper);
             MethodInfo methodInfo = type.GetMethod(cal, BindingFlags.Public | BindingFlags.Static);
             object[] p = { t };
@@ -73,10 +78,11 @@ namespace GameArki.FPEasing.Sample {
             float result = (float)o;
             
             return result;
+            
         }
         
-        Transform GetChild(Transform parent, string search)
-        {
+        Transform GetChild(Transform parent, string search) {
+            
             Transform[] transforms = parent.gameObject.GetComponentsInChildren<Transform>();
             foreach (var tran in transforms) {
                 if (tran.gameObject.name == search) {
@@ -85,10 +91,11 @@ namespace GameArki.FPEasing.Sample {
             }
 
             return null;
+            
         }
 
-        Texture2D DrawCircle(int size)
-        {
+        Texture2D DrawCircle(int size) {
+            
             Texture2D c = new Texture2D(size, size);
             Vector2 center = new Vector2((float)(size - 1) / 2, (float)(size - 1) / 2);
             float r = (float)size / 2;
@@ -104,6 +111,7 @@ namespace GameArki.FPEasing.Sample {
 
             c.Apply();
             return c;
+            
         }
 
         void DrawFunction(int precision) {
@@ -122,7 +130,11 @@ namespace GameArki.FPEasing.Sample {
                 }
             }
             converted.Apply();
+
             displayer.material.SetTexture("_MainTex", converted);
+            
         }
+        
     }
+    
 }

@@ -34,7 +34,6 @@ namespace GameArki.FPEasing.Sample {
             }
         }
 
-        
         void OnGUI() {
             if (points == null) {
                 return;
