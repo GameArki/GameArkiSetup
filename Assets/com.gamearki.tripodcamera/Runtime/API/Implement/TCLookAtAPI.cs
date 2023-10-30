@@ -15,10 +15,6 @@ namespace GameArki.TripodCamera.API {
             this.lookAtDomain = lookAtDomain;
         }
 
-        void ITCLookAtAPI.ChangeTarget(Transform target, int id) {
-            lookAtDomain.ChangeTarget(target, id);
-        }
-
         TCLookAtComposerType ITCLookAtAPI.GetComposerType(int id) {
             return lookAtDomain.GetComposerType(id);
         }
@@ -33,10 +29,6 @@ namespace GameArki.TripodCamera.API {
 
         Vector3 ITCLookAtAPI.GetNormalAngle(int id) {
             return lookAtDomain.GetNormalAngle(id);
-        }
-
-        Transform ITCLookAtAPI.GetTransform(int id) {
-            return lookAtDomain.GetTransform(id);
         }
 
         bool ITCLookAtAPI.HasTarget(int id) {
@@ -63,14 +55,14 @@ namespace GameArki.TripodCamera.API {
             lookAtDomain.SetComposerType(composerType, id);
         }
 
-        void ITCLookAtAPI.SetInit(Transform target, in Vector3 offset, EasingType horizontalEasingType, float horizontalEasingTime, EasingType verticalEasingType, float verticalEasingTime, int id) {
-            lookAtDomain.SetInit(target, offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime, id);
+        void ITCLookAtAPI.SetInit(in Vector3 offset, EasingType horizontalEasingType, float horizontalEasingTime, EasingType verticalEasingType, float verticalEasingTime, int id) {
+            lookAtDomain.SetInit(offset, horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime, id);
         }
 
         void ITCLookAtAPI.SetEasing(EasingType horizontalEasingType, float horizontalEasingTime, EasingType verticalEasingType, float verticalEasingTime, int id) {
             lookAtDomain.SetEasing(horizontalEasingType, horizontalEasingTime, verticalEasingType, verticalEasingTime, id);
         }
-        
+
         void ITCLookAtAPI.SetEnabled(bool enabled, int id) {
             lookAtDomain.SetEnabled(enabled, id);
         }
@@ -83,6 +75,13 @@ namespace GameArki.TripodCamera.API {
             lookAtDomain.SetNormalLookActivated(activated, id);
         }
 
+        void ITCLookAtAPI.TickLookAtPos(Vector3 pos, int id) {
+            lookAtDomain.TickLookAtPos(pos, id);
+        }
+
+        void ITCLookAtAPI.CancelLookAt(int id) {
+            lookAtDomain.CancelLookAt(id);
+        }
     }
 
 }

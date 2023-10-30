@@ -18,17 +18,17 @@ namespace GameArki.TripodCamera.API {
             followDomain.ChangeOffset(offset, id);
         }
 
-        void ITCFollowAPI.ChangeTarget(Transform target, int id) {
-            followDomain.ChangeTarget(target, id);
-        }
+        // void ITCFollowAPI.ChangeTarget(Transform target, int id) {
+        //     followDomain.ChangeTarget(target, id);
+        // }
 
         Vector3 ITCFollowAPI.GetNormalOffset(int id) {
             return followDomain.GetNormalOffset(id);
         }
 
-        Transform ITCFollowAPI.GetTransform(int id) {
-            return followDomain.GetTransform(id);
-        }
+        // Transform ITCFollowAPI.GetTransform(int id) {
+        //     return followDomain.GetTransform(id);
+        // }
 
         bool ITCFollowAPI.HasTarget(int id) {
             return followDomain.HasTarget(id);
@@ -38,8 +38,12 @@ namespace GameArki.TripodCamera.API {
             followDomain.SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical, id);
         }
 
-        void ITCFollowAPI.SetInit(Transform target, in Vector3 offset, EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id) {
-            followDomain.SetInit(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical, id);
+        void ITCFollowAPI.SetInit(in Vector3 offset, EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id) {
+            followDomain.SetInit(offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical, id);
+        }
+
+        void ITCFollowAPI.TickFollowPos(in Vector3 pos, in Quaternion rot, int id) {
+            followDomain.TickFollowPos(pos, rot, id);
         }
 
         void ITCFollowAPI.SetFollowType(TCFollowType followType, int id) {
@@ -52,6 +56,10 @@ namespace GameArki.TripodCamera.API {
 
         void ITCFollowAPI.ManualRounding_Vertical(float degreeX, float duration, EasingType exitEasingType, float exitDuration) {
             followDomain.ManualRounding_Vertical(degreeX, duration, exitEasingType, exitDuration);
+        }
+
+        public void CancelFollow(int id) {
+            followDomain.CancelFollow(id);
         }
     }
 

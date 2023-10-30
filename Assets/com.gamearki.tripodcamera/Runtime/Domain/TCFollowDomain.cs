@@ -15,15 +15,19 @@ namespace GameArki.TripodCamera.Domain {
             this.context = context;
         }
 
-        public void SetInit(Transform target,
-                            in Vector3 offset,
+        public void SetInit(in Vector3 offset,
                             EasingType easingType_horizontal,
                             float easingTime_horizontal,
                             EasingType easingType_vertical,
                             float easingTime_vertical,
                             int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-            tcCam.Follow_SetInit(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
+            tcCam.Follow_SetInit(offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
+        }
+
+        public void TickFollowPos(in Vector3 pos, in Quaternion rot, int id){
+            if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+            tcCam.Follow_TickFollowPos(pos, rot);
         }
 
         public void SetEasing(EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical, int id) {
@@ -31,11 +35,16 @@ namespace GameArki.TripodCamera.Domain {
             tcCam.Follow_SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
-        public void ChangeTarget(Transform target, int id) {
+        public void CancelFollow(int id){
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
-
-            tcCam.Follow_ChangeTarget(target);
+            tcCam.Follow_CancelFollow();
         }
+
+        // public void ChangeTarget(Transform target, int id) {
+        //     if (!_TryGetTCCameraByID(id, out var tcCam)) return;
+
+        //     tcCam.Follow_ChangeTarget(target);
+        // }
 
         public void ChangeOffset(Vector3 offset, int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return;
@@ -54,10 +63,10 @@ namespace GameArki.TripodCamera.Domain {
             return targeterModel.HasFollowTarget;
         }
 
-        public Transform GetTransform(int id) {
-            if (!_TryGetTCCameraByID(id, out var tcCam)) return null;
-            return tcCam.TargetorModel.FollowTarget;
-        }
+        // public Transform GetTransform(int id) {
+        //     if (!_TryGetTCCameraByID(id, out var tcCam)) return null;
+        //     return tcCam.TargetorModel.FollowPosition;
+        // }
 
         public Vector3 GetNormalOffset(int id) {
             if (!_TryGetTCCameraByID(id, out var tcCam)) return Vector3.zero;

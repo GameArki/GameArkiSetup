@@ -70,9 +70,9 @@ namespace GameArki.TripodCamera.Entities {
             this.model.normalLookAngles = angles;
         }
 
-        public void ChangeTarget(Transform target) {
-            targetorModel.SetLookAtTarget(target);
-        }
+        // public void ChangeTarget(Transform target) {
+        //     targetorModel.SetLookAtTarget(target);
+        // }
 
         [System.Obsolete]
         public void ChangeOffset(Vector3 offset) { }

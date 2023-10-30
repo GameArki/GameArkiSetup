@@ -73,6 +73,8 @@ namespace GameArki.TripodCamera.Sample {
 
         bool showMenu;
         List<int> camIDs;
+        Dictionary<int, Transform> camFollowTrans;
+        Dictionary<int, Transform> camLookAtTrans;
 
         void Awake() {
 
@@ -84,6 +86,12 @@ namespace GameArki.TripodCamera.Sample {
             camIDs.Add(cameraAPI.Spawn(Vector3.zero, Quaternion.identity, 60f));
             camIDs.Add(cameraAPI.Spawn(Vector3.zero, Quaternion.identity, 60f));
             camIDs.ForEach(id => cameraAPI.SetActive(true, id));
+
+            camFollowTrans = new Dictionary<int, Transform>();
+            camIDs.ForEach(id => camFollowTrans.TryAdd(id, null));
+
+            camLookAtTrans = new Dictionary<int, Transform>();
+            camIDs.ForEach(id => camLookAtTrans.TryAdd(id, null));
 
             var directorAPI = tcCore.API.DirectorAPI;
             directorAPI.CutToTCCamera(camIDs[0]);
@@ -124,8 +132,28 @@ namespace GameArki.TripodCamera.Sample {
         }
 
         void LateUpdate() {
+            UpdateCamFollow();
+            UpdateCamLookAt();
             float dt = Time.deltaTime;
             tcCore.Tick(dt);
+        }
+
+        void UpdateCamFollow() {
+            camIDs.ForEach(id => {
+                Transform trans = camFollowTrans[id];
+                if (trans != null) {
+                    tcCore.API.FollowAPI.TickFollowPos(trans.position, trans.rotation, id);
+                }
+            });
+        }
+
+        void UpdateCamLookAt() {
+            camIDs.ForEach(id => {
+                Transform trans = camLookAtTrans[id];
+                if (trans != null) {
+                    tcCore.API.LookAtAPI.TickLookAtPos(trans.position, id);
+                }
+            });
         }
 
         const int MENU_PADDING_TOP = 5;
@@ -224,9 +252,12 @@ namespace GameArki.TripodCamera.Sample {
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("跟随 默认跟随目标")) {
                 followTarget = GameObject.Find("默认跟随目标");
-                setter.SetInit(followTarget.transform, followOffset,
+                setter.SetInit(followOffset,
                 EasingType.Linear, follow_duration_horizontal,
                 EasingType.Linear, follow_duration_vertical, -1);
+                if (tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)) {
+                    camFollowTrans[curCamID] = followTarget.transform;
+                }
             }
 
             if (GUILayout.Button("跟随 下一个")) {
@@ -240,13 +271,19 @@ namespace GameArki.TripodCamera.Sample {
                         followTarget = targets[index + 1];
                     }
                 }
-                setter.SetInit(followTarget.transform, followOffset,
+                setter.SetInit(followOffset,
                 EasingType.Linear, follow_duration_horizontal,
                 EasingType.Linear, follow_duration_vertical, -1);
+                if (tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)) {
+                    camFollowTrans[curCamID] = followTarget.transform;
+                }
             }
 
             if (GUILayout.Button("取消跟随")) {
-                setter.ChangeTarget(null, -1);
+                if (tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)) {
+                    camFollowTrans[curCamID] = null;
+                    setter.CancelFollow(-1);
+                }
             }
             GUILayout.EndHorizontal();
 
@@ -285,12 +322,15 @@ namespace GameArki.TripodCamera.Sample {
             var lookAtAPI = tcCore.API.LookAtAPI;
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("看向 默认看向目标")) {
-                lookAtAPI.SetInit(GameObject.Find("默认看向目标").transform,
-                                                 Vector3.zero,
-                                                 EasingType.Linear,
-                                                 duration_horizontal,
-                                                 EasingType.Linear,
-                                                 duration_vertical, -1);
+                lookAtAPI.SetInit(  Vector3.zero,
+                                    EasingType.Linear,
+                                    duration_horizontal,
+                                    EasingType.Linear,
+                                    duration_vertical, -1);
+                if(tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)){
+                    lookAtAPI.SetEnabled(true, -1);
+                    camLookAtTrans[curCamID] = GameObject.Find("默认看向目标").transform;
+                }
             }
 
             if (GUILayout.Button("看向下一个")) {
@@ -304,17 +344,22 @@ namespace GameArki.TripodCamera.Sample {
                         lookAtTarget = targets[index + 1];
                     }
                 }
-                lookAtAPI.SetInit(lookAtTarget.transform,
-                                  Vector3.zero,
+                lookAtAPI.SetInit(Vector3.zero,
                                   EasingType.Linear,
                                   duration_horizontal,
                                   EasingType.Linear,
                                   duration_vertical,
                                   -1);
                 lookAtAPI.SetEnabled(true, -1);
+                if(tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)){
+                    camLookAtTrans[curCamID] = lookAtTarget.transform;
+                }
             }
             if (GUILayout.Button("取消看向")) {
                 lookAtAPI.SetEnabled(false, -1);
+                if(tcCore.API.CameraAPI.TryGetCurrentCameraID(out int curCamID)){
+                    camLookAtTrans[curCamID] = null;
+                }
             }
             GUILayout.EndHorizontal();
         }

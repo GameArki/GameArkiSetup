@@ -37,7 +37,17 @@ namespace GameArki.TripodCamera.API {
         int ITCCameraAPI.Spawn(in Vector3 position, in Quaternion rotation, float fov) {
             return cameraDomain.Spawn(position, rotation, fov);
         }
-  
+
+        bool ITCCameraAPI.TryGetCurrentCameraID(out int id) {
+            if (cameraDomain.GetTCCamera(-1) != null) {
+                id = cameraDomain.GetTCCamera(-1).ID;
+                return true;
+            } else {
+                id = 0;
+                return false;
+            }
+        }
+
     }
 
 }
