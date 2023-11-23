@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using NUnit.Framework;
 using GameArki.BufferIO.Sample;
 
@@ -73,6 +74,42 @@ namespace GameArki.BufferIO.Tests {
             };
 
             myModel.otherStr = "endall";
+
+            myModel.vector2 = new Vector2(1.1f, 2.2f);
+            myModel.vector2Arr = new Vector2[2] { new Vector2(1.1f, 2.2f), new Vector2(3.3f, 4.4f) };
+            myModel.vector2List = new List<Vector2>() { new Vector2(1.1f, 2.2f), new Vector2(3.3f, 4.4f) };
+
+            myModel.vector2Int = new Vector2Int(1, 2);
+            myModel.vector2IntArr = new Vector2Int[2] { new Vector2Int(1, 2), new Vector2Int(3, 4) };
+            myModel.vector2IntList = new List<Vector2Int>() { new Vector2Int(1, 2), new Vector2Int(3, 4) };
+
+            myModel.vector3 = new Vector3(1.1f, 2.2f, 3.3f);
+            myModel.vector3Arr = new Vector3[2] { new Vector3(1.1f, 2.2f, 3.3f), new Vector3(4.4f, 5.5f, 6.6f) };
+            myModel.vector3List = new List<Vector3>() { new Vector3(1.1f, 2.2f, 3.3f), new Vector3(4.4f, 5.5f, 6.6f) };
+
+            myModel.vector3Int = new Vector3Int(1, 2, 3);
+            myModel.vector3IntArr = new Vector3Int[2] { new Vector3Int(1, 2, 3), new Vector3Int(4, 5, 6) };
+            myModel.vector3IntList = new List<Vector3Int>() { new Vector3Int(1, 2, 3), new Vector3Int(4, 5, 6) };
+
+            myModel.vector4 = new Vector4(1.1f, 2.2f, 3.3f, 4.4f);
+            myModel.vector4Arr = new Vector4[2] { new Vector4(1.1f, 2.2f, 3.3f, 4.4f), new Vector4(5.5f, 6.6f, 7.7f, 8.8f) };
+            myModel.vector4List = new List<Vector4>() { new Vector4(1.1f, 2.2f, 3.3f, 4.4f), new Vector4(5.5f, 6.6f, 7.7f, 8.8f) };
+
+            myModel.quaternion = new Quaternion(1.1f, 2.2f, 3.3f, 4.4f);
+            myModel.quaternionArr = new Quaternion[2] { new Quaternion(1.1f, 2.2f, 3.3f, 4.4f), new Quaternion(5.5f, 6.6f, 7.7f, 8.8f) };
+            myModel.quaternionList = new List<Quaternion>() { new Quaternion(1.1f, 2.2f, 3.3f, 4.4f), new Quaternion(5.5f, 6.6f, 7.7f, 8.8f) };
+
+            myModel.color = new Color(0.5f, 0.2f, 0.3f, 0.4f);  
+            myModel.colorArr = new Color[2] { new Color(0.5f, 0.2f, 0.3f, 0.4f), new Color(0.5f, 0.2f, 0.3f, 0.4f) };
+            myModel.colorList = new List<Color>() { new Color(0.5f, 0.2f, 0.3f, 0.4f), new Color(0.5f, 0.2f, 0.3f, 0.4f) };
+
+            myModel.color32 = new Color32(1, 2, 3, 4);
+            myModel.color32Arr = new Color32[2] { new Color32(1, 2, 3, 4), new Color32(5, 6, 7, 8) };
+            myModel.color32List = new List<Color32>() { new Color32(1, 2, 3, 4), new Color32(5, 6, 7, 8) };
+
+            myModel.rect = new Rect(1.1f, 2.2f, 3.3f, 4.4f);
+            myModel.rectArr = new Rect[2] { new Rect(1.1f, 2.2f, 3.3f, 4.4f), new Rect(5.5f, 6.6f, 7.7f, 8.8f) };
+            myModel.rectList = new List<Rect>() { new Rect(1.1f, 2.2f, 3.3f, 4.4f), new Rect(5.5f, 6.6f, 7.7f, 8.8f) };
 
             byte[] data = new byte[2048];
             int offset = 0;
@@ -235,6 +272,105 @@ namespace GameArki.BufferIO.Tests {
 
             // - other
             Assert.AreEqual(myModel.otherStr, newModel.otherStr);
+
+            // - vector2
+            Assert.AreEqual(myModel.vector2, newModel.vector2);
+            Assert.AreEqual(myModel.vector2Arr.Length, newModel.vector2Arr.Length);
+            for (int i = 0; i < myModel.vector2Arr.Length; i += 1) {
+                Assert.AreEqual(myModel.vector2Arr[i], newModel.vector2Arr[i]);
+            }
+            Assert.AreEqual(myModel.vector2List.Count, newModel.vector2List.Count);
+            for (int i = 0; i < myModel.vector2List.Count; i += 1) {
+                Assert.AreEqual(myModel.vector2List[i], newModel.vector2List[i]);
+            }
+
+            // - vector2Int
+            Assert.AreEqual(myModel.vector2Int, newModel.vector2Int);
+            Assert.AreEqual(myModel.vector2IntArr.Length, newModel.vector2IntArr.Length);
+            for (int i = 0; i < myModel.vector2IntArr.Length; i += 1) {
+                Assert.AreEqual(myModel.vector2IntArr[i], newModel.vector2IntArr[i]);
+            }
+            Assert.AreEqual(myModel.vector2IntList.Count, newModel.vector2IntList.Count);
+            for (int i = 0; i < myModel.vector2IntList.Count; i += 1) {
+                Assert.AreEqual(myModel.vector2IntList[i], newModel.vector2IntList[i]);
+            }
+
+            // - vector3
+            Assert.AreEqual(myModel.vector3, newModel.vector3);
+            Assert.AreEqual(myModel.vector3Arr.Length, newModel.vector3Arr.Length);
+            for (int i = 0; i < myModel.vector3Arr.Length; i += 1) {
+                Assert.AreEqual(myModel.vector3Arr[i], newModel.vector3Arr[i]);
+            }
+            Assert.AreEqual(myModel.vector3List.Count, newModel.vector3List.Count);
+            for (int i = 0; i < myModel.vector3List.Count; i += 1) {
+                Assert.AreEqual(myModel.vector3List[i], newModel.vector3List[i]);
+            }
+
+            // - vector3Int
+            Assert.AreEqual(myModel.vector3Int, newModel.vector3Int);
+            Assert.AreEqual(myModel.vector3IntArr.Length, newModel.vector3IntArr.Length);
+            for (int i = 0; i < myModel.vector3IntArr.Length; i += 1) {
+                Assert.AreEqual(myModel.vector3IntArr[i], newModel.vector3IntArr[i]);
+            }
+            Assert.AreEqual(myModel.vector3IntList.Count, newModel.vector3IntList.Count);
+            for (int i = 0; i < myModel.vector3IntList.Count; i += 1) {
+                Assert.AreEqual(myModel.vector3IntList[i], newModel.vector3IntList[i]);
+            }
+
+            // - vector4
+            Assert.AreEqual(myModel.vector4, newModel.vector4);
+            Assert.AreEqual(myModel.vector4Arr.Length, newModel.vector4Arr.Length);
+            for (int i = 0; i < myModel.vector4Arr.Length; i += 1) {
+                Assert.AreEqual(myModel.vector4Arr[i], newModel.vector4Arr[i]);
+            }
+            Assert.AreEqual(myModel.vector4List.Count, newModel.vector4List.Count);
+            for (int i = 0; i < myModel.vector4List.Count; i += 1) {
+                Assert.AreEqual(myModel.vector4List[i], newModel.vector4List[i]);
+            }
+
+            // - quaternion
+            Assert.AreEqual(myModel.quaternion, newModel.quaternion);
+            Assert.AreEqual(myModel.quaternionArr.Length, newModel.quaternionArr.Length);
+            for (int i = 0; i < myModel.quaternionArr.Length; i += 1) {
+                Assert.AreEqual(myModel.quaternionArr[i], newModel.quaternionArr[i]);
+            }
+            Assert.AreEqual(myModel.quaternionList.Count, newModel.quaternionList.Count);
+            for (int i = 0; i < myModel.quaternionList.Count; i += 1) {
+                Assert.AreEqual(myModel.quaternionList[i], newModel.quaternionList[i]);
+            }
+
+            // - color
+            Assert.AreEqual(myModel.color, newModel.color);
+            Assert.AreEqual(myModel.colorArr.Length, newModel.colorArr.Length);
+            for (int i = 0; i < myModel.colorArr.Length; i += 1) {
+                Assert.AreEqual(myModel.colorArr[i], newModel.colorArr[i]);
+            }
+            Assert.AreEqual(myModel.colorList.Count, newModel.colorList.Count);
+            for (int i = 0; i < myModel.colorList.Count; i += 1) {
+                Assert.AreEqual(myModel.colorList[i], newModel.colorList[i]);
+            }
+
+            // - color32
+            Assert.AreEqual(myModel.color32, newModel.color32);
+            Assert.AreEqual(myModel.color32Arr.Length, newModel.color32Arr.Length);
+            for (int i = 0; i < myModel.color32Arr.Length; i += 1) {
+                Assert.AreEqual(myModel.color32Arr[i], newModel.color32Arr[i]);
+            }
+            Assert.AreEqual(myModel.color32List.Count, newModel.color32List.Count);
+            for (int i = 0; i < myModel.color32List.Count; i += 1) {
+                Assert.AreEqual(myModel.color32List[i], newModel.color32List[i]);
+            }
+
+            // - rect
+            Assert.AreEqual(myModel.rect, newModel.rect);
+            Assert.AreEqual(myModel.rectArr.Length, newModel.rectArr.Length);
+            for (int i = 0; i < myModel.rectArr.Length; i += 1) {
+                Assert.AreEqual(myModel.rectArr[i], newModel.rectArr[i]);
+            }
+            Assert.AreEqual(myModel.rectList.Count, newModel.rectList.Count);
+            for (int i = 0; i < myModel.rectList.Count; i += 1) {
+                Assert.AreEqual(myModel.rectList[i], newModel.rectList[i]);
+            }
 
         }
 

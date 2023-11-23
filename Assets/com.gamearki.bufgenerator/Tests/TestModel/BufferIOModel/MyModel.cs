@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using GameArki.BufferIO;
 
 namespace GameArki.BufferIO.Sample
@@ -48,6 +49,33 @@ namespace GameArki.BufferIO.Sample
         public HerModel[] herModelArr;
         public List<HerModel> herModelList;
         public string otherStr;
+        public Vector2 vector2;
+        public Vector2[] vector2Arr;
+        public List<Vector2> vector2List;
+        public Vector2Int vector2Int;
+        public Vector2Int[] vector2IntArr;
+        public List<Vector2Int> vector2IntList;
+        public Vector3 vector3;
+        public Vector3[] vector3Arr;
+        public List<Vector3> vector3List;
+        public Vector3Int vector3Int;
+        public Vector3Int[] vector3IntArr;
+        public List<Vector3Int> vector3IntList;
+        public Vector4 vector4;
+        public Vector4[] vector4Arr;
+        public List<Vector4> vector4List;
+        public Quaternion quaternion;
+        public Quaternion[] quaternionArr;
+        public List<Quaternion> quaternionList;
+        public Color color;
+        public Color[] colorArr;
+        public List<Color> colorList;
+        public Color32 color32;
+        public Color32[] color32Arr;
+        public List<Color32> color32List;
+        public Rect rect;
+        public Rect[] rectArr;
+        public List<Rect> rectList;
         public void WriteTo(byte[] dst, ref int offset)
         {
             BufferWriter.WriteBool(dst, boolValue, ref offset);
@@ -91,6 +119,33 @@ namespace GameArki.BufferIO.Sample
             BufferWriterExtra.WriteMessageArr(dst, herModelArr, ref offset);
             BufferWriterExtra.WriteMessageList(dst, herModelList, ref offset);
             BufferWriter.WriteUTF8String(dst, otherStr, ref offset);
+            UnityBufferWriter.WriteVector2(dst, vector2, ref offset);
+            UnityBufferWriter.WriteVector2Array(dst, vector2Arr, ref offset);
+            UnityBufferWriter.WriteVector2List(dst, vector2List, ref offset);
+            UnityBufferWriter.WriteVector2Int(dst, vector2Int, ref offset);
+            UnityBufferWriter.WriteVector2IntArray(dst, vector2IntArr, ref offset);
+            UnityBufferWriter.WriteVector2IntList(dst, vector2IntList, ref offset);
+            UnityBufferWriter.WriteVector3(dst, vector3, ref offset);
+            UnityBufferWriter.WriteVector3Array(dst, vector3Arr, ref offset);
+            UnityBufferWriter.WriteVector3List(dst, vector3List, ref offset);
+            UnityBufferWriter.WriteVector3Int(dst, vector3Int, ref offset);
+            UnityBufferWriter.WriteVector3IntArray(dst, vector3IntArr, ref offset);
+            UnityBufferWriter.WriteVector3IntList(dst, vector3IntList, ref offset);
+            UnityBufferWriter.WriteVector4(dst, vector4, ref offset);
+            UnityBufferWriter.WriteVector4Array(dst, vector4Arr, ref offset);
+            UnityBufferWriter.WriteVector4List(dst, vector4List, ref offset);
+            UnityBufferWriter.WriteQuaternion(dst, quaternion, ref offset);
+            UnityBufferWriter.WriteQuaternionArray(dst, quaternionArr, ref offset);
+            UnityBufferWriter.WriteQuaternionList(dst, quaternionList, ref offset);
+            UnityBufferWriter.WriteColor(dst, color, ref offset);
+            UnityBufferWriter.WriteColorArray(dst, colorArr, ref offset);
+            UnityBufferWriter.WriteColorList(dst, colorList, ref offset);
+            UnityBufferWriter.WriteColor32(dst, color32, ref offset);
+            UnityBufferWriter.WriteColor32Array(dst, color32Arr, ref offset);
+            UnityBufferWriter.WriteColor32List(dst, color32List, ref offset);
+            UnityBufferWriter.WriteRect(dst, rect, ref offset);
+            UnityBufferWriter.WriteRectArray(dst, rectArr, ref offset);
+            UnityBufferWriter.WriteRectList(dst, rectList, ref offset);
         }
 
         public void FromBytes(byte[] src, ref int offset)
@@ -136,6 +191,33 @@ namespace GameArki.BufferIO.Sample
             herModelArr = BufferReaderExtra.ReadMessageArr(src, () => new HerModel(), ref offset);
             herModelList = BufferReaderExtra.ReadMessageList(src, () => new HerModel(), ref offset);
             otherStr = BufferReader.ReadUTF8String(src, ref offset);
+            vector2 = UnityBufferReader.ReadVector2(src, ref offset);
+            vector2Arr = UnityBufferReader.ReadVector2Array(src, ref offset);
+            vector2List = UnityBufferReader.ReadVector2List(src, ref offset);
+            vector2Int = UnityBufferReader.ReadVector2Int(src, ref offset);
+            vector2IntArr = UnityBufferReader.ReadVector2IntArray(src, ref offset);
+            vector2IntList = UnityBufferReader.ReadVector2IntList(src, ref offset);
+            vector3 = UnityBufferReader.ReadVector3(src, ref offset);
+            vector3Arr = UnityBufferReader.ReadVector3Array(src, ref offset);
+            vector3List = UnityBufferReader.ReadVector3List(src, ref offset);
+            vector3Int = UnityBufferReader.ReadVector3Int(src, ref offset);
+            vector3IntArr = UnityBufferReader.ReadVector3IntArray(src, ref offset);
+            vector3IntList = UnityBufferReader.ReadVector3IntList(src, ref offset);
+            vector4 = UnityBufferReader.ReadVector4(src, ref offset);
+            vector4Arr = UnityBufferReader.ReadVector4Array(src, ref offset);
+            vector4List = UnityBufferReader.ReadVector4List(src, ref offset);
+            quaternion = UnityBufferReader.ReadQuaternion(src, ref offset);
+            quaternionArr = UnityBufferReader.ReadQuaternionArray(src, ref offset);
+            quaternionList = UnityBufferReader.ReadQuaternionList(src, ref offset);
+            color = UnityBufferReader.ReadColor(src, ref offset);
+            colorArr = UnityBufferReader.ReadColorArray(src, ref offset);
+            colorList = UnityBufferReader.ReadColorList(src, ref offset);
+            color32 = UnityBufferReader.ReadColor32(src, ref offset);
+            color32Arr = UnityBufferReader.ReadColor32Array(src, ref offset);
+            color32List = UnityBufferReader.ReadColor32List(src, ref offset);
+            rect = UnityBufferReader.ReadRect(src, ref offset);
+            rectArr = UnityBufferReader.ReadRectArray(src, ref offset);
+            rectList = UnityBufferReader.ReadRectList(src, ref offset);
         }
     }
 }
