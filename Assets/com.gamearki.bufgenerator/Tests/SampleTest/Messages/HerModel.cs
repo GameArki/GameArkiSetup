@@ -5,14 +5,17 @@ using GameArki.NativeBytes;
 namespace GameArki.BufferIO.Sample {
     [BufferIOMessageObject]
     public struct HerModel : IBufferIOMessage<HerModel> {
+        public string name;
         public int value;
 
         public void WriteTo(byte[] dst, ref int offset) {
-            NBWriter.W_I32(dst, value, ref offset);
+            BufferWriter.WriteUTF8String(dst, name, ref offset);
+            BufferWriter.WriteInt32(dst, value, ref offset);
         }
 
         public void FromBytes(byte[] src, ref int offset) {
-            value = NBReader.R_I32(src, ref offset);
+            name = BufferReader.ReadUTF8String(src, ref offset);
+            value = BufferReader.ReadInt32(src, ref offset);
         }
     }
 }

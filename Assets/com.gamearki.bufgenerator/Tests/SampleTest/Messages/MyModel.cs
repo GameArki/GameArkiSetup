@@ -93,14 +93,5 @@ namespace GameArki.BufferIO.Sample {
             otherStr = BufferReader.ReadUTF8String(src, ref offset);
         }
         
-        public ushort WriteToWithSize(byte[] dst, ref int offset) {
-            ushort count = 0;
-            int sizeOffset = offset;
-            offset += 2;
-            WriteTo(dst, ref offset);
-            count = (ushort)(offset - sizeOffset - 2);
-            BufferWriter.WriteUInt16(dst, count, ref sizeOffset);
-            return count;
-        }
     }
 }

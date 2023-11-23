@@ -26,10 +26,10 @@ namespace GameArki.BufferIO.Tests {
             myModel.sbyteArr = new sbyte[4] { -1, -1, -2, -8 };
             myModel.ushortArr = new ushort[1] { 222 };
             myModel.strArr = new string[2] { "hl", "ddd" };
-            myModel.herModel = new HerModel() { value = 3 };
+            myModel.herModel = new HerModel() { name = "yo", value = 3 };
             myModel.herModelArr = new HerModel[2] {
-                new HerModel{value = 4},
-                new HerModel{value = -99}
+                new HerModel{ name ="ho112", value = 4},
+                new HerModel{ value = -99}
             };
             myModel.otherStr = "endall";
 
