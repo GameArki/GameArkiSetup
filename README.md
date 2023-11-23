@@ -1,5 +1,5 @@
 # GameArkiSetup
-🍔 GameArki 类库安装工具.
+🍔 Game Architecture, a set of game libraries.  
 
 # 类库列表
 1. FPMath: 定点数数学库  
