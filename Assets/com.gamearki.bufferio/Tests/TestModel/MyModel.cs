@@ -1,4 +1,5 @@
 using System;
+using GameArki.BufferIO;
 
 namespace GameArki.BufferIO.Tests
 {
@@ -96,6 +97,5 @@ namespace GameArki.BufferIO.Tests
             herModelArr = BufferReaderExtra.ReadMessageArr(src, () => new HerModel(), ref offset);
             otherStr = BufferReader.ReadUTF8String(src, ref offset);
         }
-
     }
 }

@@ -46,9 +46,6 @@ namespace GameArki.NoBuf {
                 File.WriteAllText(value, classEditor.Generate());
 
             });
-#if UNITY_EDITOR
-            UnityEngine.Debug.Log("NoBufGenerator: 生成完成");
-#endif
         }
 
         // - WriteTo(byte[] dst, ref int offset)

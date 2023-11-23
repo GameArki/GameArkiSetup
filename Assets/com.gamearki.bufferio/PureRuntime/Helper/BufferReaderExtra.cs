@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GameArki.BufferIO {
 
@@ -14,10 +15,18 @@ namespace GameArki.BufferIO {
             ushort totalCount = BufferReader.ReadUInt16(src, ref offset);
             T[] arr = new T[totalCount];
             for (int i = 0; i < arr.Length; i += 1) {
-                arr[i] = createHandle.Invoke();
-                arr[i].FromBytes(src, ref offset);
+                arr[i] = ReadMessage(src, createHandle, ref offset);
             }
             return arr;
+        }
+
+        public static List<T> ReadMessageList<T>(byte[] src, Func<T> createHandle, ref int offset) where T : struct, IBufferIOMessage<T> {
+            ushort totalCount = BufferReader.ReadUInt16(src, ref offset);
+            List<T> list = new List<T>(totalCount);
+            for (int i = 0; i < totalCount; i += 1) {
+                list.Add(ReadMessage(src, createHandle, ref offset));
+            }
+            return list;
         }
 
     }
