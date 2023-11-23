@@ -2,6 +2,7 @@
     "name": "GameArki.BufferIO.Tests",
     "rootNamespace": "",
     "references": [
+        "GUID:bfcb2caa0b712a14c927544e9291a743",
         "GUID:e265d67c03feb3243bf7d85067f9df99",
         "GUID:0acc523941302664db1f4e527237feb3"
     ],

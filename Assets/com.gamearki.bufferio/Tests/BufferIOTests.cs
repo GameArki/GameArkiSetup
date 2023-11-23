@@ -204,6 +204,52 @@ namespace GameArki.BufferIO.Tests {
             Assert.That(strArr[2], Is.EqualTo("WWWWD"));
             Assert.That(strArr[3], Is.EqualTo("-TT"));
 
+            UnityBufferWriter.WriteVector2(dst, new Vector2(1, 2), ref writeOffset);
+            Vector2 vector2 = UnityBufferReader.ReadVector2(dst, ref readOffset);
+            Assert.That(vector2.x, Is.EqualTo(1));
+            Assert.That(vector2.y, Is.EqualTo(2));
+
+            UnityBufferWriter.WriteVector3(dst, new Vector3(1, 2, 3), ref writeOffset);
+            Vector3 vector3 = UnityBufferReader.ReadVector3(dst, ref readOffset);
+            Assert.That(vector3.x, Is.EqualTo(1));
+            Assert.That(vector3.y, Is.EqualTo(2));
+            Assert.That(vector3.z, Is.EqualTo(3));
+
+            UnityBufferWriter.WriteVector4(dst, new Vector4(1, 2, 3, 4), ref writeOffset);
+            Vector4 vector4 = UnityBufferReader.ReadVector4(dst, ref readOffset);
+            Assert.That(vector4.x, Is.EqualTo(1));
+            Assert.That(vector4.y, Is.EqualTo(2));
+            Assert.That(vector4.z, Is.EqualTo(3));
+            Assert.That(vector4.w, Is.EqualTo(4));
+
+            UnityBufferWriter.WriteQuaternion(dst, new Quaternion(1, 2, 3, 4), ref writeOffset);
+            Quaternion quaternion = UnityBufferReader.ReadQuaternion(dst, ref readOffset);
+            Assert.That(quaternion.x, Is.EqualTo(1));
+            Assert.That(quaternion.y, Is.EqualTo(2));
+            Assert.That(quaternion.z, Is.EqualTo(3));
+            Assert.That(quaternion.w, Is.EqualTo(4));
+
+            UnityBufferWriter.WriteColor(dst, new Color(1, 2, 3, 4), ref writeOffset);
+            Color color = UnityBufferReader.ReadColor(dst, ref readOffset);
+            Assert.That(color.r, Is.EqualTo(1));
+            Assert.That(color.g, Is.EqualTo(2));
+            Assert.That(color.b, Is.EqualTo(3));
+            Assert.That(color.a, Is.EqualTo(4));
+
+            UnityBufferWriter.WriteColor32(dst, new Color32(1, 2, 3, 4), ref writeOffset);
+            Color32 color32 = UnityBufferReader.ReadColor32(dst, ref readOffset);
+            Assert.That(color32.r, Is.EqualTo(1));
+            Assert.That(color32.g, Is.EqualTo(2));
+            Assert.That(color32.b, Is.EqualTo(3));
+            Assert.That(color32.a, Is.EqualTo(4));
+
+            UnityBufferWriter.WriteRect(dst, new Rect(1, 2, 3, 4), ref writeOffset);
+            Rect rect = UnityBufferReader.ReadRect(dst, ref readOffset);
+            Assert.That(rect.x, Is.EqualTo(1));
+            Assert.That(rect.y, Is.EqualTo(2));
+            Assert.That(rect.width, Is.EqualTo(3));
+            Assert.That(rect.height, Is.EqualTo(4));
+
             byte[] newDst = new byte[2000];
             writeOffset = 0;
             readOffset = 0;
