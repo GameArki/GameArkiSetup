@@ -1,6 +1,6 @@
 {
   "name": "com.gamearki.bufferio",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "二进制数据序列化函数",
   "displayName": "GameArki.BufferIO",
   "unity": "2019.4",
