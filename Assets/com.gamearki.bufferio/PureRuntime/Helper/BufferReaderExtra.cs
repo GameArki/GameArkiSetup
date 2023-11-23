@@ -4,26 +4,20 @@ namespace GameArki.BufferIO {
 
     public static class BufferReaderExtra {
 
-        public static T ReadMessage<T>(byte[] src, Func<T> createHandle, ref int offset) where T : IBufferIOMessage<T> {
+        public static T ReadMessage<T>(byte[] src, Func<T> createHandle, ref int offset) where T : struct, IBufferIOMessage<T> {
             T msg = createHandle.Invoke();
-            ushort count = BufferReader.ReadUInt16(src, ref offset);
-            if (count > 0) {
-                msg.FromBytes(src, ref offset);
-            }
+            msg.FromBytes(src, ref offset);
             return msg;
         }
 
-        public static T[] ReadMessageArr<T>(byte[] src, Func<T> createHandle, ref int offset) where T : IBufferIOMessage<T> {
+        public static T[] ReadMessageArr<T>(byte[] src, Func<T> createHandle, ref int offset) where T : struct, IBufferIOMessage<T> {
             ushort totalCount = BufferReader.ReadUInt16(src, ref offset);
             T[] arr = new T[totalCount];
             for (int i = 0; i < arr.Length; i += 1) {
-                arr[i] = (T)createHandle.Invoke();
-                ushort count = BufferReader.ReadUInt16(src, ref offset);
-                if (count > 0) {
-                    arr[i].FromBytes(src, ref offset);
-                }
+                arr[i] = createHandle.Invoke();
+                arr[i].FromBytes(src, ref offset);
             }
-            return arr as T[];
+            return arr;
         }
 
     }

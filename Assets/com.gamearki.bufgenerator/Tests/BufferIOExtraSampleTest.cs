@@ -33,10 +33,12 @@ namespace GameArki.BufferIO.Tests {
             };
             myModel.otherStr = "endall";
 
-            byte[] data = myModel.ToBytes();
+            byte[] data = new byte[2048];
+            int offset = 0;
+            myModel.WriteTo(data, ref offset);
 
             MyModel newModel = new MyModel();
-            int offset = 0;
+            offset = 0;
             newModel.FromBytes(data, ref offset);
 
             Assert.That(newModel.charValue, Is.EqualTo('D'));

@@ -8,10 +8,10 @@ namespace GameArki.BufferIO.Editor {
 
     public class BufferExtraGenerator {
 
-        const string WRITE_TO_METHOD_NAME = "WriteTo";
-        const string FROM_BYTES_METHOD_NAME = "FromBytes";
-        const string GET_EVELUATED_SIZE_METHOD_NAME = "GetEvaluatedSize";
-        const string TO_BYTES_METHOD_NAME = "ToBytes";
+        const string n_WriteTo = "WriteTo";
+        const string n_FromBytes = "FromBytes";
+        const string n_GetEvaluatedSize = "GetEvaluatedSize";
+        const string n_ToBytes = "ToBytes";
 
         static string ATTR = nameof(BufferIOMessageObjectAttribute).Replace("Attribute", "");
 
@@ -58,15 +58,15 @@ namespace GameArki.BufferIO.Editor {
 
         static MethodEditor GenWriteToMethod(string inputDir, ClassEditor classEditor) {
 
-            const string DST_PARAM_TYPE = "byte[]";
-            const string DST_PARAM_NAME = "dst";
-            const string OFFSET_PARAM_TYPE = "ref int";
-            const string OFFSET_PARAM_NAME = "offset";
+            const string t_dst = "byte[]";
+            const string n_dst = "dst";
+            const string t_ref_int = "ref int";
+            const string n_offset = "offset";
 
-            string WriteLine(string fieldType, string fieldName) {
+            string WriteLine(string fieldType, string n_field) {
                 const string WRITER = nameof(BufferWriter) + ".";
-                string paramStr = DST_PARAM_NAME + ", " + fieldName + ", " + "ref " + OFFSET_PARAM_NAME;
-                string writeSuffix = $"({paramStr});";
+                string paramStr = $"{n_dst}, " + ", " + n_field + ", " + "ref " + n_offset;
+                string writeSuffix = $"({n_dst}, {n_field}, {t_ref_int} {n_offset});";
                 switch (fieldType) {
                     case "bool": return WRITER + nameof(BufferWriter.WriteBool) + writeSuffix;
                     case "char": return WRITER + nameof(BufferWriter.WriteChar) + writeSuffix;
@@ -119,9 +119,9 @@ namespace GameArki.BufferIO.Editor {
             }
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "void", WRITE_TO_METHOD_NAME);
-            methodEditor.AddParameter(DST_PARAM_TYPE, DST_PARAM_NAME);
-            methodEditor.AddParameter(OFFSET_PARAM_TYPE, OFFSET_PARAM_NAME);
+            methodEditor.Initialize(VisitLevel.Public, false, "void", n_WriteTo);
+            methodEditor.AddParameter(t_dst, n_dst);
+            methodEditor.AddParameter(t_ref_int, n_offset);
             var fieldList = classEditor.GetAllFields();
             for (int i = 0; i < fieldList.Count; i += 1) {
                 var field = fieldList[i];
@@ -134,17 +134,17 @@ namespace GameArki.BufferIO.Editor {
         }
 
         static MethodEditor GenFromBytesMethod(string inputDir, ClassEditor classEditor) {
-            const string SRC_PARAM_TYPE = "byte[]";
-            const string SRC_PARAM_NAME = "src";
-            const string OFFSET_PARAM_TYPE = "ref int";
-            const string OFFSET_PARAM_NAME = "offset";
+            const string t_src = "byte[]";
+            const string n_src = "src";
+            const string t_ref_int = "ref int";
+            const string n_offset = "offset";
 
-            string WriteLine(string fieldType, string fieldName) {
-                const string READER = nameof(BufferReader) + ".";
-                string paramStr = SRC_PARAM_NAME + ", " + "ref " + OFFSET_PARAM_NAME;
-                string readPrefix = fieldName + " = " + READER;
+            string WriteLine(string t_field, string n_field) {
+                const string n_BufferReader = nameof(BufferReader) + ".";
+                string paramStr = n_src + ", " + "ref " + n_offset;
+                string readPrefix = $"{n_field} = {n_BufferReader}";
                 string readSuffix = $"({paramStr});";
-                switch (fieldType) {
+                switch (t_field) {
                     case "bool": return readPrefix + nameof(BufferReader.ReadBool) + readSuffix;
                     case "char": return readPrefix + nameof(BufferReader.ReadChar) + readSuffix;
                     case "byte": return readPrefix + nameof(BufferReader.ReadUInt8) + readSuffix;
@@ -172,25 +172,27 @@ namespace GameArki.BufferIO.Editor {
                     case "string[]": return readPrefix + nameof(BufferReader.ReadUTF8StringArr) + readSuffix;
                     default:
 
-                        if (fieldType == classEditor.GetClassName()) {
-                            throw new Exception($"不可循环依赖: {fieldType}");
+                        if (t_field == classEditor.GetClassName()) {
+                            throw new Exception($"不可循环依赖: {t_field}");
                         }
 
-                        const string READER_EXTRA = nameof(BufferReaderExtra) + ".";
-                        if (fieldType.Contains("[]")) {
+                        const string n_BufferReaderExtra = nameof(BufferReaderExtra);
+                        if (t_field.Contains("[]")) {
                             // 处理自定义类型数组
-                            string trueType = fieldType.Replace("[]", "");
-                            if (IsBufferObject(inputDir, trueType)) {
-                                return $"{fieldName} = " + READER_EXTRA + nameof(BufferReaderExtra.ReadMessageArr) + $"({SRC_PARAM_NAME}, () => new {trueType}(), ref {OFFSET_PARAM_NAME});";
+                        const string n_ReadMessageArr = nameof(BufferReaderExtra.ReadMessageArr);
+                            string t_trueField = t_field.Replace("[]", "");
+                            if (IsBufferObject(inputDir, t_trueField)) {
+                                return $"{n_field} = {n_BufferReaderExtra}.{n_ReadMessageArr}({n_src}, () => new {t_trueField}(), ref {n_offset});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         } else {
                             // 处理单自定义类型
-                            if (IsBufferObject(inputDir, fieldType)) {
-                                return $"{fieldName} = " + READER_EXTRA + nameof(BufferReaderExtra.ReadMessage) + $"({SRC_PARAM_NAME}, () => new {fieldType}(), ref {OFFSET_PARAM_NAME});";
+                        const string n_ReadMessage = nameof(BufferReaderExtra.ReadMessage);
+                            if (IsBufferObject(inputDir, t_field)) {
+                                return $"{n_field} = {n_BufferReaderExtra}.{n_ReadMessage}({n_src}, () => new {t_field}(), ref {n_offset});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         }
 
@@ -198,9 +200,9 @@ namespace GameArki.BufferIO.Editor {
             }
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "void", FROM_BYTES_METHOD_NAME);
-            methodEditor.AddParameter(SRC_PARAM_TYPE, SRC_PARAM_NAME);
-            methodEditor.AddParameter(OFFSET_PARAM_TYPE, OFFSET_PARAM_NAME);
+            methodEditor.Initialize(VisitLevel.Public, false, "void", n_FromBytes);
+            methodEditor.AddParameter(t_src, n_src);
+            methodEditor.AddParameter(t_ref_int, n_offset);
             var fieldList = classEditor.GetAllFields();
             for (int i = 0; i < fieldList.Count; i += 1) {
                 var field = fieldList[i];
@@ -221,7 +223,7 @@ namespace GameArki.BufferIO.Editor {
             const string COUNT_VAR = "count";
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "int", GET_EVELUATED_SIZE_METHOD_NAME);
+            methodEditor.Initialize(VisitLevel.Public, false, "int", n_GetEvaluatedSize);
             methodEditor.AddParameter(CERTAIN_PARAM_TYPE, CERTAIN_PARAM_NAME);
 
             StringBuilder certainLine = new StringBuilder();
@@ -313,7 +315,7 @@ namespace GameArki.BufferIO.Editor {
                                 string s = $"if ({fieldName} != null)" + "{"
                                         + $"for (int i = 0; i < {fieldName}.Length; i += 1)" + "{"
                                             + $"var {CHILD} = {fieldName}[i];"
-                                            + $"{COUNT_VAR} += {CHILD}." + GET_EVELUATED_SIZE_METHOD_NAME + $"(out bool _cb_{fieldName});"
+                                            + $"{COUNT_VAR} += {CHILD}." + n_GetEvaluatedSize + $"(out bool _cb_{fieldName});"
                                             + CERTAIN_PARAM_NAME + "&=" + $"_cb_{fieldName};"
                                             + "}"
                                         + "}";
@@ -324,7 +326,7 @@ namespace GameArki.BufferIO.Editor {
                             }
                         } else {
                             if (IsBufferObject(inputDir, fieldType)) {
-                                string s = COUNT_VAR + $" += {fieldName}.{GET_EVELUATED_SIZE_METHOD_NAME}(out bool _b{fieldName});\r\n";
+                                string s = COUNT_VAR + $" += {fieldName}.{n_GetEvaluatedSize}(out bool _b{fieldName});\r\n";
                                 s += CERTAIN_PARAM_NAME + "&=" + $"_b{fieldName};";
                                 evaluatedObjectLine.AppendLine($"if ({fieldName} != null) " + "{");
                                 evaluatedObjectLine.AppendLine(s);
@@ -369,11 +371,11 @@ namespace GameArki.BufferIO.Editor {
             const string DST_VAR = "dst";
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "byte[]", TO_BYTES_METHOD_NAME);
-            methodEditor.AppendLine(COUNT_TYPE + " " + COUNT_VAR + " = " + GET_EVELUATED_SIZE_METHOD_NAME + $"({CERTAIN_TYPE} {CERTAIN_VAR});");
+            methodEditor.Initialize(VisitLevel.Public, false, "byte[]", n_ToBytes);
+            methodEditor.AppendLine(COUNT_TYPE + " " + COUNT_VAR + " = " + n_GetEvaluatedSize + $"({CERTAIN_TYPE} {CERTAIN_VAR});");
             methodEditor.AppendLine(OFFSET_TYPE + " " + OFFSET_VAR + " = 0;");
             methodEditor.AppendLine("byte[] " + SRC_VAR + $" = new byte[{COUNT_VAR}];");
-            methodEditor.AppendLine(WRITE_TO_METHOD_NAME + $"({SRC_VAR}, ref {OFFSET_VAR});");
+            methodEditor.AppendLine(n_WriteTo + $"({SRC_VAR}, ref {OFFSET_VAR});");
             methodEditor.AppendLine($"if ({CERTAIN_VAR})" + "{ return " + SRC_VAR + ";}");
             methodEditor.AppendLine("else {"
                                     + $"byte[] {DST_VAR} = new byte[{OFFSET_VAR}];"
