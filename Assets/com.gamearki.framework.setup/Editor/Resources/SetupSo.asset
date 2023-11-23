@@ -39,8 +39,9 @@ MonoBehaviour:
     dirs:
     - PureRuntime
     - Tests
+    - UnityRuntime
     packageName: GameArki.BufferIO
-    version: 1.3.0
+    version: 1.4.0
     desc: "\u4E8C\u8FDB\u5236\u6570\u636E\u5E8F\u5217\u5316\u51FD\u6570"
   - rootDir: com.gamearki.bufgenerator
     dirs:
@@ -73,6 +74,8 @@ MonoBehaviour:
   - rootDir: com.gamearki.fpeasing
     dirs:
     - Runtime
+    - Sample
+    - Tests
     packageName: GameArki.FPEasing
     version: 2.7.0
     desc: "\u7F13\u52A8\u51FD\u6570\u5E93"
