@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "GameArki.BufGenerator",
+        "GameArki.BufferIO.Unity",
         "GameArki.BufferIO",
         "GameArki.NoBuf",
         "GameArki.NativeBytes",

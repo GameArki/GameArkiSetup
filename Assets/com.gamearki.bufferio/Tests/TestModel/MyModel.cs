@@ -1,4 +1,5 @@
 using System;
+using GameArki.BufferIO;
 
 namespace GameArki.BufferIO.Tests
 {
@@ -95,120 +96,6 @@ namespace GameArki.BufferIO.Tests
             herModel = BufferReaderExtra.ReadMessage(src, () => new HerModel(), ref offset);
             herModelArr = BufferReaderExtra.ReadMessageArr(src, () => new HerModel(), ref offset);
             otherStr = BufferReader.ReadUTF8String(src, ref offset);
-        }
-
-        public int GetEvaluatedSize(out bool isCertain)
-        {
-            int count = 77;
-            isCertain = false;
-            if (boolArr != null)
-            {
-                count += boolArr.Length;
-            }
-
-            if (byteArr != null)
-            {
-                count += byteArr.Length;
-            }
-
-            if (sbyteArr != null)
-            {
-                count += sbyteArr.Length;
-            }
-
-            if (shortArr != null)
-            {
-                count += shortArr.Length * 2;
-            }
-
-            if (ushortArr != null)
-            {
-                count += ushortArr.Length * 2;
-            }
-
-            if (intArr != null)
-            {
-                count += intArr.Length * 4;
-            }
-
-            if (uintArr != null)
-            {
-                count += uintArr.Length * 4;
-            }
-
-            if (longArr != null)
-            {
-                count += longArr.Length * 8;
-            }
-
-            if (ulongArr != null)
-            {
-                count += ulongArr.Length * 8;
-            }
-
-            if (floatArr != null)
-            {
-                count += floatArr.Length * 4;
-            }
-
-            if (doubleArr != null)
-            {
-                count += doubleArr.Length * 8;
-            }
-
-            if (strValue != null)
-            {
-                count += strValue.Length * 4;
-            }
-
-            if (strArr != null)
-            {
-                for (int i = 0; i < strArr.Length; i += 1)
-                {
-                    count += strArr[i].Length * 4;
-                }
-            }
-
-            if (otherStr != null)
-            {
-                count += otherStr.Length * 4;
-            }
-
-            if (herModel != null)
-            {
-                count += herModel.GetEvaluatedSize(out bool _bherModel);
-                isCertain &= _bherModel;
-            }
-
-            if (herModelArr != null)
-            {
-                for (int i = 0; i < herModelArr.Length; i += 1)
-                {
-                    var __child = herModelArr[i];
-                    count += __child.GetEvaluatedSize(out bool _cb_herModelArr);
-                    isCertain &= _cb_herModelArr;
-                }
-            }
-
-            return count;
-        }
-
-        public byte[] ToBytes()
-        {
-            int count = GetEvaluatedSize(out bool isCertain);
-            int offset = 0;
-            byte[] src = new byte[count];
-            WriteTo(src, ref offset);
-            if (isCertain)
-            {
-                return src;
-            }
-            else
-            {
-                byte[] dst = new byte[offset];
-                Buffer.BlockCopy(src, 0, dst, 0, offset);
-                return dst;
-            }
         }
     }
 }

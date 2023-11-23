@@ -253,7 +253,7 @@ namespace GameArki.BufferIO.Tests {
             byte[] newDst = new byte[2000];
             writeOffset = 0;
             readOffset = 0;
-            BufferWriterExtra.WriteMessage(newDst, new HerModel() { value = 1 }, ref writeOffset);
+            BufferWriterExtra.WriteMessage(newDst, new HerModel() { name = "Ho1", value = 1 }, ref writeOffset);
             HerModel herModel = BufferReaderExtra.ReadMessage(newDst, () => new HerModel(), ref readOffset);
             Assert.That(writeOffset, Is.EqualTo(readOffset));
             Assert.That(herModel.value, Is.EqualTo(1));

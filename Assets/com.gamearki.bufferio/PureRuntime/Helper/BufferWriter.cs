@@ -104,7 +104,7 @@ namespace GameArki.BufferIO {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteUTF8String(byte[] dst, string data, ref int offset) {
-            if (data != null) {
+            if (!string.IsNullOrEmpty(data)) {
                 byte[] d = Encoding.UTF8.GetBytes(data);
                 ushort count = (ushort)d.Length;
                 WriteUInt16(dst, count, ref offset);

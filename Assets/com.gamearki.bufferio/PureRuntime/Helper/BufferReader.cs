@@ -348,10 +348,8 @@ namespace GameArki.BufferIO {
             ushort totalCount = ReadUInt16(src, ref offset);
             string[] data = new string[totalCount];
             for (int i = 0; i < totalCount; i += 1) {
-                ushort count = ReadUInt16(src, ref offset);
-                string s = Encoding.UTF8.GetString(src, offset, count);
-                data[i] = s;
-                offset += count;
+                string d = ReadUTF8String(src, ref offset);
+                data[i] = d;
             }
             return data;
         }
@@ -361,10 +359,8 @@ namespace GameArki.BufferIO {
             ushort totalCount = ReadUInt16(src, ref offset);
             List<string> data = new List<string>(totalCount);
             for (int i = 0; i < totalCount; i += 1) {
-                ushort count = ReadUInt16(src, ref offset);
-                string s = Encoding.UTF8.GetString(src, offset, count);
-                data.Add(s);
-                offset += count;
+                string d = ReadUTF8String(src, ref offset);
+                data.Add(d);
             }
             return data;
         }

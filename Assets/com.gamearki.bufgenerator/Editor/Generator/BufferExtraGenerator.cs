@@ -8,10 +8,10 @@ namespace GameArki.BufferIO.Editor {
 
     public class BufferExtraGenerator {
 
-        const string WRITE_TO_METHOD_NAME = "WriteTo";
-        const string FROM_BYTES_METHOD_NAME = "FromBytes";
-        const string GET_EVELUATED_SIZE_METHOD_NAME = "GetEvaluatedSize";
-        const string TO_BYTES_METHOD_NAME = "ToBytes";
+        const string n_WriteTo = "WriteTo";
+        const string n_FromBytes = "FromBytes";
+        const string n_GetEvaluatedSize = "GetEvaluatedSize";
+        const string n_ToBytes = "ToBytes";
 
         static string ATTR = nameof(BufferIOMessageObjectAttribute).Replace("Attribute", "");
 
@@ -35,14 +35,6 @@ namespace GameArki.BufferIO.Editor {
                 classEditor.RemoveMethod(fromBytesMethod.GetName());
                 classEditor.AddMethod(fromBytesMethod);
 
-                MethodEditor getEvaluatedSizeMethod = GenGetEvaluatedSizeMethod(inputDir, classEditor);
-                classEditor.RemoveMethod(getEvaluatedSizeMethod.GetName());
-                classEditor.AddMethod(getEvaluatedSizeMethod);
-
-                MethodEditor toBytesMethod = GenToBytesMethod(inputDir, classEditor);
-                classEditor.RemoveMethod(toBytesMethod.GetName());
-                classEditor.AddMethod(toBytesMethod);
-
                 string typeName = $"{typeof(IBufferIOMessage<>).Name.Replace("`1", "")}<{classEditor.GetClassName()}>";
                 classEditor.RemoveInherit(typeName);
                 classEditor.InheritInterface(typeName);
@@ -58,60 +50,112 @@ namespace GameArki.BufferIO.Editor {
 
         static MethodEditor GenWriteToMethod(string inputDir, ClassEditor classEditor) {
 
-            const string DST_PARAM_TYPE = "byte[]";
-            const string DST_PARAM_NAME = "dst";
-            const string OFFSET_PARAM_TYPE = "ref int";
-            const string OFFSET_PARAM_NAME = "offset";
+            const string t_dst = "byte[]";
+            const string n_dst = "dst";
+            const string t_ref_int = "ref int";
+            const string n_offset = "offset";
 
-            string WriteLine(string fieldType, string fieldName) {
-                const string WRITER = nameof(BufferWriter) + ".";
-                string paramStr = DST_PARAM_NAME + ", " + fieldName + ", " + "ref " + OFFSET_PARAM_NAME;
-                string writeSuffix = $"({paramStr});";
-                switch (fieldType) {
-                    case "bool": return WRITER + nameof(BufferWriter.WriteBool) + writeSuffix;
-                    case "char": return WRITER + nameof(BufferWriter.WriteChar) + writeSuffix;
-                    case "byte": return WRITER + nameof(BufferWriter.WriteUInt8) + writeSuffix;
-                    case "sbyte": return WRITER + nameof(BufferWriter.WriteInt8) + writeSuffix;
-                    case "short": return WRITER + nameof(BufferWriter.WriteInt16) + writeSuffix;
-                    case "ushort": return WRITER + nameof(BufferWriter.WriteUInt16) + writeSuffix;
-                    case "int": return WRITER + nameof(BufferWriter.WriteInt32) + writeSuffix;
-                    case "uint": return WRITER + nameof(BufferWriter.WriteUInt32) + writeSuffix;
-                    case "long": return WRITER + nameof(BufferWriter.WriteInt64) + writeSuffix;
-                    case "ulong": return WRITER + nameof(BufferWriter.WriteUInt64) + writeSuffix;
-                    case "float": return WRITER + nameof(BufferWriter.WriteSingle) + writeSuffix;
-                    case "double": return WRITER + nameof(BufferWriter.WriteDouble) + writeSuffix;
-                    case "bool[]": return WRITER + nameof(BufferWriter.WriteBoolArr) + writeSuffix;
-                    case "byte[]": return WRITER + nameof(BufferWriter.WriteUint8Arr) + writeSuffix;
-                    case "sbyte[]": return WRITER + nameof(BufferWriter.WriteInt8Arr) + writeSuffix;
-                    case "short[]": return WRITER + nameof(BufferWriter.WriteInt16Arr) + writeSuffix;
-                    case "ushort[]": return WRITER + nameof(BufferWriter.WriteUInt16Arr) + writeSuffix;
-                    case "int[]": return WRITER + nameof(BufferWriter.WriteInt32Arr) + writeSuffix;
-                    case "uint[]": return WRITER + nameof(BufferWriter.WriteUInt32Arr) + writeSuffix;
-                    case "long[]": return WRITER + nameof(BufferWriter.WriteInt64Arr) + writeSuffix;
-                    case "ulong[]": return WRITER + nameof(BufferWriter.WriteUInt64Arr) + writeSuffix;
-                    case "float[]": return WRITER + nameof(BufferWriter.WriteSingleArr) + writeSuffix;
-                    case "double[]": return WRITER + nameof(BufferWriter.WriteDoubleArr) + writeSuffix;
-                    case "string": return WRITER + nameof(BufferWriter.WriteUTF8String) + writeSuffix;
-                    case "string[]": return WRITER + nameof(BufferWriter.WriteUTF8StringArr) + writeSuffix;
+            string WriteLine(string t_field, string n_field) {
+                string paramSuffix = $"{n_dst}, {n_field}, ref {n_offset}";
+                switch (t_field) {
+                    case "byte": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt8)}({paramSuffix});";
+                    case "byte[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUint8Arr)}({paramSuffix});";
+                    case "List<byte>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUint8List)}({paramSuffix});";
+                    case "sbyte": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt8)}({paramSuffix});";
+                    case "sbyte[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt8Arr)}({paramSuffix});";
+                    case "List<sbyte>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt8List)}({paramSuffix});";
+                    case "bool": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteBool)}({paramSuffix});";
+                    case "bool[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteBoolArr)}({paramSuffix});";
+                    case "List<bool>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteBoolList)}({paramSuffix});";
+                    case "short": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt16)}({paramSuffix});";
+                    case "short[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt16Arr)}({paramSuffix});";
+                    case "List<short>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt16List)}({paramSuffix});";
+                    case "ushort": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt16)}({paramSuffix});";
+                    case "ushort[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt16Arr)}({paramSuffix});";
+                    case "List<ushort>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt16List)}({paramSuffix});";
+                    case "int": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt32)}({paramSuffix});";
+                    case "int[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt32Arr)}({paramSuffix});";
+                    case "List<int>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt32List)}({paramSuffix});";
+                    case "uint": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt32)}({paramSuffix});";
+                    case "uint[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt32Arr)}({paramSuffix});";
+                    case "List<uint>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt32List)}({paramSuffix});";
+                    case "long": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt64)}({paramSuffix});";
+                    case "long[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt64Arr)}({paramSuffix});";
+                    case "List<long>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteInt64List)}({paramSuffix});";
+                    case "ulong": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt64)}({paramSuffix});";
+                    case "ulong[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt64Arr)}({paramSuffix});";
+                    case "List<ulong>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUInt64List)}({paramSuffix});";
+                    case "float": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteSingle)}({paramSuffix});";
+                    case "float[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteSingleArr)}({paramSuffix});";
+                    case "List<float>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteSingleList)}({paramSuffix});";
+                    case "double": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDouble)}({paramSuffix});";
+                    case "double[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDoubleArr)}({paramSuffix});";
+                    case "List<double>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDoubleList)}({paramSuffix});";
+                    case "char": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteChar)}({paramSuffix});";
+                    case "string": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUTF8String)}({paramSuffix});";
+                    case "string[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUTF8StringArr)}({paramSuffix});";
+                    case "List<string>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUTF8StringList)}({paramSuffix});";
+#if UNITY_EDITOR
+                    case "Vector2": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2)}({paramSuffix});";
+                    case "Vector2[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2Array)}({paramSuffix});";
+                    case "List<Vector2>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2List)}({paramSuffix});";
+                    case "Vector2Int": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2Int)}({paramSuffix});";
+                    case "Vector2Int[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2IntArray)}({paramSuffix});";
+                    case "List<Vector2Int>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector2IntList)}({paramSuffix});";
+                    case "Vector3": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3)}({paramSuffix});";
+                    case "Vector3[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3Array)}({paramSuffix});";
+                    case "List<Vector3>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3List)}({paramSuffix});";
+                    case "Vector3Int": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3Int)}({paramSuffix});";
+                    case "Vector3Int[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3IntArray)}({paramSuffix});";
+                    case "List<Vector3Int>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector3IntList)}({paramSuffix});";
+                    case "Vector4": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector4)}({paramSuffix});";
+                    case "Vector4[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector4Array)}({paramSuffix});";
+                    case "List<Vector4>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteVector4List)}({paramSuffix});";
+                    case "Quaternion": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteQuaternion)}({paramSuffix});";
+                    case "Quaternion[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteQuaternionArray)}({paramSuffix});";
+                    case "List<Quaternion>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteQuaternionList)}({paramSuffix});";
+                    case "Color": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColor)}({paramSuffix});";
+                    case "Color[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColorArray)}({paramSuffix});";
+                    case "List<Color>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColorList)}({paramSuffix});";
+                    case "Color32": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColor32)}({paramSuffix});";
+                    case "Color32[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColor32Array)}({paramSuffix});";
+                    case "List<Color32>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteColor32List)}({paramSuffix});";
+                    case "Rect": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteRect)}({paramSuffix});";
+                    case "Rect[]": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteRectArray)}({paramSuffix});";
+                    case "List<Rect>": return $"{nameof(UnityBufferWriter)}.{nameof(UnityBufferWriter.WriteRectList)}({paramSuffix});";
+#endif
                     default:
-
-                        if (fieldType == classEditor.GetClassName()) {
-                            throw new Exception($"不可循环依赖: {fieldType}");
+                        if (t_field.EndsWith("[]>")) {
+                            throw new Exception($"未处理该类型: {t_field}");
+                        }
+                        string className = classEditor.GetClassName();
+                        if (t_field == className || t_field == $"{className}[]" || t_field == $"List<{className}>") {
+                            throw new Exception($"不可循环依赖: {t_field}");
                         }
 
-                        const string WRITER_EXTRA = nameof(BufferWriterExtra) + ".";
-                        if (fieldType.Contains("[]")) {
-                            string trueType = fieldType.Replace("[]", "");
+                        const string n_BufferWriterExtra = nameof(BufferWriterExtra);
+                        if (t_field.EndsWith("[]")) {
+                            string trueType = t_field.Replace("[]", "");
                             if (IsBufferObject(inputDir, trueType)) {
-                                return WRITER_EXTRA + nameof(BufferWriterExtra.WriteMessageArr) + writeSuffix;
+                                const string n_WriteMessageArr = nameof(BufferWriterExtra.WriteMessageArr);
+                                return $"{n_BufferWriterExtra}.{n_WriteMessageArr}({paramSuffix});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
+                            }
+                        } else if (t_field.StartsWith("List<") && t_field.EndsWith(">")) {
+                            string trueType = t_field.Replace("List<", "").Replace(">", "");
+                            if (IsBufferObject(inputDir, trueType)) {
+                                const string n_WriteMessageList = nameof(BufferWriterExtra.WriteMessageList);
+                                return $"{n_BufferWriterExtra}.{n_WriteMessageList}({paramSuffix});";
+                            } else {
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         } else {
-                            if (IsBufferObject(inputDir, fieldType)) {
-                                return WRITER_EXTRA + nameof(BufferWriterExtra.WriteMessage) + writeSuffix;
+                            if (IsBufferObject(inputDir, t_field)) {
+                                const string n_WriteMessage = nameof(BufferWriterExtra.WriteMessage);
+                                return $"{n_BufferWriterExtra}.{n_WriteMessage}({paramSuffix});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         }
 
@@ -119,9 +163,9 @@ namespace GameArki.BufferIO.Editor {
             }
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "void", WRITE_TO_METHOD_NAME);
-            methodEditor.AddParameter(DST_PARAM_TYPE, DST_PARAM_NAME);
-            methodEditor.AddParameter(OFFSET_PARAM_TYPE, OFFSET_PARAM_NAME);
+            methodEditor.Initialize(VisitLevel.Public, false, "void", n_WriteTo);
+            methodEditor.AddParameter(t_dst, n_dst);
+            methodEditor.AddParameter(t_ref_int, n_offset);
             var fieldList = classEditor.GetAllFields();
             for (int i = 0; i < fieldList.Count; i += 1) {
                 var field = fieldList[i];
@@ -134,73 +178,124 @@ namespace GameArki.BufferIO.Editor {
         }
 
         static MethodEditor GenFromBytesMethod(string inputDir, ClassEditor classEditor) {
-            const string SRC_PARAM_TYPE = "byte[]";
-            const string SRC_PARAM_NAME = "src";
-            const string OFFSET_PARAM_TYPE = "ref int";
-            const string OFFSET_PARAM_NAME = "offset";
+            const string t_src = "byte[]";
+            const string n_src = "src";
+            const string t_ref_int = "ref int";
+            const string n_offset = "offset";
 
-            string WriteLine(string fieldType, string fieldName) {
-                const string READER = nameof(BufferReader) + ".";
-                string paramStr = SRC_PARAM_NAME + ", " + "ref " + OFFSET_PARAM_NAME;
-                string readPrefix = fieldName + " = " + READER;
-                string readSuffix = $"({paramStr});";
-                switch (fieldType) {
-                    case "bool": return readPrefix + nameof(BufferReader.ReadBool) + readSuffix;
-                    case "char": return readPrefix + nameof(BufferReader.ReadChar) + readSuffix;
-                    case "byte": return readPrefix + nameof(BufferReader.ReadUInt8) + readSuffix;
-                    case "sbyte": return readPrefix + nameof(BufferReader.ReadInt8) + readSuffix;
-                    case "short": return readPrefix + nameof(BufferReader.ReadInt16) + readSuffix;
-                    case "ushort": return readPrefix + nameof(BufferReader.ReadUInt16) + readSuffix;
-                    case "int": return readPrefix + nameof(BufferReader.ReadInt32) + readSuffix;
-                    case "uint": return readPrefix + nameof(BufferReader.ReadUInt32) + readSuffix;
-                    case "long": return readPrefix + nameof(BufferReader.ReadInt64) + readSuffix;
-                    case "ulong": return readPrefix + nameof(BufferReader.ReadUInt64) + readSuffix;
-                    case "float": return readPrefix + nameof(BufferReader.ReadSingle) + readSuffix;
-                    case "double": return readPrefix + nameof(BufferReader.ReadDouble) + readSuffix;
-                    case "bool[]": return readPrefix + nameof(BufferReader.ReadBoolArr) + readSuffix;
-                    case "byte[]": return readPrefix + nameof(BufferReader.ReadUInt8Arr) + readSuffix;
-                    case "sbyte[]": return readPrefix + nameof(BufferReader.ReadInt8Arr) + readSuffix;
-                    case "short[]": return readPrefix + nameof(BufferReader.ReadInt16Arr) + readSuffix;
-                    case "ushort[]": return readPrefix + nameof(BufferReader.ReadUInt16Arr) + readSuffix;
-                    case "int[]": return readPrefix + nameof(BufferReader.ReadInt32Arr) + readSuffix;
-                    case "uint[]": return readPrefix + nameof(BufferReader.ReadUInt32Arr) + readSuffix;
-                    case "long[]": return readPrefix + nameof(BufferReader.ReadInt64Arr) + readSuffix;
-                    case "ulong[]": return readPrefix + nameof(BufferReader.ReadUInt64Arr) + readSuffix;
-                    case "float[]": return readPrefix + nameof(BufferReader.ReadSingleArr) + readSuffix;
-                    case "double[]": return readPrefix + nameof(BufferReader.ReadDoubleArr) + readSuffix;
-                    case "string": return readPrefix + nameof(BufferReader.ReadUTF8String) + readSuffix;
-                    case "string[]": return readPrefix + nameof(BufferReader.ReadUTF8StringArr) + readSuffix;
+            string WriteLine(string t_field, string n_field) {
+                const string n_BufferReader = nameof(BufferReader);
+                string paramSuffix = $"{n_src}, ref {n_offset}";
+                switch (t_field) {
+                    case "byte": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt8)}({paramSuffix});";
+                    case "byte[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt8Arr)}({paramSuffix});";
+                    case "List<byte>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt8List)}({paramSuffix});";
+                    case "sbyte": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt8)}({paramSuffix});";
+                    case "sbyte[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt8Arr)}({paramSuffix});";
+                    case "List<sbyte>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt8List)}({paramSuffix});";
+                    case "bool": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadBool)}({paramSuffix});";
+                    case "bool[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadBoolArr)}({paramSuffix});";
+                    case "List<bool>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadBoolList)}({paramSuffix});";
+                    case "short": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt16)}({paramSuffix});";
+                    case "short[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt16Arr)}({paramSuffix});";
+                    case "List<short>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt16List)}({paramSuffix});";
+                    case "ushort": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt16)}({paramSuffix});";
+                    case "ushort[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt16Arr)}({paramSuffix});";
+                    case "List<ushort>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt16List)}({paramSuffix});";
+                    case "int": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt32)}({paramSuffix});";
+                    case "int[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt32Arr)}({paramSuffix});";
+                    case "List<int>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt32List)}({paramSuffix});";
+                    case "uint": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt32)}({paramSuffix});";
+                    case "uint[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt32Arr)}({paramSuffix});";
+                    case "List<uint>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt32List)}({paramSuffix});";
+                    case "long": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt64)}({paramSuffix});";
+                    case "long[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt64Arr)}({paramSuffix});";
+                    case "List<long>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadInt64List)}({paramSuffix});";
+                    case "ulong": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt64)}({paramSuffix});";
+                    case "ulong[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt64Arr)}({paramSuffix});";
+                    case "List<ulong>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUInt64List)}({paramSuffix});";
+                    case "float": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadSingle)}({paramSuffix});";
+                    case "float[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadSingleArr)}({paramSuffix});";
+                    case "List<float>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadSingleList)}({paramSuffix});";
+                    case "double": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDouble)}({paramSuffix});";
+                    case "double[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDoubleArr)}({paramSuffix});";
+                    case "List<double>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDoubleList)}({paramSuffix});";
+                    case "char": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadChar)}({paramSuffix});";
+                    case "string": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUTF8String)}({paramSuffix});";
+                    case "string[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUTF8StringArr)}({paramSuffix});";
+                    case "List<string>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUTF8StringList)}({paramSuffix});";
+#if UNITY_EDITOR
+                    case "Vector2": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2)}({paramSuffix});";
+                    case "Vector2[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2Array)}({paramSuffix});";
+                    case "List<Vector2>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2List)}({paramSuffix});";
+                    case "Vector2Int": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2Int)}({paramSuffix});";
+                    case "Vector2Int[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2IntArray)}({paramSuffix});";
+                    case "List<Vector2Int>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector2IntList)}({paramSuffix});";
+                    case "Vector3": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3)}({paramSuffix});";
+                    case "Vector3[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3Array)}({paramSuffix});";
+                    case "List<Vector3>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3List)}({paramSuffix});";
+                    case "Vector3Int": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3Int)}({paramSuffix});";
+                    case "Vector3Int[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3IntArray)}({paramSuffix});";
+                    case "List<Vector3Int>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector3IntList)}({paramSuffix});";
+                    case "Vector4": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector4)}({paramSuffix});";
+                    case "Vector4[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector4Array)}({paramSuffix});";
+                    case "List<Vector4>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadVector4List)}({paramSuffix});";
+                    case "Quaternion": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadQuaternion)}({paramSuffix});";
+                    case "Quaternion[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadQuaternionArray)}({paramSuffix});";
+                    case "List<Quaternion>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadQuaternionList)}({paramSuffix});";
+                    case "Color": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColor)}({paramSuffix});";
+                    case "Color[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColorArray)}({paramSuffix});";
+                    case "List<Color>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColorList)}({paramSuffix});";
+                    case "Color32": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColor32)}({paramSuffix});";
+                    case "Color32[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColor32Array)}({paramSuffix});";
+                    case "List<Color32>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadColor32List)}({paramSuffix});";
+                    case "Rect": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadRect)}({paramSuffix});";
+                    case "Rect[]": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadRectArray)}({paramSuffix});";
+                    case "List<Rect>": return $"{n_field} = {nameof(UnityBufferReader)}.{nameof(UnityBufferReader.ReadRectList)}({paramSuffix});";
+#endif
                     default:
-
-                        if (fieldType == classEditor.GetClassName()) {
-                            throw new Exception($"不可循环依赖: {fieldType}");
+                        string className = classEditor.GetClassName();
+                        if (t_field.EndsWith("[]>")) {
+                            throw new Exception($"未处理该类型: {t_field}");
                         }
-
-                        const string READER_EXTRA = nameof(BufferReaderExtra) + ".";
-                        if (fieldType.Contains("[]")) {
+                        if (t_field == className || t_field == $"{className}[]" || t_field == $"List<{className}>") {
+                            throw new Exception($"不可循环依赖: {t_field}");
+                        }
+                        const string n_BufferReaderExtra = nameof(BufferReaderExtra);
+                        if (t_field.EndsWith("[]")) {
                             // 处理自定义类型数组
-                            string trueType = fieldType.Replace("[]", "");
-                            if (IsBufferObject(inputDir, trueType)) {
-                                return $"{fieldName} = " + READER_EXTRA + nameof(BufferReaderExtra.ReadMessageArr) + $"({SRC_PARAM_NAME}, () => new {trueType}(), ref {OFFSET_PARAM_NAME});";
+                            const string n_ReadMessageArr = nameof(BufferReaderExtra.ReadMessageArr);
+                            string t_trueField = t_field.Replace("[]", "");
+                            if (IsBufferObject(inputDir, t_trueField)) {
+                                return $"{n_field} = {n_BufferReaderExtra}.{n_ReadMessageArr}({n_src}, () => new {t_trueField}(), ref {n_offset});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
+                            }
+                        } else if (t_field.StartsWith("List<") && t_field.EndsWith(">")) {
+                            // 处理自定义类型列表
+                            const string n_ReadMessageList = nameof(BufferReaderExtra.ReadMessageList);
+                            string t_trueField = t_field.Replace("List<", "").Replace(">", "");
+                            if (IsBufferObject(inputDir, t_trueField)) {
+                                return $"{n_field} = {n_BufferReaderExtra}.{n_ReadMessageList}({n_src}, () => new {t_trueField}(), ref {n_offset});";
+                            } else {
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         } else {
                             // 处理单自定义类型
-                            if (IsBufferObject(inputDir, fieldType)) {
-                                return $"{fieldName} = " + READER_EXTRA + nameof(BufferReaderExtra.ReadMessage) + $"({SRC_PARAM_NAME}, () => new {fieldType}(), ref {OFFSET_PARAM_NAME});";
+                            const string n_ReadMessage = nameof(BufferReaderExtra.ReadMessage);
+                            if (IsBufferObject(inputDir, t_field)) {
+                                return $"{n_field} = {n_BufferReaderExtra}.{n_ReadMessage}({n_src}, () => new {t_field}(), ref {n_offset});";
                             } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
+                                throw new Exception($"未处理该类型: {t_field}");
                             }
                         }
-
                 }
             }
 
             MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "void", FROM_BYTES_METHOD_NAME);
-            methodEditor.AddParameter(SRC_PARAM_TYPE, SRC_PARAM_NAME);
-            methodEditor.AddParameter(OFFSET_PARAM_TYPE, OFFSET_PARAM_NAME);
+            methodEditor.Initialize(VisitLevel.Public, false, "void", n_FromBytes);
+            methodEditor.AddParameter(t_src, n_src);
+            methodEditor.AddParameter(t_ref_int, n_offset);
             var fieldList = classEditor.GetAllFields();
             for (int i = 0; i < fieldList.Count; i += 1) {
                 var field = fieldList[i];
@@ -209,177 +304,6 @@ namespace GameArki.BufferIO.Editor {
                 string line = WriteLine(type, name);
                 methodEditor.AppendLine(line);
             }
-            return methodEditor;
-
-        }
-
-        static MethodEditor GenGetEvaluatedSizeMethod(string inputDir, ClassEditor classEditor) {
-
-            const string CERTAIN_PARAM_TYPE = "out bool";
-            const string CERTAIN_PARAM_NAME = "isCertain";
-            const string COUNT_TYPE = "int";
-            const string COUNT_VAR = "count";
-
-            MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "int", GET_EVELUATED_SIZE_METHOD_NAME);
-            methodEditor.AddParameter(CERTAIN_PARAM_TYPE, CERTAIN_PARAM_NAME);
-
-            StringBuilder certainLine = new StringBuilder();
-            StringBuilder dealCertainLine = new StringBuilder();
-            StringBuilder evaluatedStringLine = new StringBuilder();
-            StringBuilder evaluatedObjectLine = new StringBuilder();
-
-            bool isCertain = true;
-            int certainCount = 0;
-
-            void WriteCount(string fieldType, string fieldName) {
-
-                string dealStr = COUNT_VAR + " += " + fieldName + ".Length";
-
-                switch (fieldType) {
-
-                    case "bool":
-                    case "byte":
-                    case "sbyte": certainCount += 1; break;
-                    case "char":
-                    case "short":
-                    case "ushort": certainCount += 2; break;
-                    case "int":
-                    case "uint":
-                    case "float": certainCount += 4; break;
-                    case "long":
-                    case "ulong":
-                    case "double": certainCount += 8; break;
-
-                    case "bool[]":
-                    case "byte[]":
-                    case "sbyte[]":
-                        dealCertainLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        dealCertainLine.AppendLine(dealStr + ";");
-                        dealCertainLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-                    case "short[]":
-                    case "ushort[]":
-                        dealCertainLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        dealCertainLine.AppendLine(dealStr + " * 2;");
-                        dealCertainLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-                    case "int[]":
-                    case "uint[]":
-                    case "float[]":
-                        dealCertainLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        dealCertainLine.AppendLine(dealStr + " * 4;");
-                        dealCertainLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-                    case "long[]":
-                    case "ulong[]":
-                    case "double[]":
-                        dealCertainLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        dealCertainLine.AppendLine(dealStr + " * 8;");
-                        dealCertainLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-
-                    case "string":
-                        isCertain = false;
-                        evaluatedStringLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        evaluatedStringLine.AppendLine(COUNT_VAR + " += " + fieldName + ".Length * 4;");
-                        evaluatedStringLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-
-                    case "string[]":
-                        isCertain = false;
-                        evaluatedStringLine.AppendLine($"if ({fieldName} != null) " + "{");
-                        string str = $"for (int i = 0; i < {fieldName}.Length; i += 1)" + "{" + $"{COUNT_VAR} += {fieldName}[i].Length * 4;" + "}";
-                        evaluatedStringLine.AppendLine(str);
-                        evaluatedStringLine.AppendLine("}");
-                        certainCount += 2;
-                        break;
-
-                    default:
-
-                        if (fieldType == classEditor.GetClassName()) {
-                            throw new Exception($"不可循环依赖: {fieldType}");
-                        }
-
-                        if (fieldType.Contains("[]")) {
-                            string trueType = fieldType.Replace("[]", "");
-                            if (IsBufferObject(inputDir, trueType)) {
-                                const string CHILD = "__child";
-                                string s = $"if ({fieldName} != null)" + "{"
-                                        + $"for (int i = 0; i < {fieldName}.Length; i += 1)" + "{"
-                                            + $"var {CHILD} = {fieldName}[i];"
-                                            + $"{COUNT_VAR} += {CHILD}." + GET_EVELUATED_SIZE_METHOD_NAME + $"(out bool _cb_{fieldName});"
-                                            + CERTAIN_PARAM_NAME + "&=" + $"_cb_{fieldName};"
-                                            + "}"
-                                        + "}";
-                                evaluatedObjectLine.AppendLine(s);
-                                certainCount += 2;
-                            } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
-                            }
-                        } else {
-                            if (IsBufferObject(inputDir, fieldType)) {
-                                string s = COUNT_VAR + $" += {fieldName}.{GET_EVELUATED_SIZE_METHOD_NAME}(out bool _b{fieldName});\r\n";
-                                s += CERTAIN_PARAM_NAME + "&=" + $"_b{fieldName};";
-                                evaluatedObjectLine.AppendLine($"if ({fieldName} != null) " + "{");
-                                evaluatedObjectLine.AppendLine(s);
-                                evaluatedObjectLine.AppendLine("}");
-                                certainCount += 2;
-                            } else {
-                                throw new Exception($"未处理该类型: {fieldType}");
-                            }
-                        }
-                        break;
-                }
-            }
-
-            var fieldList = classEditor.GetAllFields();
-            for (int i = 0; i < fieldList.Count; i += 1) {
-                var field = fieldList[i];
-                string type = field.GetFieldType();
-                string name = field.GetFieldName();
-                WriteCount(type, name);
-            }
-
-            methodEditor.AppendLine(COUNT_TYPE + " " + COUNT_VAR + $" = {certainCount};");
-            methodEditor.AppendLine(CERTAIN_PARAM_NAME + " = " + isCertain.ToString().ToLower() + ";");
-            methodEditor.AppendLine(certainLine.ToString());
-            methodEditor.AppendLine(dealCertainLine.ToString());
-            methodEditor.AppendLine(evaluatedStringLine.ToString());
-            methodEditor.AppendLine(evaluatedObjectLine.ToString());
-            methodEditor.AppendLine("return " + COUNT_VAR + ";");
-            return methodEditor;
-
-        }
-
-        static MethodEditor GenToBytesMethod(string inputDir, ClassEditor classEditor) {
-
-            const string COUNT_TYPE = "int";
-            const string COUNT_VAR = "count";
-            const string OFFSET_TYPE = "int";
-            const string OFFSET_VAR = "offset";
-            const string CERTAIN_TYPE = "out bool";
-            const string CERTAIN_VAR = "isCertain";
-            const string SRC_VAR = "src";
-            const string DST_VAR = "dst";
-
-            MethodEditor methodEditor = new MethodEditor();
-            methodEditor.Initialize(VisitLevel.Public, false, "byte[]", TO_BYTES_METHOD_NAME);
-            methodEditor.AppendLine(COUNT_TYPE + " " + COUNT_VAR + " = " + GET_EVELUATED_SIZE_METHOD_NAME + $"({CERTAIN_TYPE} {CERTAIN_VAR});");
-            methodEditor.AppendLine(OFFSET_TYPE + " " + OFFSET_VAR + " = 0;");
-            methodEditor.AppendLine("byte[] " + SRC_VAR + $" = new byte[{COUNT_VAR}];");
-            methodEditor.AppendLine(WRITE_TO_METHOD_NAME + $"({SRC_VAR}, ref {OFFSET_VAR});");
-            methodEditor.AppendLine($"if ({CERTAIN_VAR})" + "{ return " + SRC_VAR + ";}");
-            methodEditor.AppendLine("else {"
-                                    + $"byte[] {DST_VAR} = new byte[{OFFSET_VAR}];"
-                                    + $"Buffer.BlockCopy({SRC_VAR}, 0, {DST_VAR}, 0, {OFFSET_VAR});"
-                                    + $"return {DST_VAR};"
-                                    + "}");
             return methodEditor;
 
         }
