@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.BufferIO.Unity",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e265d67c03feb3243bf7d85067f9df99"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
