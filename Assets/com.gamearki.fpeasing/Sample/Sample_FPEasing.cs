@@ -5,6 +5,7 @@ namespace GameArki.FPEasing.Sample {
     public class Sample_FPEasing : MonoBehaviour {
 
         Vector2[] points;
+        [SerializeField] EasingType easingType;
 
         void Awake() {
             points = new Vector2[360];
@@ -23,7 +24,7 @@ namespace GameArki.FPEasing.Sample {
 
             // t: x
             // v: y
-            float v = FunctionHelper.EaseInOutBounce(t);
+            float v = EasingHelper.Ease1D(easingType, t, 1, 0, 1);
 
             int index = (int)(t * 360);
             points[index] = new Vector2(t, v);

@@ -10,16 +10,42 @@ namespace GameArki.FPEasing {
             return 1;
         }
 
+        // - Linear
         public static float EaseLinear(float t) {
             return t;
         }
 
+        public static float EaseMountainLinear(float t) {
+            if (t < 0.5f) {
+                return EaseLinear(t * 2);
+            } else {
+                return EaseLinear((1 - t) * 2);
+            }
+        }
+
+        // - Quad
         public static float EaseInQuad(float t) {
             return t * t;
         }
 
+        public static float EaseMountainInQuad(float t) {
+            if (t < 0.5f) {
+                return EaseInQuad(t * 2);
+            } else {
+                return EaseInQuad((1 - t) * 2);
+            }
+        }
+
         public static float EaseOutQuad(float t) {
             return -t * (t - 2);
+        }
+
+        public static float EaseMountainOutQuad(float t) {
+            if (t < 0.5f) {
+                return EaseOutQuad(t * 2);
+            } else {
+                return EaseOutQuad((1 - t) * 2);
+            }
         }
 
         public static float EaseInOutQuad(float t) {
@@ -31,13 +57,30 @@ namespace GameArki.FPEasing {
             return -0.5f * (t * (t - 2) - 1);
         }
 
+        // - Cubic
         public static float EaseInCubic(float t) {
             return t * t * t;
+        }
+
+        public static float EaseMountainInCubic(float t) {
+            if (t < 0.5f) {
+                return EaseInCubic(t * 2);
+            } else {
+                return EaseInCubic((1 - t) * 2);
+            }
         }
 
         public static float EaseOutCubic(float t) {
             t -= 1;
             return (t * t * t + 1);
+        }
+
+        public static float EaseMountainOutCubic(float t) {
+            if (t < 0.5f) {
+                return EaseOutCubic(t * 2);
+            } else {
+                return EaseOutCubic((1 - t) * 2);
+            }
         }
 
         public static float EaseInOutCubic(float t) {
@@ -49,13 +92,30 @@ namespace GameArki.FPEasing {
             return 0.5f * (t * t * t + 2);
         }
 
+        // - Quart
         public static float EaseInQuart(float t) {
             return t * t * t * t;
+        }
+
+        public static float EaseMountainInQuart(float t) {
+            if (t < 0.5f) {
+                return EaseInQuart(t * 2);
+            } else {
+                return EaseInQuart((1 - t) * 2);
+            }
         }
 
         public static float EaseOutQuart(float t) {
             t -= 1;
             return -(t * t * t * t - 1);
+        }
+
+        public static float EaseMountainOutQuart(float t) {
+            if (t < 0.5f) {
+                return EaseOutQuart(t * 2);
+            } else {
+                return EaseOutQuart((1 - t) * 2);
+            }
         }
 
         public static float EaseInOutQuart(float t) {
@@ -67,13 +127,30 @@ namespace GameArki.FPEasing {
             return -0.5f * (t * t * t * t - 2);
         }
 
+        // - Quint
         public static float EaseInQuint(float t) {
             return t * t * t * t * t;
+        }
+
+        public static float EaseMountainInQuint(float t) {
+            if (t < 0.5f) {
+                return EaseInQuint(t * 2);
+            } else {
+                return EaseInQuint((1 - t) * 2);
+            }
         }
 
         public static float EaseOutQuint(float t) {
             t -= 1;
             return (t * t * t * t * t + 1);
+        }
+
+        public static float EaseMountainOutQuint(float t) {
+            if (t < 0.5f) {
+                return EaseOutQuint(t * 2);
+            } else {
+                return EaseOutQuint((1 - t) * 2);
+            }
         }
 
         public static float EaseInOutQuint(float t) {
@@ -85,18 +162,36 @@ namespace GameArki.FPEasing {
             return 0.5f * (t * t * t * t * t + 2);
         }
 
+        // - Sine
         public static float EaseInSine(float t) {
             return -MathF.Cos(t * (MathF.PI / 2)) + 1;
+        }
+
+        public static float EaseMountainInSine(float t) {
+            if (t < 0.5f) {
+                return EaseInSine(t * 2);
+            } else {
+                return EaseInSine((1 - t) * 2);
+            }
         }
 
         public static float EaseOutSine(float t) {
             return MathF.Sin(t * (MathF.PI / 2));
         }
 
+        public static float EaseMountainOutSine(float t) {
+            if (t < 0.5f) {
+                return EaseOutSine(t * 2);
+            } else {
+                return EaseOutSine((1 - t) * 2);
+            }
+        }
+
         public static float EaseInOutSine(float t) {
             return -0.5f * (MathF.Cos(MathF.PI * t) - 1);
         }
 
+        // - Expo
         public static float EaseInExpo(float t) {
             return MathF.Pow(2, 10 * (t - 1));
         }
@@ -114,13 +209,30 @@ namespace GameArki.FPEasing {
             return 0.5f * (-MathF.Pow(2, -10 * t) + 2);
         }
 
+        // - Circ
         public static float EaseInCirc(float t) {
             return -(MathF.Sqrt(1 - t * t) - 1);
+        }
+
+        public static float EaseMountainInCirc(float t) {
+            if (t < 0.5f) {
+                return EaseInCirc(t * 2);
+            } else {
+                return EaseInCirc((1 - t) * 2);
+            }
         }
 
         public static float EaseOutCirc(float t) {
             t -= 1;
             return MathF.Sqrt(1 - t * t);
+        }
+
+        public static float EaseMountainOutCirc(float t) {
+            if (t < 0.5f) {
+                return EaseOutCirc(t * 2);
+            } else {
+                return EaseOutCirc((1 - t) * 2);
+            }
         }
 
         public static float EaseInOutCirc(float t) {
@@ -132,6 +244,7 @@ namespace GameArki.FPEasing {
             return 0.5f * (MathF.Sqrt(1 - t * t) + 1);
         }
 
+        // - Elastic
         public static float EaseInElastic(float t) {
             float s = 1.70158f;
             float p = 0;
@@ -205,6 +318,7 @@ namespace GameArki.FPEasing {
             return a * MathF.Pow(2, -10 * t) * MathF.Sin((t - s) * (2 * MathF.PI) / p) * 0.5f + 1;
         }
 
+        // - Back
         public static float EaseInBack(float t) {
             float s = 1.70158f;
             return t * t * ((s + 1) * t - s);
@@ -228,6 +342,7 @@ namespace GameArki.FPEasing {
             return 0.5f * (t * t * ((s + 1) * t + s) + 2);
         }
 
+        // - Bounce
         public static float EaseInBounce(float t) {
             return 1 - EaseOutBounce(1 - t);
         }
@@ -252,29 +367,6 @@ namespace GameArki.FPEasing {
                 return EaseInBounce(t * 2) * 0.5f;
             }
             return EaseOutBounce(t * 2 - 1) * 0.5f + 0.5f;
-        }
-
-        // ==== Hill ====
-        public static float EaseHill_EN1(float t) => EaseHill_Base(t, 0.1f);
-        public static float EaseHill_EN2(float t) => EaseHill_Base(t, 0.2f);
-        public static float EaseHill_EN3(float t) => EaseHill_Base(t, 0.3f);
-        public static float EaseHill_EN4(float t) => EaseHill_Base(t, 0.4f);
-        public static float EaseHill_EN5(float t) => EaseHill_Base(t, 0.5f);
-        public static float EaseHill_EN6(float t) => EaseHill_Base(t, 0.6f);
-        public static float EaseHill_EN7(float t) => EaseHill_Base(t, 0.7f);
-        public static float EaseHill_EN8(float t) => EaseHill_Base(t, 0.8f);
-        public static float EaseHill_EN9(float t) => EaseHill_Base(t, 0.9f);
-        public static float EaseHill_EN10(float t) => EaseHill_Base(t, 1f);
-
-        static float EaseHill_Base(float t, float multiple) {
-            float v;
-            if (t < 0.5f) {
-                v = EaseOutCirc(t * 2);
-            } else {
-                v = EaseOutCirc(2 - t * 2);
-            }
-            v *= multiple;
-            return v;
         }
 
     }
