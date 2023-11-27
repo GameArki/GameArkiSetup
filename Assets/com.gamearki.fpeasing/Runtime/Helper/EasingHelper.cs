@@ -123,7 +123,7 @@ namespace GameArki.FPEasing {
         static EasingModel GetEasingType(ReadOnlySpan<EasingModel> easingModels, ref float timePercent) {
             float totalWeight = 0;
             float sum = 0;
-            for (int i = 0; i < easingModels.Length; i += 1)  {
+            for (int i = 0; i < easingModels.Length; i += 1) {
                 sum += easingModels[i].timeWeight;
             }
             float t = timePercent;
@@ -146,38 +146,64 @@ namespace GameArki.FPEasing {
         public static float GetValuePercent(EasingType type, float timePercent) {
             float valuePercent;
             switch (type) {
+
                 case EasingType.Immediate: valuePercent = FunctionHelper.EaseImmediate(timePercent); break;
+
                 case EasingType.Linear: valuePercent = FunctionHelper.EaseLinear(timePercent); break;
+                case EasingType.MountainLinear: valuePercent = FunctionHelper.EaseMountainLinear(timePercent); break;
+
                 case EasingType.InQuad: valuePercent = FunctionHelper.EaseInQuad(timePercent); break;
+                case EasingType.MountainInQuad: valuePercent = FunctionHelper.EaseMountainInQuad(timePercent); break;
                 case EasingType.OutQuad: valuePercent = FunctionHelper.EaseOutQuad(timePercent); break;
+                case EasingType.MountainOutQuad: valuePercent = FunctionHelper.EaseMountainOutQuad(timePercent); break;
                 case EasingType.InOutQuad: valuePercent = FunctionHelper.EaseInOutQuad(timePercent); break;
+
                 case EasingType.InCubic: valuePercent = FunctionHelper.EaseInCubic(timePercent); break;
+                case EasingType.MountainInCubic: valuePercent = FunctionHelper.EaseMountainInCubic(timePercent); break;
                 case EasingType.OutCubic: valuePercent = FunctionHelper.EaseOutCubic(timePercent); break;
+                case EasingType.MountainOutCubic: valuePercent = FunctionHelper.EaseMountainOutCubic(timePercent); break;
                 case EasingType.InOutCubic: valuePercent = FunctionHelper.EaseInOutCubic(timePercent); break;
+
                 case EasingType.InQuart: valuePercent = FunctionHelper.EaseInQuart(timePercent); break;
+                case EasingType.MountainInQuart: valuePercent = FunctionHelper.EaseMountainInQuart(timePercent); break;
                 case EasingType.OutQuart: valuePercent = FunctionHelper.EaseOutQuart(timePercent); break;
+                case EasingType.MountainOutQuart: valuePercent = FunctionHelper.EaseMountainOutQuart(timePercent); break;
                 case EasingType.InOutQuart: valuePercent = FunctionHelper.EaseInOutQuart(timePercent); break;
+
                 case EasingType.InQuint: valuePercent = FunctionHelper.EaseInQuint(timePercent); break;
+                case EasingType.MountainInQuint: valuePercent = FunctionHelper.EaseMountainInQuint(timePercent); break;
                 case EasingType.OutQuint: valuePercent = FunctionHelper.EaseOutQuint(timePercent); break;
+                case EasingType.MountainOutQuint: valuePercent = FunctionHelper.EaseMountainOutQuint(timePercent); break;
                 case EasingType.InOutQuint: valuePercent = FunctionHelper.EaseInOutQuint(timePercent); break;
+
                 case EasingType.InSine: valuePercent = FunctionHelper.EaseInSine(timePercent); break;
+                case EasingType.MountainInSine: valuePercent = FunctionHelper.EaseMountainInSine(timePercent); break;
                 case EasingType.OutSine: valuePercent = FunctionHelper.EaseOutSine(timePercent); break;
+                case EasingType.MountainOutSine: valuePercent = FunctionHelper.EaseMountainOutSine(timePercent); break;
                 case EasingType.InOutSine: valuePercent = FunctionHelper.EaseInOutSine(timePercent); break;
+
                 case EasingType.InExpo: valuePercent = FunctionHelper.EaseInExpo(timePercent); break;
                 case EasingType.OutExpo: valuePercent = FunctionHelper.EaseOutExpo(timePercent); break;
                 case EasingType.InOutExpo: valuePercent = FunctionHelper.EaseInOutExpo(timePercent); break;
+
                 case EasingType.InCirc: valuePercent = FunctionHelper.EaseInCirc(timePercent); break;
+                case EasingType.MountainInCirc: valuePercent = FunctionHelper.EaseMountainInCirc(timePercent); break;
                 case EasingType.OutCirc: valuePercent = FunctionHelper.EaseOutCirc(timePercent); break;
+                case EasingType.MountainOutCirc: valuePercent = FunctionHelper.EaseMountainOutCirc(timePercent); break;
                 case EasingType.InOutCirc: valuePercent = FunctionHelper.EaseInOutCirc(timePercent); break;
+
                 case EasingType.InElastic: valuePercent = FunctionHelper.EaseInElastic(timePercent); break;
                 case EasingType.OutElastic: valuePercent = FunctionHelper.EaseOutElastic(timePercent); break;
                 case EasingType.InOutElastic: valuePercent = FunctionHelper.EaseInOutElastic(timePercent); break;
+
                 case EasingType.InBack: valuePercent = FunctionHelper.EaseInBack(timePercent); break;
                 case EasingType.OutBack: valuePercent = FunctionHelper.EaseOutBack(timePercent); break;
                 case EasingType.InOutBack: valuePercent = FunctionHelper.EaseInOutBack(timePercent); break;
+
                 case EasingType.InBounce: valuePercent = FunctionHelper.EaseInBounce(timePercent); break;
                 case EasingType.OutBounce: valuePercent = FunctionHelper.EaseOutBounce(timePercent); break;
                 case EasingType.InOutBounce: valuePercent = FunctionHelper.EaseInOutBounce(timePercent); break;
+
                 default: throw new System.ArgumentException("Invalid EasingType" + type.ToString());
             }
             return valuePercent;
