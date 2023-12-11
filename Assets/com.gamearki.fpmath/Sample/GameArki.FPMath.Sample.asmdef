@@ -1,0 +1,16 @@
+{
+    "name": "GameArki.FPMath.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b8f55fa5a969fb247ac8ba8dcd19d463"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
