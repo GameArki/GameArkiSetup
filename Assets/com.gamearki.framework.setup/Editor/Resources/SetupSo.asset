@@ -87,6 +87,13 @@ MonoBehaviour:
     desc: "(\u5B9A\u70B9\u6570\u7248)\u7F13\u52A8\u51FD\u6570\u5E93"
   - rootDir: com.gamearki.fpmath
     dirs:
+    - Runtime
+    - Sample
+    packageName: GameArki.FPMath
+    version: 1.0.0
+    desc: "\u6570\u5B66\u5E93"
+  - rootDir: com.gamearki.fpmath.fp
+    dirs:
     - PurePlugins
     packageName: GameArki.FPMath
     version: 1.8.3
