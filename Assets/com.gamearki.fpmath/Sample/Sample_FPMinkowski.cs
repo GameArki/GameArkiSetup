@@ -4,30 +4,30 @@ using UnityEngine;
 
 namespace GameArki.FPMath.Sample {
 
+    [ExecuteInEditMode]
     public class Sample_FPMinkowski : MonoBehaviour {
 
         [SerializeField] Vector2[] aVectors;
         [SerializeField] Vector2[] bVectors;
         Vector2[] results;
 
-        void OnEnable() {
-            results = new Vector2[1000];
+        void Awake() {
+            results = new Vector2[10000];
         }
 
         // Update is called once per frame
         void Update() {
-
         }
 
         void OnDrawGizmos() {
             if (aVectors == null || bVectors == null) return;
             // Draw A
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.green;
             for (int i = 0; i < aVectors.Length; i++) {
                 Vector2 curP = aVectors[i];
                 Vector2 nextP = aVectors[(i + 1) % aVectors.Length];
                 Gizmos.DrawLine(curP, nextP);
-            } 
+            }
             // Draw B
             Gizmos.color = Color.green;
             for (int i = 0; i < bVectors.Length; i++) {
@@ -46,7 +46,7 @@ namespace GameArki.FPMath.Sample {
             }
 
             // Draw Diff
-            int resultLength = FPMinkowski2D.Diff_CulledPolygon(bVectors, aVectors, results);
+            int resultLength = FPMinkowski2D.Diff_CulledPolygon(aVectors, bVectors, results);
             Gizmos.color = Color.red;
             for (int i = 0; i < resultLength; i++) {
                 Vector2 point = results[i];
