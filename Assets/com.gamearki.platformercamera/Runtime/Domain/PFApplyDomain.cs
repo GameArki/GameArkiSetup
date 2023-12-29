@@ -31,10 +31,7 @@ namespace GameArki.PlatformerCamera.Domain {
             // Apply Confiner
             var confiner = pfCam.ConfinerCom;
             if (confiner.IsEnable) {
-                float radio = (float)Screen.width / Screen.height;
-                var viewSize = infoCom.GetViewSize(radio);
-                var confinerSize = confiner.GetSize();
-                var camPos = confiner.LockCameraInside(pos, viewSize);
+                var camPos = confiner.LockCameraInside(pos, pfCam.CurrentInfoCom.HeightHalfSize);
                 if (camPos != pos) {
                     infoCom.SetPos(camPos);
                     pos = camPos;

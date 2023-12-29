@@ -169,7 +169,7 @@ MonoBehaviour:
     - Runtime
     - Sample
     packageName: GameArki.PlatformerCamera
-    version: 0.4.1
+    version: 0.4.2
     desc: "Unity 2D \u76F8\u673A\u5E93, \u6307\u4EE4\u5F0F\u8C03\u7528, \u6CA1\u6709\u81EA\u52A8
       Tick."
   - rootDir: com.gamearki.purebttree

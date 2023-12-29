@@ -14,7 +14,7 @@ namespace GameArki.PlatformerCamera {
         Vector2 worldMax;
         public Vector2 WorldMax => worldMax;
 
-        public PFConfinerComponent() {}
+        public PFConfinerComponent() { }
 
         public void SetConfiner(bool isEnable, Vector2 worldMin, Vector2 worldMax) {
             this.worldMin = worldMin;
@@ -30,11 +30,11 @@ namespace GameArki.PlatformerCamera {
             return worldMax - worldMin;
         }
 
-        public Vector3 LockCameraInside(Vector3 camPos, Vector2 camSize) {
+        public Vector3 LockCameraInside(Vector3 camPos, float orthographicSize) {
 
             Vector3 resPos = camPos;
-
-            Vector2 halfSize = camSize * 0.5f;
+            float radio = (float)Screen.currentResolution.width / Screen.currentResolution.height;
+            Vector2 halfSize = new Vector2(orthographicSize * radio, orthographicSize);
             Vector2 camWorldMin = (Vector2)camPos - halfSize;
             Vector2 camWorldMax = (Vector2)camPos + halfSize;
 

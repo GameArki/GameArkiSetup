@@ -20,7 +20,10 @@ namespace GameArki.FPMath.Sample {
         }
 
         void OnDrawGizmos() {
-            if (aVectors == null || bVectors == null) return;
+            if (aVectors == null || bVectors == null || aVectors.Length == 0 || bVectors.Length == 0) return;
+            if (results == null || results.Length == 0) {
+                results = new Vector2[1000];
+            }
             // Draw A
             Gizmos.color = Color.blue;
             for (int i = 0; i < aVectors.Length; i++) {
