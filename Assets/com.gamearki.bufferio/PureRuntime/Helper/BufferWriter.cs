@@ -84,6 +84,28 @@ namespace GameArki.BufferIO {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteDecimal(byte[] dst, decimal data, ref int offset) {
+            Bit128 content = new Bit128();
+            content.decimalValue = data;
+            dst[offset++] = content.b0;
+            dst[offset++] = content.b1;
+            dst[offset++] = content.b2;
+            dst[offset++] = content.b3;
+            dst[offset++] = content.b4;
+            dst[offset++] = content.b5;
+            dst[offset++] = content.b6;
+            dst[offset++] = content.b7;
+            dst[offset++] = content.b8;
+            dst[offset++] = content.b9;
+            dst[offset++] = content.b10;
+            dst[offset++] = content.b11;
+            dst[offset++] = content.b12;
+            dst[offset++] = content.b13;
+            dst[offset++] = content.b14;
+            dst[offset++] = content.b15;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteInt64(byte[] dst, long data, ref int offset) {
             WriteUInt64(dst, (ulong)data, ref offset);
         }
@@ -418,6 +440,32 @@ namespace GameArki.BufferIO {
                 WriteUInt16(dst, count, ref offset);
                 for (int i = 0; i < data.Count; i += 1) {
                     WriteDouble(dst, data[i], ref offset);
+                }
+            } else {
+                WriteUInt16(dst, 0, ref offset);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteDecimalArr(byte[] dst, decimal[] data, ref int offset) {
+            if (data != null) {
+                ushort count = (ushort)data.Length;
+                WriteUInt16(dst, count, ref offset);
+                for (int i = 0; i < count; i += 1) {
+                    WriteDecimal(dst, data[i], ref offset);
+                }
+            } else {
+                WriteUInt16(dst, 0, ref offset);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteDecimalList(byte[] dst, List<decimal> data, ref int offset) {
+            if (data != null) {
+                ushort count = (ushort)data.Count;
+                WriteUInt16(dst, count, ref offset);
+                for (int i = 0; i < data.Count; i += 1) {
+                    WriteDecimal(dst, data[i], ref offset);
                 }
             } else {
                 WriteUInt16(dst, 0, ref offset);

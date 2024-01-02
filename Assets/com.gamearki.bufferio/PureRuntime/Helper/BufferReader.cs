@@ -100,6 +100,28 @@ namespace GameArki.BufferIO {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static decimal ReadDecimal(byte[] src, ref int offset) {
+            Bit128 content = new Bit128();
+            content.b0 = src[offset++];
+            content.b1 = src[offset++];
+            content.b2 = src[offset++];
+            content.b3 = src[offset++];
+            content.b4 = src[offset++];
+            content.b5 = src[offset++];
+            content.b6 = src[offset++];
+            content.b7 = src[offset++];
+            content.b8 = src[offset++];
+            content.b9 = src[offset++];
+            content.b10 = src[offset++];
+            content.b11 = src[offset++];
+            content.b12 = src[offset++];
+            content.b13 = src[offset++];
+            content.b14 = src[offset++];
+            content.b15 = src[offset++];
+            return content.decimalValue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool[] ReadBoolArr(byte[] src, ref int offset) {
             ushort count = ReadUInt16(src, ref offset);
             bool[] data = new bool[count];
@@ -330,6 +352,28 @@ namespace GameArki.BufferIO {
             List<double> data = new List<double>(count);
             for (int i = 0; i < count; i += 1) {
                 double d = ReadDouble(src, ref offset);
+                data.Add(d);
+            }
+            return data;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static decimal[] ReadDecimalArr(byte[] src, ref int offset) {
+            ushort count = ReadUInt16(src, ref offset);
+            decimal[] data = new decimal[count];
+            for (int i = 0; i < count; i += 1) {
+                decimal d = ReadDecimal(src, ref offset);
+                data[i] = d;
+            }
+            return data;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<decimal> ReadDecimalList(byte[] src, ref int offset) {
+            ushort count = ReadUInt16(src, ref offset);
+            List<decimal> data = new List<decimal>(count);
+            for (int i = 0; i < count; i += 1) {
+                decimal d = ReadDecimal(src, ref offset);
                 data.Add(d);
             }
             return data;
