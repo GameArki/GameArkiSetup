@@ -91,6 +91,9 @@ namespace GameArki.BufferIO.Editor {
                     case "double": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDouble)}({paramSuffix});";
                     case "double[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDoubleArr)}({paramSuffix});";
                     case "List<double>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDoubleList)}({paramSuffix});";
+                    case "decimal": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDecimal)}({paramSuffix});";
+                    case "decimal[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDecimalArr)}({paramSuffix});";
+                    case "List<decimal>": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteDecimalList)}({paramSuffix});";
                     case "char": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteChar)}({paramSuffix});";
                     case "string": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUTF8String)}({paramSuffix});";
                     case "string[]": return $"{nameof(BufferWriter)}.{nameof(BufferWriter.WriteUTF8StringArr)}({paramSuffix});";
@@ -220,6 +223,9 @@ namespace GameArki.BufferIO.Editor {
                     case "double": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDouble)}({paramSuffix});";
                     case "double[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDoubleArr)}({paramSuffix});";
                     case "List<double>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDoubleList)}({paramSuffix});";
+                    case "decimal": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDecimal)}({paramSuffix});";
+                    case "decimal[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDecimalArr)}({paramSuffix});";
+                    case "List<decimal>": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadDecimalList)}({paramSuffix});";
                     case "char": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadChar)}({paramSuffix});";
                     case "string": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUTF8String)}({paramSuffix});";
                     case "string[]": return $"{n_field} = {n_BufferReader}.{nameof(BufferReader.ReadUTF8StringArr)}({paramSuffix});";
