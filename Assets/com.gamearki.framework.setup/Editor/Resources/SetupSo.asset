@@ -41,7 +41,7 @@ MonoBehaviour:
     - Tests
     - UnityRuntime
     packageName: GameArki.BufferIO
-    version: 1.5.0
+    version: 1.6.0
     desc: "\u4E8C\u8FDB\u5236\u6570\u636E\u5E8F\u5217\u5316\u51FD\u6570"
   - rootDir: com.gamearki.bufgenerator
     dirs:
@@ -49,7 +49,7 @@ MonoBehaviour:
     - Editor
     - Tests
     packageName: GameArki.BufGenerator
-    version: 1.4.0
+    version: 1.5.0
     desc: "\u4E8C\u8FDB\u5236\u6570\u636E\u5E8F\u5217\u5316\u534F\u8BAE, \u542B\u81EA\u52A8\u751F\u6210\u63A5\u53E3"
   - rootDir: com.gamearki.csharpgen
     dirs:
