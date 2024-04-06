@@ -1,0 +1,23 @@
+{
+  "name": "com.gamearki.unityextension",
+  "version": "0.1.0",
+  "description": "魔改Unity原生组件",
+  "displayName": "GameArki.UnityExtension",
+  "unity": "2019.4",
+  "author": {
+    "name": "GameArki",
+    "email": "chenwansal1@163.com",
+    "url": "https://github.com/GameArki"
+  },
+  "changelogUrl": "",
+  "dependencies": {},
+  "documentationUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "GameArki"
+  ],
+  "license": "",
+  "licensesUrl": "",
+  "samples": [],
+  "unityRelease": "16f1"
+}
