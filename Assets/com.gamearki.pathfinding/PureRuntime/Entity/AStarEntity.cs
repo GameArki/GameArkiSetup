@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameArki.PathFinding.Generic;
-// using static UnityEngine.Debug;
+using static UnityEngine.Debug;
 
 namespace GameArki.PathFinding.AStar {
 
@@ -275,7 +275,7 @@ namespace GameArki.PathFinding.AStar {
 
             if (!gotFromOpenDic) {
                 openList.Push(neighbourNode);
-                // Log($"openList.Push {neighbourNode.pos} F  {neighbourNode.f} newG:{newG}");
+                Log($"openList.Push {neighbourNode.pos} F  {neighbourNode.f} newG:{newG}");
                 openDic.Add(posKey, neighbourNode);
             }
         }
@@ -311,7 +311,7 @@ namespace GameArki.PathFinding.AStar {
 
         bool IsWalkableNeighbour(in Int2 neighbourPos, in Int2 curPos, in Int2 walkableHeightDiffRange) {
             if (!IsCanReach(neighbourPos, curPos, walkableHeightDiffRange)) return false;
-            if (closedDic.TryGetValue(neighbourPos.X + neighbourPos.Y * width, out var flag) && flag) return false;
+            if (closedDic.TryGetValue(CombineKey(neighbourPos.X,neighbourPos.Y), out var flag) && flag) return false;
             return true;
         }
 

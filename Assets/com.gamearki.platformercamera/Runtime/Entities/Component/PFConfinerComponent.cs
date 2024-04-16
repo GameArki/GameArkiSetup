@@ -33,7 +33,7 @@ namespace GameArki.PlatformerCamera {
         public Vector3 LockCameraInside(Vector3 camPos, float orthographicSize) {
 
             Vector3 resPos = camPos;
-            float radio = (float)Screen.currentResolution.width / Screen.currentResolution.height;
+            float radio = (float)Screen.width / (float)Screen.height;
             Vector2 halfSize = new Vector2(orthographicSize * radio, orthographicSize);
             Vector2 camWorldMin = (Vector2)camPos - halfSize;
             Vector2 camWorldMax = (Vector2)camPos + halfSize;
