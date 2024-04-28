@@ -9,9 +9,9 @@ namespace GameArki.PathFinding.Generic {
         public int h;
         public Int2 pos;
         public AStarNode parent;
-
+public static int count ;
         public AStarNode() {
-            // UnityEngine.Debug.Log($"New AStarNode");
+            UnityEngine.Debug.Log("AStarNode count: " + ++count);
         }
 
         public int CompareTo(AStarNode x) {
